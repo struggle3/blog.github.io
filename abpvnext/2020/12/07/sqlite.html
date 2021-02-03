@@ -2,7 +2,9 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
+  <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg"><!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>abp集成SQLite | 野程序猿</title>
 <meta name="generator" content="Jekyll v4.2.0" />
 <meta property="og:title" content="abp集成SQLite" />
@@ -17,9 +19,10 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="abp集成SQLite" />
 <script type="application/ld+json">
-{"datePublished":"2020-12-07T22:00:00+08:00","dateModified":"2020-12-07T22:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html"},"@type":"BlogPosting","url":"struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html","description":"集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&lt;AbpDbContextOptions&gt;(options =&gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。","headline":"abp集成SQLite","@context":"https://schema.org"}</script>
+{"headline":"abp集成SQLite","dateModified":"2020-12-07T22:00:00+08:00","datePublished":"2020-12-07T22:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html"},"@type":"BlogPosting","url":"struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html","description":"集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&lt;AbpDbContextOptions&gt;(options =&gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/blog.github.io/assets/main.css"><link type="application/atom+xml" rel="alternate" href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" title="野程序猿" />
+<link rel="stylesheet" href="/blog.github.io/assets/main.css">
+  <link rel="stylesheet" href="/blog.github.io/assets/style.css"><link type="application/atom+xml" rel="alternate" href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" title="野程序猿" />
 </head>
 <body><header class="site-header">
 
