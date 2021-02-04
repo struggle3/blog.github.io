@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
     <title>野程序猿</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="abp,abp vnexta,abp前端,angular" />
+    <meta name="description" content="第一次使用ABP VNext进行angular前端开发" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -739,7 +741,7 @@
 
 <span class="nt">&lt;abp-modal</span> <span class="na">[(visible)]=</span><span class="s">"isModalVisible"</span> <span class="na">[busy]=</span><span class="s">"modalBusy"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;ng-template</span> <span class="na">#abpHeader</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;h3&gt;&lt;/h3&gt;</span>
+    <span class="nt">&lt;h3&gt;</span>(selected?.id ? '::NewsItem:EditNewsItem' : '::NewsItem:NewNewsItem') | abpLocalization<span class="nt">&lt;/h3&gt;</span>
   <span class="nt">&lt;/ng-template&gt;</span>
 
   <span class="nt">&lt;ng-template</span> <span class="na">#abpBody</span><span class="nt">&gt;</span>

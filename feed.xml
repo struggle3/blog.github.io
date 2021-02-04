@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>野程序猿</title>
-		<description>欢迎来到我的博客！</description>
+		<description>我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。</description>
 		<link>struggle3.github.io/blog.github.io/blog.github.io</link>
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
@@ -2099,7 +2099,7 @@ namespace MyAbp.Blazor.Pages
 
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;abp-modal&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;[(visible)]=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;isModalVisible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;[busy]=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;modalBusy&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;ng-template&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;#abpHeader&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h3&amp;gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h3&amp;gt;&lt;/span&gt;(selected?.id ? '::NewsItem:EditNewsItem' : '::NewsItem:NewNewsItem') | abpLocalization&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ng-template&amp;gt;&lt;/span&gt;
 
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;ng-template&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;#abpBody&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
