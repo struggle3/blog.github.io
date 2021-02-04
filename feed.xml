@@ -7,6 +7,69 @@
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>firewalld常用命令</title>
+				<description>&lt;h2 id=&quot;常用命令&quot;&gt;常用命令&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;查看是否开启
+systemctl status firewalld.service&lt;/li&gt;
+  &lt;li&gt;打开防火墙
+systemctl start firewalld.service&lt;/li&gt;
+  &lt;li&gt;停用防火墙
+systemctl disable firewalld&lt;/li&gt;
+  &lt;li&gt;禁用防火墙
+systemctl stop firewalld.service&lt;/li&gt;
+  &lt;li&gt;开机启动
+systemctl enable firewalld&lt;/li&gt;
+  &lt;li&gt;取消开机启动
+systemctl disable firewalld&lt;/li&gt;
+  &lt;li&gt;查看运行状态
+firewall-cmd –state&lt;/li&gt;
+  &lt;li&gt;查看接口信息
+firewall-cmd –list-all&lt;/li&gt;
+  &lt;li&gt;更新防火墙规则方法1:无需断开连接，动态更改规则
+firewall-cmd –reload&lt;/li&gt;
+  &lt;li&gt;更新防火墙规则方法2:断开连接，以重启的方式更改规则
+firewall-cmd –complete-reload&lt;/li&gt;
+  &lt;li&gt;查看帮助
+firewall-cmd –help
+–zone=NAME # 指定 Zone
+–permanent # 为永久生效
+–timeout=seconds # 持续一段时间，到期后自动移除，经常用于调试，且不能与 –permanent 同时使用&lt;/li&gt;
+  &lt;li&gt;追加一个8181端口，永久有效
+firewall-cmd –add-port=8181/tcp –permanent&lt;/li&gt;
+  &lt;li&gt;追加一段端口范围
+firewall-cmd –add-port=6000-6600/tcp&lt;/li&gt;
+  &lt;li&gt;开放 ftp 服务
+firewall-cmd –add-service=ftp&lt;/li&gt;
+  &lt;li&gt;添加eth0 接口至 public 信任等级，永久有效
+firewall-cmd –zone=public –add-interface=eth0 –permanent&lt;/li&gt;
+  &lt;li&gt;配置 public zone 的端口转发
+firewall-cmd –zone=public –add-masquerade&lt;/li&gt;
+  &lt;li&gt;然后转发 tcp 22 端口至 9527
+firewall-cmd –zone=public –add-forward-port=port=22:proto=tcp:toport=9527&lt;/li&gt;
+  &lt;li&gt;转发 22 端口数据至另一个 ip 的相同端口上
+firewall-cmd –zone=public –add-forward-port=port=22:proto=tcp:toaddr=192.168.1.123&lt;/li&gt;
+  &lt;li&gt;转发 22 端口数据至另一 ip 的 9527 端口上
+firewall-cmd –zone=public –add-forward-port=port=22:proto=tcp:toport=9527:toaddr=192.168.1.100&lt;/li&gt;
+  &lt;li&gt;IP 封禁
+firewall-cmd –permanent –add-rich-rule=”rule family=’ipv4’ source address=’192.168.1.123’ reject”&lt;/li&gt;
+  &lt;li&gt;通过 ipset 来封禁 ip
+firewall-cmd –permanent –zone=public –new-ipset=blacklist –type=hash:ip
+firewall-cmd –permanent –zone=public –ipset=blacklist –add-entry=192.168.1.123&lt;/li&gt;
+  &lt;li&gt;封禁网段
+firewall-cmd –permanent –zone=public –new-ipset=blacklist –type=hash:net
+firewall-cmd –permanent –zone=public –ipset=blacklist –add-entry=192.168.1.0/24&lt;/li&gt;
+  &lt;li&gt;倒入 ipset 规则 blacklist，然后封禁 blacklist
+firewall-cmd –permanent –zone=public –new-ipset-from-file=/path/blacklist.xml
+firewall-cmd –permanent –zone=public –add-rich-rule=’rule source ipset=blacklist drop’&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+				<pubDate>Sun, 20 Dec 2020 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/linux/2020/12/20/firewalld.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/linux/2020/12/20/firewalld.html</guid>
+			</item>
+		
+			<item>
 				<title>abp集成SQLite</title>
 				<description>&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
@@ -2305,280 +2368,6 @@ namespace MyAbp.Application.News
 				<pubDate>Fri, 10 Apr 2020 22:00:00 +0800</pubDate>
 				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/10/abp-service.html</link>
 				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/10/abp-service.html</guid>
-			</item>
-		
-			<item>
-				<title>abp领域层开发</title>
-				<description>&lt;h1 id=&quot;1-描述&quot;&gt;1. 描述&lt;/h1&gt;
-&lt;h2 id=&quot;开发环境&quot;&gt;开发环境&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;dotnet core 3.1.102&lt;/li&gt;
-    &lt;li&gt;SQL 2017&lt;/li&gt;
-    &lt;li&gt;vs code&lt;/li&gt;
-    &lt;li&gt;volo.abp 2.3.0&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;2-下载模板项目&quot;&gt;2. 下载模板项目&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;在abp.io或abp cli官网下载模板项目&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;3-领域层开发&quot;&gt;3. 领域层开发&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
-using System.Collections.Generic;
-using Volo.Abp.Domain.Entities.Auditing;
-
-namespace MyAbp.Domain.News
-{
-    //1、新闻聚合
-    public class NewsItem:CreationAuditedAggregateRoot&amp;lt;Guid&amp;gt;
-    {
-        public virtual string Title { get; protected set; }
-
-        public virtual string Short { get; protected set; }
-
-        public virtual string Full { get; protected set; }
-
-        public virtual  bool Published { get; protected set; }
-
-        public virtual DateTime? StartDateUtc { get; protected set; }
-
-        public virtual DateTime? EndDateUtc { get; protected set; }
-
-        public virtual bool AllowComments { get; protected set; }
-
-        public virtual int OrderBy{get;protected set;}
-
-        public virtual ICollection&amp;lt;NewsCategoryLine&amp;gt; Categorys { get; protected set; }
-
-        protected NewsItem() { }
-    }
-}
-
-using System;
-using Volo.Abp.Domain.Entities.Auditing;
-namespace MyAbp.Domain.News
-{
-    //1、评论聚合
-    public class NewsComment:CreationAuditedAggregateRoot&amp;lt;Guid&amp;gt;
-    {
-        public virtual string CommentTitle { get; protected set; }
-
-        public virtual string CommentText { get; protected set; }
-
-        public virtual Guid NewsItemId { get; protected set; }
-
-        protected NewsComment(){}
-    }
-}
-
-using System;
-using Volo.Abp.Domain.Entities.Auditing;
-
-namespace MyAbp.Domain.News
-{
-    //1、分类聚合
-    public class NewsCategory:CreationAuditedAggregateRoot&amp;lt;Guid&amp;gt;
-    {
-        public virtual string Name{get; protected set;}
-        protected NewsCategory(){}
-    }
-}
-
-using System;
-using Volo.Abp.Domain.Entities;
-
-namespace MyAbp.Domain.News
-{
-    public class NewsCategoryLine:Entity
-    {
-        //1、分类映射聚合
-        public virtual Guid NewsItemId { get; protected set; }
-        public virtual Guid NewsCategoryId { get; protected set; }
-        protected NewsCategoryLine()
-        {
-
-        }
-        protected internal NewsCategoryLine(Guid newsItemId, Guid newsCategoryId)
-        {
-            NewsItemId = newsItemId;
-            NewsCategoryId = newsCategoryId;
-        }
-
-        public override object[] GetKeys()
-        {
-            return new object[] { NewsItemId, NewsCategoryId };
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&quot;4-基础设施层开发&quot;&gt;4. 基础设施层开发&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;添加实体：MyAbpDbContext.cs代码&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using Microsoft.EntityFrameworkCore;
-using MyAbp.Users;
-using Volo.Abp.Data;
-using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.Modeling;
-using Volo.Abp.Users.EntityFrameworkCore;
-using MyAbp.Domain.News;
-
-namespace MyAbp.EntityFrameworkCore
-{
-    /* This is your actual DbContext used on runtime.
-     * It includes only your entities.
-     * It does not include entities of the used modules, because each module has already
-     * its own DbContext class. If you want to share some database tables with the used modules,
-     * just create a structure like done for AppUser.
-     *
-     * Don't use this DbContext for database migrations since it does not contain tables of the
-     * used modules (as explained above). See MyAbpMigrationsDbContext for migrations.
-     */
-    [ConnectionStringName(&quot;Default&quot;)]
-    public class MyAbpDbContext : AbpDbContext&amp;lt;MyAbpDbContext&amp;gt;
-    {
-        public DbSet&amp;lt;AppUser&amp;gt; Users { get; set; }
-
-        /* Add DbSet properties for your Aggregate Roots / Entities here.
-         * Also map them inside MyAbpDbContextModelCreatingExtensions.ConfigureMyAbp
-         */
-        //2、添加实体
-        public DbSet&amp;lt;NewsItem&amp;gt; NewsItems { get; set; }
-        public DbSet&amp;lt;NewsComment&amp;gt; NewsComments { get; set; }
-        public DbSet&amp;lt;NewsCategory&amp;gt; NewsCategorys { get; set; }
-        public DbSet&amp;lt;NewsCategoryLine&amp;gt; NewsCategoryLines { get; set; }
-        public MyAbpDbContext(DbContextOptions&amp;lt;MyAbpDbContext&amp;gt; options)
-            : base(options)
-        {
-
-        }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            /* Configure the shared tables (with included modules) here */
-
-            builder.Entity&amp;lt;AppUser&amp;gt;(b =&amp;gt;
-            {
-                b.ToTable(&quot;AbpUsers&quot;); //Sharing the same table &quot;AbpUsers&quot; with the IdentityUser
-                b.ConfigureByConvention();
-                b.ConfigureAbpUser();
-
-                //Moved customization to a method so we can share it with the MyAbpMigrationsDbContext class
-                b.ConfigureCustomUserProperties();
-            });
-
-            /* Configure your own tables/entities inside the ConfigureMyAbp method */
-
-            builder.ConfigureMyAbp();
-        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;配置实体：MyAbpDbContextModelCreatingExtensions.cs代码&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Volo.Abp;
-using Volo.Abp.Users;
-using Volo.Abp.EntityFrameworkCore.Modeling;
-using MyAbp.Domain.News;
-
-namespace MyAbp.EntityFrameworkCore
-{
-    public static class MyAbpDbContextModelCreatingExtensions
-    {
-        public static void ConfigureMyAbp(this ModelBuilder builder)
-        {
-            Check.NotNull(builder, nameof(builder));
-
-            /* Configure your own tables/entities inside here */
-
-            //builder.Entity&amp;lt;YourEntity&amp;gt;(b =&amp;gt;
-            //{
-            //    b.ToTable(MyAbpConsts.DbTablePrefix + &quot;YourEntities&quot;, MyAbpConsts.DbSchema);
-
-            //    //...
-            //});
-            // 3、配置实体
-            builder.Entity&amp;lt;NewsItem&amp;gt;(b =&amp;gt;
-            {
-                b.ToTable(MyAbpConsts.DbTablePrefix + &quot;NewsItems&quot;, MyAbpConsts.DbSchema);
-                b.Property(x =&amp;gt; x.Title).IsRequired().HasMaxLength(128);
-                b.ConfigureByConvention();
-            });
-
-            builder.Entity&amp;lt;NewsComment&amp;gt;(b =&amp;gt;
-            {
-                b.ToTable(MyAbpConsts.DbTablePrefix + &quot;NewsComments&quot;, MyAbpConsts.DbSchema);
-                b.Property(x =&amp;gt; x.CommentTitle).IsRequired().HasMaxLength(128);
-                b.ConfigureByConvention();
-            });
-
-            builder.Entity&amp;lt;NewsCategory&amp;gt;(b =&amp;gt;
-            {
-                b.ToTable(MyAbpConsts.DbTablePrefix + &quot;NewsCategorys&quot;, MyAbpConsts.DbSchema);
-                b.Property(x =&amp;gt; x.Name).IsRequired().HasMaxLength(128);
-                b.ConfigureByConvention();
-            });
-
-            builder.Entity&amp;lt;NewsCategoryLine&amp;gt;(b =&amp;gt;
-            {
-                b.ToTable(MyAbpConsts.DbTablePrefix + &quot;NewsCategoryLines&quot;, MyAbpConsts.DbSchema);
-                b.HasKey(nc =&amp;gt; new { nc.NewsItemId, nc.NewsCategoryId });
-
-                b.HasOne&amp;lt;NewsCategory&amp;gt;().WithMany().HasForeignKey(pd =&amp;gt; pd.NewsCategoryId).IsRequired();
-                b.HasOne&amp;lt;NewsItem&amp;gt;().WithMany(ni=&amp;gt; ni.Categorys).HasForeignKey(ni =&amp;gt; ni.NewsItemId).IsRequired();
-
-                b.HasIndex(nc =&amp;gt; new { nc.NewsItemId, nc.NewsCategoryId });
-                b.ConfigureByConvention();
-            });
-        }
-
-        public static void ConfigureCustomUserProperties&amp;lt;TUser&amp;gt;(this EntityTypeBuilder&amp;lt;TUser&amp;gt; b)
-            where TUser: class, IUser
-        {
-            //b.Property&amp;lt;string&amp;gt;(nameof(AppUser.MyProperty))...
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&quot;5-数据迁移&quot;&gt;5. 数据迁移&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;添加&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet ef migrations add newsitem &lt;span class=&quot;nt&quot;&gt;--startup-project&lt;/span&gt; .&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;rc&lt;span class=&quot;se&quot;&gt;\M&lt;/span&gt;yAbp.HttpApi.Host&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; .&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;rc&lt;span class=&quot;se&quot;&gt;\M&lt;/span&gt;yAbp.EntityFrameworkCore.DbMigrations&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;迁移&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet ef database update &lt;span class=&quot;nt&quot;&gt;--startup-project&lt;/span&gt; .&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;rc&lt;span class=&quot;se&quot;&gt;\M&lt;/span&gt;yAbp.HttpApi.Host&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; .&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;rc&lt;span class=&quot;se&quot;&gt;\M&lt;/span&gt;yAbp.EntityFrameworkCore.DbMigrations&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-				<pubDate>Thu, 09 Apr 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/09/abp-domain.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/09/abp-domain.html</guid>
 			</item>
 		
 	</channel>
