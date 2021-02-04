@@ -108,8 +108,18 @@ var builder = new DbContextOptionsBuilder&lt;mytestMigrationsDbContext&gt;()
     .UseSqlite(configuration.GetConnectionString("Default"));
     //.UseSqlServer(configuration.GetConnectionString("Default"));
 
-return new mytestMigrationsDbContext(builder.Options); } ``` &gt; 删除Migrations文件所有文件 ## 执行命令 &gt; **提示：同时也可以运行控制台的DbMigrator程序**
+return new mytestMigrationsDbContext(builder.Options); } ```
 </code></pre></div></div>
+
+<blockquote>
+  <p>删除Migrations文件所有文件</p>
+</blockquote>
+
+<h2 id="执行命令">执行命令</h2>
+
+<blockquote>
+  <p><strong>提示：同时也可以运行控制台的DbMigrator程序</strong></p>
+</blockquote>
 
 <blockquote>
   <p>添加</p>

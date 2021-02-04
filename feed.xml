@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="struggle3.github.io/blog.github.io/blog.github.io/" rel="alternate" type="text/html" /><updated>2021-02-04T10:10:44+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/feed.xml</id><title type="html">野程序猿</title><subtitle>记录自己的生活。</subtitle><entry><title type="html">abp集成SQLite</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html" rel="alternate" type="text/html" title="abp集成SQLite" /><published>2020-12-07T22:00:00+08:00</published><updated>2020-12-07T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html">&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="struggle3.github.io/blog.github.io/blog.github.io/" rel="alternate" type="text/html" /><updated>2021-02-04T10:24:25+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/feed.xml</id><title type="html">野程序猿</title><subtitle>记录自己的生活。</subtitle><entry><title type="html">abp集成SQLite</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html" rel="alternate" type="text/html" title="abp集成SQLite" /><published>2020-12-07T22:00:00+08:00</published><updated>2020-12-07T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html">&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 &lt;blockquote&gt;
   &lt;p&gt;SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。&lt;/p&gt;
@@ -55,8 +55,18 @@ var builder = new DbContextOptionsBuilder&amp;lt;mytestMigrationsDbContext&amp;g
     .UseSqlite(configuration.GetConnectionString(&quot;Default&quot;));
     //.UseSqlServer(configuration.GetConnectionString(&quot;Default&quot;));
 
-return new mytestMigrationsDbContext(builder.Options); } ``` &amp;gt; 删除Migrations文件所有文件 ## 执行命令 &amp;gt; **提示：同时也可以运行控制台的DbMigrator程序**
+return new mytestMigrationsDbContext(builder.Options); } ```
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;删除Migrations文件所有文件&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;执行命令&quot;&gt;执行命令&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;提示：同时也可以运行控制台的DbMigrator程序&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;添加&lt;/p&gt;
@@ -504,8 +514,8 @@ namespace MyAbp.Blazor.Pages.tenant
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/0401.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/blog.github.io/images/0402.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">集成完相关框架后开始对ABP默认的租户进行单页CRUD开，在开发过程中参考了AbpDesignCrudPageBase进行一个简单封装以实现快速开发和组件重用。 加入实际权限代码如下</summary></entry><entry><title type="html">abp集成ant blazor封装crudpage</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html" rel="alternate" type="text/html" title="abp集成ant blazor封装crudpage" /><published>2020-11-18T22:00:00+08:00</published><updated>2020-11-18T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html">&lt;blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/abp/0401.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/blog.github.io/images/abp/0402.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">集成完相关框架后开始对ABP默认的租户进行单页CRUD开，在开发过程中参考了AbpDesignCrudPageBase进行一个简单封装以实现快速开发和组件重用。 加入实际权限代码如下</summary></entry><entry><title type="html">abp集成ant blazor封装crudpage</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html" rel="alternate" type="text/html" title="abp集成ant blazor封装crudpage" /><published>2020-11-18T22:00:00+08:00</published><updated>2020-11-18T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html">&lt;blockquote&gt;
   &lt;p&gt;在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1079,7 +1089,7 @@ namespace MyAbp.Blazor.Pages
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">添加认证回调 在Pages文件中添加名为”Authentication.razor”文件并输入如下代码。 ```C# @page “/authentication/{action}” @using Microsoft.AspNetCore.Components.WebAssembly.Authentication</summary></entry><entry><title type="html">abp集成ant blazor</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html" rel="alternate" type="text/html" title="abp集成ant blazor" /><published>2020-11-12T22:00:00+08:00</published><updated>2020-11-12T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html">&lt;h2 id=&quot;引入ant-design-of-blazor包&quot;&gt;引入Ant Design of Blazor包&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/abp/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">添加认证回调 在Pages文件中添加名为”Authentication.razor”文件并输入如下代码。 ```C# @page “/authentication/{action}” @using Microsoft.AspNetCore.Components.WebAssembly.Authentication</summary></entry><entry><title type="html">abp集成ant blazor</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html" rel="alternate" type="text/html" title="abp集成ant blazor" /><published>2020-11-12T22:00:00+08:00</published><updated>2020-11-12T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html">&lt;h2 id=&quot;引入ant-design-of-blazor包&quot;&gt;引入Ant Design of Blazor包&lt;/h2&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Install-Package AntDesign &lt;span class=&quot;nt&quot;&gt;-Version&lt;/span&gt; 0.4.0-nightly-2011120611
  Install-Package AntDesign.Pro.Layout &lt;span class=&quot;nt&quot;&gt;-Version&lt;/span&gt; 0.1.0-nightly-201103141915
@@ -1429,10 +1439,10 @@ namespace MyAbp.Blazor.Pages
   &lt;li&gt;项目结构图&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/abp/01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;运行效果图&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">引入Ant Design of Blazor包</summary></entry></feed>
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/abp/02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">引入Ant Design of Blazor包</summary></entry></feed>
