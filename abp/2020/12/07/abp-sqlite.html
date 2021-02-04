@@ -11,15 +11,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&lt;AbpDbContextOptions&gt;(options =&gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。" />
 <meta property="og:description" content="集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&lt;AbpDbContextOptions&gt;(options =&gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。" />
-<link rel="canonical" href="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html" />
-<meta property="og:url" content="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html" />
+<link rel="canonical" href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html" />
+<meta property="og:url" content="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html" />
 <meta property="og:site_name" content="野程序猿" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-12-07T22:00:00+08:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="abp集成SQLite" />
 <script type="application/ld+json">
-{"headline":"abp集成SQLite","dateModified":"2020-12-07T22:00:00+08:00","datePublished":"2020-12-07T22:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html"},"@type":"BlogPosting","url":"struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html","description":"集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&lt;AbpDbContextOptions&gt;(options =&gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。","@context":"https://schema.org"}</script>
+{"datePublished":"2020-12-07T22:00:00+08:00","dateModified":"2020-12-07T22:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html"},"@type":"BlogPosting","url":"struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html","description":"集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&lt;AbpDbContextOptions&gt;(options =&gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。","headline":"abp集成SQLite","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog.github.io/assets/main.css">
   <link rel="stylesheet" href="/blog.github.io/assets/style.css"><link type="application/atom+xml" rel="alternate" href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" title="野程序猿" />
@@ -120,7 +120,7 @@ return new mytestMigrationsDbContext(builder.Options); } ``` &gt; 删除Migratio
 </code></pre></div>  </div>
 </blockquote>
 
-  </div><a class="u-url" href="/blog.github.io/abpvnext/2020/12/07/sqlite.html" hidden></a>
+  </div><a class="u-url" href="/blog.github.io/abp/2020/12/07/abp-sqlite.html" hidden></a>
 </article>
 
       </div>
@@ -135,7 +135,7 @@ return new mytestMigrationsDbContext(builder.Options); } ``` &gt; 删除Migratio
           <a href="/blog.github.io/feed.xml">
             <svg class="svg-icon orange">
               <use xlink:href="/blog.github.io/assets/minima-social-icons.svg#rss"></use>
-            </svg><span>Subscribe</span>
+            </svg><span>订阅博客</span>
           </a>
         </p>
       </div>

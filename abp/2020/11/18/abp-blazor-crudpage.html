@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
+  <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>abp集成ant blazor封装crudpage | 野程序猿</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="abp集成ant blazor封装crudpage" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。" />
+<meta property="og:description" content="在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。" />
+<link rel="canonical" href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html" />
+<meta property="og:url" content="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html" />
+<meta property="og:site_name" content="野程序猿" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-18T22:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="abp集成ant blazor封装crudpage" />
+<script type="application/ld+json">
+{"datePublished":"2020-11-18T22:00:00+08:00","dateModified":"2020-11-18T22:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html"},"@type":"BlogPosting","url":"struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html","description":"在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。","headline":"abp集成ant blazor封装crudpage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog.github.io/assets/main.css">
+  <link rel="stylesheet" href="/blog.github.io/assets/style.css"><link type="application/atom+xml" rel="alternate" href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" title="野程序猿" />
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog.github.io/">野程序猿</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog.github.io/about/imdex.html">关于自己</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">abp集成ant blazor封装crudpage</h1>
+    <p class="post-meta"><time class="dt-published" datetime="2020-11-18T22:00:00+08:00" itemprop="datePublished">
+        2020-11-18 22:00:00
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <blockquote>
+  <p>在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。</p>
+</blockquote>
+
+<blockquote>
+  <p>在ModalAsync为后缀的相关方法中需要手动修改模态框显示和隐藏的相关代码。</p>
+</blockquote>
+
+<pre><code class="language-C#">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AntDesign;
+using AntDesign.TableModels;
+using JetBrains.Annotations;
+using Localization.Resources.AbpUi;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+using Volo.Abp.AspNetCore.Components.WebAssembly;
+using Volo.Abp.Authorization;
+using Volo.Abp.ObjectMapping;
+
+namespace MyAbp.Blazor.Pages
+{
+    public abstract class AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TKey&gt;
+        : AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            PagedAndSortedResultRequestDto&gt;
+        where TAppService : ICrudAppService&lt;
+            TEntityDto,
+            TKey&gt;
+        where TEntityDto : class, IEntityDto&lt;TKey&gt;, new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput&gt;
+        : AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TEntityDto&gt;
+        where TAppService : ICrudAppService&lt;
+            TEntityDto,
+            TKey,
+            TGetListInput&gt;
+        where TEntityDto : class, IEntityDto&lt;TKey&gt;, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput&gt;
+        : AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TCreateInput&gt;
+        where TAppService : ICrudAppService&lt;
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput&gt;
+        where TEntityDto : IEntityDto&lt;TKey&gt;
+        where TCreateInput : class, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&gt;
+        : AntDesignCrudPageBase&lt;
+            TAppService,
+            TEntityDto,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&gt;
+        where TAppService : ICrudAppService&lt;
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&gt;
+        where TEntityDto : IEntityDto&lt;TKey&gt;
+        where TCreateInput : class, new()
+        where TUpdateInput : class, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&lt;
+            TAppService,
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&gt;
+        : AntDesignCrudPageBase&lt;
+            TAppService,
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput,
+            TGetListOutputDto,
+            TCreateInput,
+            TUpdateInput&gt;
+        where TAppService : ICrudAppService&lt;
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&gt;
+        where TGetOutputDto : IEntityDto&lt;TKey&gt;
+        where TGetListOutputDto : IEntityDto&lt;TKey&gt;
+        where TCreateInput : class, new()
+        where TUpdateInput : class, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&lt;
+            TAppService,
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput,
+            TListViewModel,
+            TCreateViewModel,
+            TUpdateViewModel&gt;
+        : OwningComponentBase
+        where TAppService : ICrudAppService&lt;
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&gt;
+        where TGetOutputDto : IEntityDto&lt;TKey&gt;
+        where TGetListOutputDto : IEntityDto&lt;TKey&gt;
+        where TCreateInput : class
+        where TUpdateInput : class
+        where TGetListInput : new()
+        where TListViewModel : IEntityDto&lt;TKey&gt;
+        where TCreateViewModel : class, new()
+        where TUpdateViewModel : class, new()
+    {
+        [Inject] protected TAppService AppService { get; set; }
+        [Inject] protected IUiMessageService UiMessageService { get; set; }
+        [Inject] protected IStringLocalizer&lt;AbpUiResource&gt; UiLocalizer { get; set; }
+        [Inject] protected IAuthorizationService AuthorizationService { get; set; }
+
+        protected virtual int PageSize { get; set; } = LimitedResultRequestDto.DefaultMaxResultCount;
+
+        protected int CurrentPage;
+        protected string CurrentSorting;
+        protected int TotalCount;
+        protected IReadOnlyList&lt;TListViewModel&gt; Entities = Array.Empty&lt;TListViewModel&gt;();
+        protected TCreateViewModel NewEntity;
+        protected TKey EditingEntityId;
+        protected TUpdateViewModel EditingEntity;
+
+        protected string CreatePolicyName { get; set; }
+        protected string UpdatePolicyName { get; set; }
+        protected string DeletePolicyName { get; set; }
+
+        public bool HasCreatePermission { get; set; }
+        public bool HasUpdatePermission { get; set; }
+        public bool HasDeletePermission { get; set; }
+        public bool CreateVisible { get; set; }
+        public bool EditVisible { get; set; }
+
+        protected Type ObjectMapperContext { get; set; }
+
+        protected IObjectMapper ObjectMapper
+        {
+            get
+            {
+                if (_objectMapper != null)
+                {
+                    return _objectMapper;
+                }
+
+                if (ObjectMapperContext == null)
+                {
+                    return LazyGetRequiredService(ref _objectMapper);
+                }
+
+                return LazyGetRequiredService(
+                    typeof(IObjectMapper&lt;&gt;).MakeGenericType(ObjectMapperContext),
+                    ref _objectMapper
+                );
+            }
+        }
+
+        private IObjectMapper _objectMapper;
+
+        protected TService LazyGetRequiredService&lt;TService&gt;(ref TService reference)
+            =&gt; LazyGetRequiredService(typeof(TService), ref reference);
+
+        protected TRef LazyGetRequiredService&lt;TRef&gt;(Type serviceType, ref TRef reference)
+        {
+            if (reference == null)
+            {
+                reference = (TRef)ScopedServices.GetRequiredService(serviceType);
+            }
+
+            return reference;
+        }
+
+        protected AntDesignCrudPageBase()
+        {
+            NewEntity = new TCreateViewModel();
+            EditingEntity = new TUpdateViewModel();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await SetPermissionsAsync();
+        }
+
+        protected virtual async Task SetPermissionsAsync()
+        {
+            if (CreatePolicyName != null)
+            {
+                HasCreatePermission = await AuthorizationService.IsGrantedAsync(CreatePolicyName);
+            }
+
+            if (UpdatePolicyName != null)
+            {
+                HasUpdatePermission = await AuthorizationService.IsGrantedAsync(UpdatePolicyName);
+            }
+
+            if (DeletePolicyName != null)
+            {
+                HasDeletePermission = await AuthorizationService.IsGrantedAsync(DeletePolicyName);
+            }
+        }
+
+        protected virtual async Task GetEntitiesAsync()
+        {
+            var input = await CreateGetListInputAsync();
+            var result = await AppService.GetListAsync(input);
+            Entities = MapToListViewModel(result.Items);
+            TotalCount = (int)result.TotalCount;
+        }
+
+        private IReadOnlyList&lt;TListViewModel&gt; MapToListViewModel(IReadOnlyList&lt;TGetListOutputDto&gt; dtos)
+        {
+            if (typeof(TGetListOutputDto) == typeof(TListViewModel))
+            {
+                return dtos.As&lt;IReadOnlyList&lt;TListViewModel&gt;&gt;();
+            }
+
+            return ObjectMapper.Map&lt;IReadOnlyList&lt;TGetListOutputDto&gt;, List&lt;TListViewModel&gt;&gt;(dtos);
+        }
+
+        protected virtual Task&lt;TGetListInput&gt; CreateGetListInputAsync()
+        {
+            var input = new TGetListInput();
+
+            if (input is ISortedResultRequest sortedResultRequestInput)
+            {
+                sortedResultRequestInput.Sorting = CurrentSorting;
+            }
+
+            if (input is IPagedResultRequest pagedResultRequestInput)
+            {
+                pagedResultRequestInput.SkipCount = CurrentPage * PageSize;
+            }
+
+            if (input is ILimitedResultRequest limitedResultRequestInput)
+            {
+                limitedResultRequestInput.MaxResultCount = PageSize;
+            }
+
+            return Task.FromResult(input);
+        }
+
+        protected virtual async Task OnDataGridReadAsync(QueryModel&lt;TListViewModel&gt; queryModel)
+        {
+            CurrentPage = queryModel.PageIndex-1;
+            PageSize = queryModel.PageSize;
+
+            await GetEntitiesAsync();
+
+            StateHasChanged();
+        }
+
+        protected virtual async Task OpenCreateModalAsync()
+        {
+            await CheckCreatePolicyAsync();
+            NewEntity = new TCreateViewModel();
+            CreateVisible = true;
+        }
+
+        protected virtual Task CloseCreateModalAsync()
+        {
+            CreateVisible = false;
+            return Task.CompletedTask;
+        }
+
+        protected virtual async Task OpenEditModalAsync(TKey id)
+        {
+            await CheckUpdatePolicyAsync();
+
+            var entityDto = await AppService.GetAsync(id);
+            EditingEntityId = id;
+            EditingEntity = MapToEditingEntity(entityDto);
+            EditVisible = true;
+        }
+
+        protected virtual TUpdateViewModel MapToEditingEntity(TGetOutputDto entityDto)
+        {
+            return ObjectMapper.Map&lt;TGetOutputDto, TUpdateViewModel&gt;(entityDto);
+        }
+
+        protected virtual TCreateInput MapToCreateInput(TCreateViewModel createViewModel)
+        {
+            if (typeof(TCreateInput) == typeof(TCreateViewModel))
+            {
+                return createViewModel.As&lt;TCreateInput&gt;();
+            }
+
+            return ObjectMapper.Map&lt;TCreateViewModel, TCreateInput&gt;(createViewModel);
+        }
+
+        protected virtual TUpdateInput MapToUpdateInput(TUpdateViewModel updateViewModel)
+        {
+            if (typeof(TUpdateInput) == typeof(TUpdateViewModel))
+            {
+                return updateViewModel.As&lt;TUpdateInput&gt;();
+            }
+
+            return ObjectMapper.Map&lt;TUpdateViewModel, TUpdateInput&gt;(updateViewModel);
+        }
+
+        protected virtual Task CloseEditModalAsync()
+        {
+            EditVisible = false;
+            return Task.CompletedTask;
+        }
+
+        protected virtual async Task CreateEntityAsync()
+        {
+            await CheckCreatePolicyAsync();
+            var createInput = MapToCreateInput(NewEntity);
+            await AppService.CreateAsync(createInput);
+            await GetEntitiesAsync();
+            CreateVisible = false;
+        }
+
+        protected virtual async Task UpdateEntityAsync()
+        {
+            await CheckUpdatePolicyAsync();
+            var updateInput = MapToUpdateInput(EditingEntity);
+            await AppService.UpdateAsync(EditingEntityId, updateInput);
+            await GetEntitiesAsync();
+            EditVisible = false;
+        }
+
+        protected virtual async Task DeleteEntityAsync(TListViewModel entity)
+        {
+            await CheckDeletePolicyAsync();
+            await AppService.DeleteAsync(entity.Id);
+            await GetEntitiesAsync();
+        }
+
+        protected virtual async Task CheckCreatePolicyAsync()
+        {
+            await CheckPolicyAsync(CreatePolicyName);
+        }
+
+        protected virtual async Task CheckUpdatePolicyAsync()
+        {
+            await CheckPolicyAsync(UpdatePolicyName);
+        }
+
+        protected virtual async Task CheckDeletePolicyAsync()
+        {
+            await CheckPolicyAsync(DeletePolicyName);
+        }
+
+        /// &lt;summary&gt;
+        /// Calls IAuthorizationService.CheckAsync for the given &lt;see cref="policyName"/&gt;.
+        /// Throws &lt;see cref="AbpAuthorizationException"/&gt; if given policy was not granted for the current user.
+        ///
+        /// Does nothing if &lt;see cref="policyName"/&gt; is null or empty.
+        /// &lt;/summary&gt;
+        /// &lt;param name="policyName"&gt;A policy name to check&lt;/param&gt;
+        protected virtual async Task CheckPolicyAsync([CanBeNull] string policyName)
+        {
+            if (string.IsNullOrEmpty(policyName))
+            {
+                return;
+            }
+            await AuthorizationService.CheckAsync(policyName);
+        }
+    }
+}
+
+</code></pre>
+
+  </div><a class="u-url" href="/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog.github.io/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog.github.io/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog.github.io/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>订阅博客</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>记录自己的生活。</p>
+      </div>
+    </div>
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="struggle3.github.io/blog.github.io/blog.github.io/" rel="alternate" type="text/html" /><updated>2021-02-03T20:35:36+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/feed.xml</id><title type="html">野程序猿</title><subtitle>记录自己的生活。</subtitle><entry><title type="html">abp集成SQLite</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html" rel="alternate" type="text/html" title="abp集成SQLite" /><published>2020-12-07T22:00:00+08:00</published><updated>2020-12-07T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/07/sqlite.html">&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="struggle3.github.io/blog.github.io/blog.github.io/" rel="alternate" type="text/html" /><updated>2021-02-04T10:10:44+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/feed.xml</id><title type="html">野程序猿</title><subtitle>记录自己的生活。</subtitle><entry><title type="html">abp集成SQLite</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html" rel="alternate" type="text/html" title="abp集成SQLite" /><published>2020-12-07T22:00:00+08:00</published><updated>2020-12-07T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html">&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 &lt;blockquote&gt;
   &lt;p&gt;SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。&lt;/p&gt;
@@ -65,7 +65,8 @@ return new mytestMigrationsDbContext(builder.Options); } ``` &amp;gt; 删除Migr
   &lt;p&gt;删除&lt;/p&gt;
   &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Update-Database
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-&lt;/blockquote&gt;</content><author><name></name></author><category term="abpvnext" /><summary type="html">集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&amp;lt;AbpDbContextOptions&amp;gt;(options =&amp;gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。</summary></entry><entry><title type="html">abpvnext部署</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/01/abpvnext-publish.html" rel="alternate" type="text/html" title="abpvnext部署" /><published>2020-12-01T22:00:00+08:00</published><updated>2020-12-01T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/01/abpvnext-publish</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/12/01/abpvnext-publish.html">&lt;h1 id=&quot;安装nginx&quot;&gt;安装nginx&lt;/h1&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="abp" /><summary type="html">集成SQLite 前言 SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。 DbMigrator连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } HttpApi.Host连接字符串 在项目找到appsettings.json修改如下: &quot;ConnectionStrings&quot;: { &quot;Default&quot;: &quot;Data Source=D:/mytest.db;&quot; } 安装Sqlite支持 在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。 启用Sqlite支持 在EntityFrameworkCoreModule类中加入DependsOn如下代码: [DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))] 在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码： Configure&amp;lt;AbpDbContextOptions&amp;gt;(options =&amp;gt; { /* The main point to change your DBMS. * See also mytestMigrationsDbContextFactory for EF Core tooling. */ //options.UseSqlServer(); options.UseSqlite(); }); 禁用数据库事务 注意：如果不禁用数据事务会出现database is locked异常。</summary></entry><entry><title type="html">abpvnext部署</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html" rel="alternate" type="text/html" title="abpvnext部署" /><published>2020-12-01T22:00:00+08:00</published><updated>2020-12-01T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html">&lt;h1 id=&quot;安装nginx&quot;&gt;安装nginx&lt;/h1&gt;
+
 &lt;h2 id=&quot;配置-epel源&quot;&gt;配置 EPEL源&lt;/h2&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; epel-release
 &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; update
@@ -75,6 +76,9 @@ return new mytestMigrationsDbContext(builder.Options); } ``` &amp;gt; 删除Migr
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;h3 id=&quot;nginx目录&quot;&gt;nginx目录&lt;/h3&gt;
 &lt;p&gt;默认的配置文件为：/etc/nginx/nginx.conf&lt;/p&gt;
+
+&lt;p&gt;自定义配置文件目录为: /etc/nginx/conf.d/&lt;/p&gt;
+
 &lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 前端配置
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
         &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt;       &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;;
@@ -112,8 +116,9 @@ return new mytestMigrationsDbContext(builder.Options); } ``` &amp;gt; 删除Migr
         }
     }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;自定义配置文件目录为: /etc/nginx/conf.d/&lt;/p&gt;
+
 &lt;h3 id=&quot;操作nginx&quot;&gt;操作nginx&lt;/h3&gt;
+
 &lt;ol&gt;
   &lt;li&gt;启动 nginx
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl start nginx
@@ -139,49 +144,70 @@ nginx &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; reload
   &lt;li&gt;禁用开机启动nginx
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl disable nginx
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;h1 id=&quot;防火墙firewalld&quot;&gt;防火墙firewalld&lt;/h1&gt;
-    &lt;h2 id=&quot;开启80端口&quot;&gt;开启80端口&lt;/h2&gt;
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--zone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;public &lt;span class=&quot;nt&quot;&gt;--add-port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;80/tcp &lt;span class=&quot;nt&quot;&gt;--permanent&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;blockquote&gt;
-      &lt;p&gt;命令含义：
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;防火墙firewalld&quot;&gt;防火墙firewalld&lt;/h1&gt;
+
+&lt;h2 id=&quot;开启80端口&quot;&gt;开启80端口&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--zone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;public &lt;span class=&quot;nt&quot;&gt;--add-port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;80/tcp &lt;span class=&quot;nt&quot;&gt;--permanent&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;命令含义：
 –zone #作用域
 –add-port=80/tcp  #添加端口，格式为：端口/通讯协议
 –permanent   #永久生效，没有此参数重启后失效&lt;/p&gt;
-      &lt;h2 id=&quot;重启防火墙&quot;&gt;重启防火墙&lt;/h2&gt;
-      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--reload&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
-      &lt;h2 id=&quot;查看端口&quot;&gt;查看端口&lt;/h2&gt;
-      &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--list-all&lt;/span&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;重启防火墙&quot;&gt;重启防火墙&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--reload&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;查看端口&quot;&gt;查看端口&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--list-all&lt;/span&gt;
 firewall-cmd &lt;span class=&quot;nt&quot;&gt;--list-port&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;      &lt;/div&gt;
-      &lt;h1 id=&quot;supervisor安装&quot;&gt;supervisor安装&lt;/h1&gt;
-      &lt;h2 id=&quot;参考链接&quot;&gt;参考链接&lt;/h2&gt;
-      &lt;p&gt;https://www.cnblogs.com/xueweihan/p/6195824.html&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;supervisor安装&quot;&gt;supervisor安装&lt;/h1&gt;
+
+&lt;h2 id=&quot;参考链接&quot;&gt;参考链接&lt;/h2&gt;
+
+&lt;p&gt;https://www.cnblogs.com/xueweihan/p/6195824.html&lt;/p&gt;
 
 &lt;p&gt;https://zhuanlan.zhihu.com/p/260071860&lt;/p&gt;
 
 &lt;p&gt;https://www.cnblogs.com/flaming/p/8149973.html&lt;/p&gt;
+
 &lt;h2 id=&quot;名词解释&quot;&gt;名词解释&lt;/h2&gt;
+
 &lt;blockquote&gt;
   &lt;p&gt;supervisor：要安装的软件的名称。
 supervisord：装好supervisor软件后，supervisord用于启动supervisor服务。
 supervisorctl：用于管理supervisor配置文件中program和supervisor服务本身。&lt;/p&gt;
-  &lt;h2 id=&quot;使用yum命令安装推荐&quot;&gt;使用yum命令安装（推荐）&lt;/h2&gt;
-  &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;epel-release
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;使用yum命令安装推荐&quot;&gt;使用yum命令安装（推荐）&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;epel-release
 yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; supervisor
 systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;supervisord &lt;span class=&quot;c&quot;&gt;# 开机自启动&lt;/span&gt;
 systemctl start supervisord &lt;span class=&quot;c&quot;&gt;# 启动supervisord服务&lt;/span&gt;
 systemctl stop supervisord &lt;span class=&quot;c&quot;&gt;# 停止supervisord服务&lt;/span&gt;
 systemctl status supervisord &lt;span class=&quot;c&quot;&gt;# 查看supervisord服务状态&lt;/span&gt;
 ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span class=&quot;c&quot;&gt;# 查看是否存在supervisord进程&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-  &lt;h2 id=&quot;配置dotnet命令&quot;&gt;配置dotnet命令&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;配置dotnet命令&quot;&gt;配置dotnet命令&lt;/h2&gt;
+
+&lt;blockquote&gt;
   &lt;p&gt;在/etc/supervisord.d目录下添加一个ini文件，同时也可以通过/etc目录下面的supervisord.conf文件中的[include]files进行自定义加载ini文件路径。&lt;/p&gt;
-  &lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[program:myapp]&lt;/span&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[program:myapp]&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dotnet Wang.MyApp.HttpApi.Host.dll --urls=http://localhost:5000#要执行的命令&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/local/apphost/#命令执行的目录&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ASPNETCORE__ENVIRONMENT=Production#环境变量&lt;/span&gt;
@@ -192,16 +218,726 @@ ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span c
 &lt;span class=&quot;py&quot;&gt;startsecs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;10#自动重启间隔&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;stderr_logfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/var/log/supervisor/myapp_err.log#标准错误日志&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;stdout_logfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/var/log/supervisor/myapp_out.log#标准输出日志&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;注意：#后边的内容要去掉这里是注释但是supervisor不识别。&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;注意：#日志目录必须是已经存在的目录，不然会出现无法启动的情况。&lt;/strong&gt;&lt;/p&gt;
-  &lt;h2 id=&quot;卸载&quot;&gt;卸载&lt;/h2&gt;
-  &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; remove supervisor
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-&lt;/blockquote&gt;</content><author><name></name></author><category term="abpvnext" /><summary type="html">安装nginx 配置 EPEL源 sudo yum install -y epel-release sudo yum -y update 安装nginx sudo yum install -y nginx nginx目录 默认的配置文件为：/etc/nginx/nginx.conf ```conf 前端配置 server { listen 8080; server_name localhost; root /usr/local/appwasm;</summary></entry><entry><title type="html">abp集成ant blazor认证</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/11/16/authentication.html" rel="alternate" type="text/html" title="abp集成ant blazor认证" /><published>2020-11-16T22:00:00+08:00</published><updated>2020-11-16T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/11/16/authentication</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/11/16/authentication.html">&lt;h2 id=&quot;添加认证回调&quot;&gt;添加认证回调&lt;/h2&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;卸载&quot;&gt;卸载&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; remove supervisor
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="abp" /><summary type="html">安装nginx</summary></entry><entry><title type="html">abp发布说明</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/21/abp-publish.html" rel="alternate" type="text/html" title="abp发布说明" /><published>2020-11-21T22:00:00+08:00</published><updated>2020-11-21T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/21/abp-publish</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/21/abp-publish.html">&lt;blockquote&gt;
+  &lt;p&gt;如果把ABP.VNext项目发布至产品环境时运行需要注意如下事项：&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;发布后请修改HttpApi.Host这项目中的appsettings.json文件中的CorsOrigins参数值改为前端服务地址&lt;/li&gt;
+  &lt;li&gt;发布后请修改HttpApi.Host这项目中的appsettings.json文件中的AuthServer参数值改为认证服务地址&lt;/li&gt;
+  &lt;li&gt;发布后请修改前端项目的appsettings.json文件中AuthServer中Authority参数值改为认证服务地址&lt;/li&gt;
+  &lt;li&gt;发布后请修改前端项目的appsettings.json文件中RemoteServices中BaseUrl参数值改为HttpApi.Host服务地址&lt;/li&gt;
+  &lt;li&gt;发布前在数据迁移时在DbMigrator中将IdentityServer相关的Clients参数的RootUrl进行对应修改&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><category term="abp" /><summary type="html">如果把ABP.VNext项目发布至产品环境时运行需要注意如下事项：</summary></entry><entry><title type="html">abp集成ant blazor租户</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html" rel="alternate" type="text/html" title="abp集成ant blazor租户" /><published>2020-11-20T22:00:00+08:00</published><updated>2020-11-20T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/20/abp-blazor-tenant</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html">&lt;blockquote&gt;
+  &lt;p&gt;集成完相关框架后开始对ABP默认的租户进行单页CRUD开，在开发过程中参考了AbpDesignCrudPageBase进行一个简单封装以实现快速开发和组件重用。&lt;/p&gt;
+  &lt;h2 id=&quot;加入实际权限代码如下&quot;&gt;加入实际权限代码如下&lt;/h2&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;导入名称空间
+    &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.TenantManagement
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;加入权限
+    &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;@attribute [Authorize(TenantManagementPermissions.Tenants.Default)]
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;h2 id=&quot;前端代码&quot;&gt;前端代码&lt;/h2&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;@page &quot;/tenant/tenants&quot;
+@attribute [Authorize(TenantManagementPermissions.Tenants.Default)]
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.TenantManagement
+@using Volo.Abp.TenantManagement.Localization
+@using Volo.Abp.FeatureManagement.Blazor.Components
+@inherits TenantManagementBase
+@inject IStringLocalizer&amp;lt;AbpTenantManagementResource&amp;gt; L
+&amp;lt;PageContainer Title=&quot;@L[&quot;Menu:TenantManagement&quot;]&quot;&amp;gt;
+    &amp;lt;Card Title=&quot;@L[&quot;Tenants&quot;]&quot;&amp;gt;
+        &amp;lt;Extra&amp;gt;
+            @if (HasCreatePermission)
+            {
+                &amp;lt;AntDesign.Button OnClick=&quot;OpenCreateModalAsync&quot; Class=&quot;ant-btn ant-btn-primary&quot;&amp;gt;@L[&quot;NewTenant&quot;]&amp;lt;/AntDesign.Button&amp;gt;
+            }
+        &amp;lt;/Extra&amp;gt;
+        &amp;lt;ChildContent&amp;gt;
+            @* ************************* DATA GRID ************************* *@
+            &amp;lt;Table DataSource=&quot;@Entities&quot; TItem=&quot;TenantDto&quot; PageSize=&quot;PageSize&quot; Total=&quot;TotalCount&quot; OnChange=&quot;OnDataGridReadAsync&quot;&amp;gt;
+                &amp;lt;AntDesign.Column @bind-Field=&quot;@context.Name&quot; Title=&quot;@L[&quot;TenantName&quot;].Value&quot;&amp;gt;
+                    &amp;lt;Template&amp;gt;
+                        @context.Name
+                        @*@if (context.As&amp;lt;IdentityRoleDto&amp;gt;().IsDefault)
+                            {
+                                &amp;lt;Tag Class=&quot;volcano&quot;&amp;gt;@L[&quot;DisplayName:IsDefault&quot;]&amp;lt;/Tag&amp;gt;
+                            }
+                            @if (context.As&amp;lt;IdentityRoleDto&amp;gt;().IsPublic)
+                            {
+                                &amp;lt;Tag Class=&quot;green&quot;&amp;gt;@L[&quot;DisplayName:IsPublic&quot;]&amp;lt;/Tag&amp;gt;
+                            }*@
+                    &amp;lt;/Template&amp;gt;
+                &amp;lt;/AntDesign.Column&amp;gt;
+                &amp;lt;ActionColumn Title=&quot;@L[&quot;Actions&quot;]&quot;&amp;gt;
+                    &amp;lt;Space&amp;gt;
+                        @if (HasUpdatePermission)
+                        {
+                            &amp;lt;SpaceItem&amp;gt;
+                                &amp;lt;AntDesign.Button Class=&quot;ant-btn ant-btn-primary&quot; OnClick=&quot;() =&amp;gt; OpenEditModalAsync(context.As&amp;lt;TenantDto&amp;gt;().Id)&quot;&amp;gt;@L[&quot;Edit&quot;]&amp;lt;/AntDesign.Button&amp;gt;
+                            &amp;lt;/SpaceItem&amp;gt;
+                        }
+                        @if (HasDeletePermission)
+                        {
+                            &amp;lt;SpaceItem&amp;gt;
+                                &amp;lt;AntDesign.Button Danger OnClick=&quot;() =&amp;gt; DeleteEntityAsync(context.As&amp;lt;TenantDto&amp;gt;())&quot;&amp;gt;@L[&quot;Delete&quot;]&amp;lt;/AntDesign.Button&amp;gt;
+                            &amp;lt;/SpaceItem&amp;gt;
+                        }
+                        @if (HasManageConnectionStringsPermission)
+                        {
+                            &amp;lt;SpaceItem&amp;gt;
+                                &amp;lt;AntDesign.Button OnClick=&quot;() =&amp;gt; OpenEditConnectionStringModalAsync(context.As&amp;lt;TenantDto&amp;gt;().Id)&quot;&amp;gt;@L[&quot;ConnectionStrings&quot;]&amp;lt;/AntDesign.Button&amp;gt;
+                            &amp;lt;/SpaceItem&amp;gt;
+                        }
+                        @if (HasManageFeaturesPermission)
+                        {
+                            &amp;lt;SpaceItem&amp;gt;
+                                &amp;lt;AntDesign.Button OnClick=&quot;() =&amp;gt; FeatureManagementModal.OpenAsync(FeatureProviderName, context.As&amp;lt;TenantDto&amp;gt;().Id.ToString())&quot;&amp;gt;@L[&quot;Features&quot;]&amp;lt;/AntDesign.Button&amp;gt;
+                            &amp;lt;/SpaceItem&amp;gt;
+                        }
+                    &amp;lt;/Space&amp;gt;
+                &amp;lt;/ActionColumn&amp;gt;
+            &amp;lt;/Table&amp;gt;
+        &amp;lt;/ChildContent&amp;gt;
+    &amp;lt;/Card&amp;gt;
+    @* ************************* CREATE MODAL ************************* *@
+    @if (HasCreatePermission)
+    {
+        RenderFragment footerCreate =@&amp;lt;Template&amp;gt;
+        &amp;lt;Button Class=&quot;ant-btn ant-btn-primary&quot; OnClick=&quot;CloseCreateModalAsync&quot;&amp;gt;
+            @L[&quot;Cancel&quot;]
+        &amp;lt;/Button&amp;gt;
+        &amp;lt;Button OnClick=&quot;CreateEntityAsync&quot;&amp;gt;
+            @L[&quot;Save&quot;]
+        &amp;lt;/Button&amp;gt;
+    &amp;lt;/Template&amp;gt;;
+&amp;lt;Modal Title=&quot;@L[&quot;NewTenant&quot;].Value&quot; Visible=&quot;CreateVisible&quot; Footer=&quot;@footerCreate&quot;&amp;gt;
+    &amp;lt;Form Model=&quot;@NewEntity&quot; LabelCol=&quot;new ColLayoutParam { Span = 8 }&quot; WrapperCol=&quot;new ColLayoutParam { Span = 16 }&quot;&amp;gt;
+        &amp;lt;FormItem Label=&quot;@L[&quot;TenantName&quot;]&quot;&amp;gt;
+            &amp;lt;Input @bind-Value=&quot;@NewEntity.Name&quot; /&amp;gt;
+        &amp;lt;/FormItem&amp;gt;
+        &amp;lt;FormItem Label=&quot;@L[&quot;DisplayName:AdminEmailAddress&quot;]&quot;&amp;gt;
+            &amp;lt;Input @bind-Value=&quot;@NewEntity.AdminEmailAddress&quot; /&amp;gt;
+        &amp;lt;/FormItem&amp;gt;
+        &amp;lt;FormItem Label=&quot;@L[&quot;DisplayName:AdminPassword&quot;]&quot;&amp;gt;
+            &amp;lt;Input @bind-Value=&quot;@NewEntity.AdminPassword&quot; /&amp;gt;
+        &amp;lt;/FormItem&amp;gt;
+    &amp;lt;/Form&amp;gt;
+&amp;lt;/Modal&amp;gt;
+}
+@* ************************* EDIT MODAL ************************* *@
+    @if (HasUpdatePermission)
+    {
+        RenderFragment footerEdit =@&amp;lt;Template&amp;gt;
+        &amp;lt;Button Class=&quot;ant-btn ant-btn-primary&quot; OnClick=&quot;CloseEditModalAsync&quot;&amp;gt;
+            @L[&quot;Cancel&quot;]
+        &amp;lt;/Button&amp;gt;
+        &amp;lt;Button OnClick=&quot;UpdateEntityAsync&quot;&amp;gt;
+            @L[&quot;Save&quot;]
+        &amp;lt;/Button&amp;gt;
+    &amp;lt;/Template&amp;gt;;
+&amp;lt;Modal Title=&quot;@L[&quot;Edit&quot;].Value&quot; Visible=&quot;EditVisible&quot; Footer=&quot;@footerEdit&quot;&amp;gt;
+    &amp;lt;Form Model=&quot;@EditingEntity&quot;&amp;gt;
+        &amp;lt;FormItem Label=&quot;@L[&quot;TenantName&quot;]&quot;&amp;gt;
+            &amp;lt;Input @bind-Value=&quot;@EditingEntity.Name&quot; /&amp;gt;
+        &amp;lt;/FormItem&amp;gt;
+    &amp;lt;/Form&amp;gt;
+&amp;lt;/Modal&amp;gt;
+}
+@* ************************* EDIT CONNECTION STRING MODAL ************************* *@
+    @if (HasUpdatePermission)
+    {
+        RenderFragment footerConnectionEdit =@&amp;lt;Template&amp;gt;
+        &amp;lt;Button Class=&quot;ant-btn ant-btn-primary&quot; OnClick=&quot;CloseEditConnectionStringModal&quot;&amp;gt;
+            @L[&quot;Cancel&quot;]
+        &amp;lt;/Button&amp;gt;
+        &amp;lt;Button OnClick=&quot;UpdateConnectionStringAsync&quot;&amp;gt;
+            @L[&quot;Save&quot;]
+        &amp;lt;/Button&amp;gt;
+    &amp;lt;/Template&amp;gt;;
+&amp;lt;Modal Title=&quot;@L[&quot;ConnectionStrings&quot;].Value&quot; Visible=&quot;ManageConnectionStringModal&quot; Footer=&quot;@footerConnectionEdit&quot;&amp;gt;
+    &amp;lt;Form Model=&quot;@EditingEntity&quot;&amp;gt;
+        &amp;lt;FormItem Label=&quot;@L[&quot;DisplayName:DefaultConnectionString&quot;]&quot;&amp;gt;
+            &amp;lt;Checkbox @bind-Checked=&quot;@TenantInfo.UseSharedDatabase&quot; @bind-Value=&quot;@TenantInfo.UseSharedDatabase&quot;&amp;gt;
+                
+            &amp;lt;/Checkbox&amp;gt;
+        &amp;lt;/FormItem&amp;gt;
+        @if (!TenantInfo.UseSharedDatabase)
+        {
+            &amp;lt;FormItem Label=&quot;@L[&quot;DisplayName:DefaultConnectionString&quot;]&quot;&amp;gt;
+                &amp;lt;Input @bind-Value=&quot;@TenantInfo.DefaultConnectionString&quot; /&amp;gt;
+            &amp;lt;/FormItem&amp;gt;
+        }
+    &amp;lt;/Form&amp;gt;
+&amp;lt;/Modal&amp;gt;
+}
+    @if (HasManageFeaturesPermission)
+    {
+        &amp;lt;FeatureManagementModal @ref=&quot;FeatureManagementModal&quot; /&amp;gt;
+    }
+&amp;lt;/PageContainer&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;组件代码&quot;&gt;组件代码&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using AntDesign;
+using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Volo.Abp.FeatureManagement.Blazor.Components;
+using Volo.Abp.TenantManagement;
+using Volo.Abp.TenantManagement.Blazor;
+
+namespace MyAbp.Blazor.Pages.tenant
+{
+    public partial class TenantManagementBase:AntDesignCrudPageBase&amp;lt;ITenantAppService, TenantDto, Guid, GetTenantsInput, TenantCreateDto, TenantUpdateDto&amp;gt;
+    {
+        protected const string FeatureProviderName = &quot;T&quot;;
+
+        protected bool ShouldShowEntityActions;
+        protected bool HasManageConnectionStringsPermission;
+        protected bool HasManageFeaturesPermission;
+
+        protected FeatureManagementModal FeatureManagementModal;
+
+        protected bool ManageConnectionStringModal;
+
+        protected TenantInfoModel TenantInfo;
+
+        public TenantManagementBase()
+        {
+            ObjectMapperContext = typeof(AbpTenantManagementBlazorModule);
+
+            CreatePolicyName = TenantManagementPermissions.Tenants.Create;
+            UpdatePolicyName = TenantManagementPermissions.Tenants.Update;
+            DeletePolicyName = TenantManagementPermissions.Tenants.Delete;
+
+            TenantInfo = new TenantInfoModel();
+        }
+
+        protected override async Task SetPermissionsAsync()
+        {
+            await base.SetPermissionsAsync();
+
+            HasManageConnectionStringsPermission = await AuthorizationService.IsGrantedAsync(TenantManagementPermissions.Tenants.ManageConnectionStrings);
+            HasManageFeaturesPermission = await AuthorizationService.IsGrantedAsync(TenantManagementPermissions.Tenants.ManageFeatures);
+
+            ShouldShowEntityActions = HasUpdatePermission ||
+                                      HasDeletePermission ||
+                                      HasManageConnectionStringsPermission ||
+                                      HasManageFeaturesPermission;
+        }
+
+        protected virtual async Task OpenEditConnectionStringModalAsync(Guid id)
+        {
+            var tenantConnectionString = await AppService.GetDefaultConnectionStringAsync(id);
+
+            TenantInfo = new TenantInfoModel
+            {
+                Id = id,
+                DefaultConnectionString = tenantConnectionString,
+                UseSharedDatabase = tenantConnectionString.IsNullOrWhiteSpace()
+            };
+
+            //ManageConnectionStringModal.Show();
+            ManageConnectionStringModal = true;
+        }
+
+        protected virtual Task CloseEditConnectionStringModal()
+        {
+            //ManageConnectionStringModal.Hide();
+            ManageConnectionStringModal = false;
+            return Task.CompletedTask;
+        }
+
+        protected virtual async Task UpdateConnectionStringAsync()
+        {
+            await CheckPolicyAsync(TenantManagementPermissions.Tenants.ManageConnectionStrings);
+
+            if (TenantInfo.UseSharedDatabase || TenantInfo.DefaultConnectionString.IsNullOrWhiteSpace())
+            {
+                await AppService.DeleteDefaultConnectionStringAsync(TenantInfo.Id);
+            }
+            else
+            {
+                await AppService.UpdateDefaultConnectionStringAsync(TenantInfo.Id, TenantInfo.DefaultConnectionString);
+            }
+
+            //ManageConnectionStringModal.Hide();
+            ManageConnectionStringModal = false;
+        }
+    }
+
+    public class TenantInfoModel
+    {
+        public Guid Id { get; set; }
+
+        public bool UseSharedDatabase { get; set; }
+
+        public string DefaultConnectionString { get; set; }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/0401.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/blog.github.io/images/0402.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">集成完相关框架后开始对ABP默认的租户进行单页CRUD开，在开发过程中参考了AbpDesignCrudPageBase进行一个简单封装以实现快速开发和组件重用。 加入实际权限代码如下</summary></entry><entry><title type="html">abp集成ant blazor封装crudpage</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html" rel="alternate" type="text/html" title="abp集成ant blazor封装crudpage" /><published>2020-11-18T22:00:00+08:00</published><updated>2020-11-18T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html">&lt;blockquote&gt;
+  &lt;p&gt;在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;在ModalAsync为后缀的相关方法中需要手动修改模态框显示和隐藏的相关代码。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AntDesign;
+using AntDesign.TableModels;
+using JetBrains.Annotations;
+using Localization.Resources.AbpUi;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+using Volo.Abp.AspNetCore.Components.WebAssembly;
+using Volo.Abp.Authorization;
+using Volo.Abp.ObjectMapping;
+
+namespace MyAbp.Blazor.Pages
+{
+    public abstract class AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TKey&amp;gt;
+        : AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            PagedAndSortedResultRequestDto&amp;gt;
+        where TAppService : ICrudAppService&amp;lt;
+            TEntityDto,
+            TKey&amp;gt;
+        where TEntityDto : class, IEntityDto&amp;lt;TKey&amp;gt;, new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput&amp;gt;
+        : AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TEntityDto&amp;gt;
+        where TAppService : ICrudAppService&amp;lt;
+            TEntityDto,
+            TKey,
+            TGetListInput&amp;gt;
+        where TEntityDto : class, IEntityDto&amp;lt;TKey&amp;gt;, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput&amp;gt;
+        : AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TCreateInput&amp;gt;
+        where TAppService : ICrudAppService&amp;lt;
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput&amp;gt;
+        where TEntityDto : IEntityDto&amp;lt;TKey&amp;gt;
+        where TCreateInput : class, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&amp;gt;
+        : AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TEntityDto,
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&amp;gt;
+        where TAppService : ICrudAppService&amp;lt;
+            TEntityDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&amp;gt;
+        where TEntityDto : IEntityDto&amp;lt;TKey&amp;gt;
+        where TCreateInput : class, new()
+        where TUpdateInput : class, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&amp;gt;
+        : AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput,
+            TGetListOutputDto,
+            TCreateInput,
+            TUpdateInput&amp;gt;
+        where TAppService : ICrudAppService&amp;lt;
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&amp;gt;
+        where TGetOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
+        where TGetListOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
+        where TCreateInput : class, new()
+        where TUpdateInput : class, new()
+        where TGetListInput : new()
+    {
+    }
+
+    public abstract class AntDesignCrudPageBase&amp;lt;
+            TAppService,
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput,
+            TListViewModel,
+            TCreateViewModel,
+            TUpdateViewModel&amp;gt;
+        : OwningComponentBase
+        where TAppService : ICrudAppService&amp;lt;
+            TGetOutputDto,
+            TGetListOutputDto,
+            TKey,
+            TGetListInput,
+            TCreateInput,
+            TUpdateInput&amp;gt;
+        where TGetOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
+        where TGetListOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
+        where TCreateInput : class
+        where TUpdateInput : class
+        where TGetListInput : new()
+        where TListViewModel : IEntityDto&amp;lt;TKey&amp;gt;
+        where TCreateViewModel : class, new()
+        where TUpdateViewModel : class, new()
+    {
+        [Inject] protected TAppService AppService { get; set; }
+        [Inject] protected IUiMessageService UiMessageService { get; set; }
+        [Inject] protected IStringLocalizer&amp;lt;AbpUiResource&amp;gt; UiLocalizer { get; set; }
+        [Inject] protected IAuthorizationService AuthorizationService { get; set; }
+
+        protected virtual int PageSize { get; set; } = LimitedResultRequestDto.DefaultMaxResultCount;
+
+        protected int CurrentPage;
+        protected string CurrentSorting;
+        protected int TotalCount;
+        protected IReadOnlyList&amp;lt;TListViewModel&amp;gt; Entities = Array.Empty&amp;lt;TListViewModel&amp;gt;();
+        protected TCreateViewModel NewEntity;
+        protected TKey EditingEntityId;
+        protected TUpdateViewModel EditingEntity;
+
+        protected string CreatePolicyName { get; set; }
+        protected string UpdatePolicyName { get; set; }
+        protected string DeletePolicyName { get; set; }
+
+        public bool HasCreatePermission { get; set; }
+        public bool HasUpdatePermission { get; set; }
+        public bool HasDeletePermission { get; set; }
+        public bool CreateVisible { get; set; }
+        public bool EditVisible { get; set; }
+
+        protected Type ObjectMapperContext { get; set; }
+
+        protected IObjectMapper ObjectMapper
+        {
+            get
+            {
+                if (_objectMapper != null)
+                {
+                    return _objectMapper;
+                }
+
+                if (ObjectMapperContext == null)
+                {
+                    return LazyGetRequiredService(ref _objectMapper);
+                }
+
+                return LazyGetRequiredService(
+                    typeof(IObjectMapper&amp;lt;&amp;gt;).MakeGenericType(ObjectMapperContext),
+                    ref _objectMapper
+                );
+            }
+        }
+
+        private IObjectMapper _objectMapper;
+
+        protected TService LazyGetRequiredService&amp;lt;TService&amp;gt;(ref TService reference)
+            =&amp;gt; LazyGetRequiredService(typeof(TService), ref reference);
+
+        protected TRef LazyGetRequiredService&amp;lt;TRef&amp;gt;(Type serviceType, ref TRef reference)
+        {
+            if (reference == null)
+            {
+                reference = (TRef)ScopedServices.GetRequiredService(serviceType);
+            }
+
+            return reference;
+        }
+
+        protected AntDesignCrudPageBase()
+        {
+            NewEntity = new TCreateViewModel();
+            EditingEntity = new TUpdateViewModel();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await SetPermissionsAsync();
+        }
+
+        protected virtual async Task SetPermissionsAsync()
+        {
+            if (CreatePolicyName != null)
+            {
+                HasCreatePermission = await AuthorizationService.IsGrantedAsync(CreatePolicyName);
+            }
+
+            if (UpdatePolicyName != null)
+            {
+                HasUpdatePermission = await AuthorizationService.IsGrantedAsync(UpdatePolicyName);
+            }
+
+            if (DeletePolicyName != null)
+            {
+                HasDeletePermission = await AuthorizationService.IsGrantedAsync(DeletePolicyName);
+            }
+        }
+
+        protected virtual async Task GetEntitiesAsync()
+        {
+            var input = await CreateGetListInputAsync();
+            var result = await AppService.GetListAsync(input);
+            Entities = MapToListViewModel(result.Items);
+            TotalCount = (int)result.TotalCount;
+        }
+
+        private IReadOnlyList&amp;lt;TListViewModel&amp;gt; MapToListViewModel(IReadOnlyList&amp;lt;TGetListOutputDto&amp;gt; dtos)
+        {
+            if (typeof(TGetListOutputDto) == typeof(TListViewModel))
+            {
+                return dtos.As&amp;lt;IReadOnlyList&amp;lt;TListViewModel&amp;gt;&amp;gt;();
+            }
+
+            return ObjectMapper.Map&amp;lt;IReadOnlyList&amp;lt;TGetListOutputDto&amp;gt;, List&amp;lt;TListViewModel&amp;gt;&amp;gt;(dtos);
+        }
+
+        protected virtual Task&amp;lt;TGetListInput&amp;gt; CreateGetListInputAsync()
+        {
+            var input = new TGetListInput();
+
+            if (input is ISortedResultRequest sortedResultRequestInput)
+            {
+                sortedResultRequestInput.Sorting = CurrentSorting;
+            }
+
+            if (input is IPagedResultRequest pagedResultRequestInput)
+            {
+                pagedResultRequestInput.SkipCount = CurrentPage * PageSize;
+            }
+
+            if (input is ILimitedResultRequest limitedResultRequestInput)
+            {
+                limitedResultRequestInput.MaxResultCount = PageSize;
+            }
+
+            return Task.FromResult(input);
+        }
+
+        protected virtual async Task OnDataGridReadAsync(QueryModel&amp;lt;TListViewModel&amp;gt; queryModel)
+        {
+            CurrentPage = queryModel.PageIndex-1;
+            PageSize = queryModel.PageSize;
+
+            await GetEntitiesAsync();
+
+            StateHasChanged();
+        }
+
+        protected virtual async Task OpenCreateModalAsync()
+        {
+            await CheckCreatePolicyAsync();
+            NewEntity = new TCreateViewModel();
+            CreateVisible = true;
+        }
+
+        protected virtual Task CloseCreateModalAsync()
+        {
+            CreateVisible = false;
+            return Task.CompletedTask;
+        }
+
+        protected virtual async Task OpenEditModalAsync(TKey id)
+        {
+            await CheckUpdatePolicyAsync();
+
+            var entityDto = await AppService.GetAsync(id);
+            EditingEntityId = id;
+            EditingEntity = MapToEditingEntity(entityDto);
+            EditVisible = true;
+        }
+
+        protected virtual TUpdateViewModel MapToEditingEntity(TGetOutputDto entityDto)
+        {
+            return ObjectMapper.Map&amp;lt;TGetOutputDto, TUpdateViewModel&amp;gt;(entityDto);
+        }
+
+        protected virtual TCreateInput MapToCreateInput(TCreateViewModel createViewModel)
+        {
+            if (typeof(TCreateInput) == typeof(TCreateViewModel))
+            {
+                return createViewModel.As&amp;lt;TCreateInput&amp;gt;();
+            }
+
+            return ObjectMapper.Map&amp;lt;TCreateViewModel, TCreateInput&amp;gt;(createViewModel);
+        }
+
+        protected virtual TUpdateInput MapToUpdateInput(TUpdateViewModel updateViewModel)
+        {
+            if (typeof(TUpdateInput) == typeof(TUpdateViewModel))
+            {
+                return updateViewModel.As&amp;lt;TUpdateInput&amp;gt;();
+            }
+
+            return ObjectMapper.Map&amp;lt;TUpdateViewModel, TUpdateInput&amp;gt;(updateViewModel);
+        }
+
+        protected virtual Task CloseEditModalAsync()
+        {
+            EditVisible = false;
+            return Task.CompletedTask;
+        }
+
+        protected virtual async Task CreateEntityAsync()
+        {
+            await CheckCreatePolicyAsync();
+            var createInput = MapToCreateInput(NewEntity);
+            await AppService.CreateAsync(createInput);
+            await GetEntitiesAsync();
+            CreateVisible = false;
+        }
+
+        protected virtual async Task UpdateEntityAsync()
+        {
+            await CheckUpdatePolicyAsync();
+            var updateInput = MapToUpdateInput(EditingEntity);
+            await AppService.UpdateAsync(EditingEntityId, updateInput);
+            await GetEntitiesAsync();
+            EditVisible = false;
+        }
+
+        protected virtual async Task DeleteEntityAsync(TListViewModel entity)
+        {
+            await CheckDeletePolicyAsync();
+            await AppService.DeleteAsync(entity.Id);
+            await GetEntitiesAsync();
+        }
+
+        protected virtual async Task CheckCreatePolicyAsync()
+        {
+            await CheckPolicyAsync(CreatePolicyName);
+        }
+
+        protected virtual async Task CheckUpdatePolicyAsync()
+        {
+            await CheckPolicyAsync(UpdatePolicyName);
+        }
+
+        protected virtual async Task CheckDeletePolicyAsync()
+        {
+            await CheckPolicyAsync(DeletePolicyName);
+        }
+
+        /// &amp;lt;summary&amp;gt;
+        /// Calls IAuthorizationService.CheckAsync for the given &amp;lt;see cref=&quot;policyName&quot;/&amp;gt;.
+        /// Throws &amp;lt;see cref=&quot;AbpAuthorizationException&quot;/&amp;gt; if given policy was not granted for the current user.
+        ///
+        /// Does nothing if &amp;lt;see cref=&quot;policyName&quot;/&amp;gt; is null or empty.
+        /// &amp;lt;/summary&amp;gt;
+        /// &amp;lt;param name=&quot;policyName&quot;&amp;gt;A policy name to check&amp;lt;/param&amp;gt;
+        protected virtual async Task CheckPolicyAsync([CanBeNull] string policyName)
+        {
+            if (string.IsNullOrEmpty(policyName))
+            {
+                return;
+            }
+            await AuthorizationService.CheckAsync(policyName);
+        }
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="abp" /><summary type="html">在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。</summary></entry><entry><title type="html">abp集成ant blazor认证</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html" rel="alternate" type="text/html" title="abp集成ant blazor认证" /><published>2020-11-16T22:00:00+08:00</published><updated>2020-11-16T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/16/abp-blazor-authentication</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html">&lt;h2 id=&quot;添加认证回调&quot;&gt;添加认证回调&lt;/h2&gt;
 &lt;p&gt;在Pages文件中添加名为”Authentication.razor”文件并输入如下代码。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;@page &quot;/authentication/{action}&quot;
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
@@ -343,7 +1079,7 @@ ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span c
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abpvnext" /><summary type="html">添加认证回调 在Pages文件中添加名为”Authentication.razor”文件并输入如下代码。 ```C# @page “/authentication/{action}” @using Microsoft.AspNetCore.Components.WebAssembly.Authentication</summary></entry><entry><title type="html">abp集成ant blazor</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/11/12/antblazor.html" rel="alternate" type="text/html" title="abp集成ant blazor" /><published>2020-11-12T22:00:00+08:00</published><updated>2020-11-12T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/11/12/antblazor</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abpvnext/2020/11/12/antblazor.html">&lt;h2 id=&quot;引入ant-design-of-blazor包&quot;&gt;引入Ant Design of Blazor包&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">添加认证回调 在Pages文件中添加名为”Authentication.razor”文件并输入如下代码。 ```C# @page “/authentication/{action}” @using Microsoft.AspNetCore.Components.WebAssembly.Authentication</summary></entry><entry><title type="html">abp集成ant blazor</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html" rel="alternate" type="text/html" title="abp集成ant blazor" /><published>2020-11-12T22:00:00+08:00</published><updated>2020-11-12T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html">&lt;h2 id=&quot;引入ant-design-of-blazor包&quot;&gt;引入Ant Design of Blazor包&lt;/h2&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Install-Package AntDesign &lt;span class=&quot;nt&quot;&gt;-Version&lt;/span&gt; 0.4.0-nightly-2011120611
  Install-Package AntDesign.Pro.Layout &lt;span class=&quot;nt&quot;&gt;-Version&lt;/span&gt; 0.1.0-nightly-201103141915
@@ -699,4 +1435,4 @@ ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span c
   &lt;li&gt;运行效果图&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abpvnext" /><summary type="html">引入Ant Design of Blazor包</summary></entry></feed>
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/images/02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="abp" /><summary type="html">引入Ant Design of Blazor包</summary></entry></feed>
