@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="struggle3.github.io/blog.github.io/blog.github.io/" rel="alternate" type="text/html" /><updated>2021-02-04T10:24:25+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/feed.xml</id><title type="html">野程序猿</title><subtitle>记录自己的生活。</subtitle><entry><title type="html">abp集成SQLite</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html" rel="alternate" type="text/html" title="abp集成SQLite" /><published>2020-12-07T22:00:00+08:00</published><updated>2020-12-07T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html">&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="struggle3.github.io/blog.github.io/blog.github.io/" rel="alternate" type="text/html" /><updated>2021-02-04T10:37:58+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/feed.xml</id><title type="html">野程序猿</title><subtitle>记录自己的生活。</subtitle><entry><title type="html">abp集成SQLite</title><link href="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html" rel="alternate" type="text/html" title="abp集成SQLite" /><published>2020-12-07T22:00:00+08:00</published><updated>2020-12-07T22:00:00+08:00</updated><id>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite</id><content type="html" xml:base="struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html">&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 &lt;blockquote&gt;
   &lt;p&gt;SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。&lt;/p&gt;
@@ -42,21 +42,22 @@ Configure&amp;lt;AbpUnitOfWorkDefaultOptions&amp;gt;(options =&amp;gt;
 });
 &lt;/code&gt;&lt;/pre&gt;
   &lt;h2 id=&quot;启用迁移支持&quot;&gt;启用迁移支持&lt;/h2&gt;
-  &lt;p&gt;在EntityFrameworkCore.DbMigrations项目中的MigrationsDbContextFactory类的CreateDbContext修改如下代码:
-```C#
-public mytestMigrationsDbContext CreateDbContext(string[] args)
-{
-    mytestEfCoreEntityExtensionMappings.Configure();&lt;/p&gt;
+  &lt;p&gt;在EntityFrameworkCore.DbMigrations项目中的MigrationsDbContextFactory类的CreateDbContext修改如下代码:&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var configuration = BuildConfiguration();
+&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;public mytestMigrationsDbContext CreateDbContext(string[] args)
+{
+    mytestEfCoreEntityExtensionMappings.Configure();
 
-var builder = new DbContextOptionsBuilder&amp;lt;mytestMigrationsDbContext&amp;gt;()
-    .UseSqlite(configuration.GetConnectionString(&quot;Default&quot;));
-    //.UseSqlServer(configuration.GetConnectionString(&quot;Default&quot;));
+    var configuration = BuildConfiguration();
 
-return new mytestMigrationsDbContext(builder.Options); } ```
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+    var builder = new DbContextOptionsBuilder&amp;lt;mytestMigrationsDbContext&amp;gt;()
+        .UseSqlite(configuration.GetConnectionString(&quot;Default&quot;));
+        //.UseSqlServer(configuration.GetConnectionString(&quot;Default&quot;));
+
+    return new mytestMigrationsDbContext(builder.Options);
+}
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;删除Migrations文件所有文件&lt;/p&gt;
