@@ -34,7 +34,7 @@ body { background-image: url(/blog.github.io/assets/images/canvas_bg.jpg); paddi
 .container-left { margin: 0; padding-bottom: 60px; }
 
 /* post style */
-.article { font-size: 17px; color: #28323C; }
+.article { font-size: 14px; color: #28323C; }
 
 .article img { max-width: 100%; }
 
@@ -45,7 +45,7 @@ body { background-image: url(/blog.github.io/assets/images/canvas_bg.jpg); paddi
 
 .icon-style { font-size: 13px; }
 
-.post-date { text-transform: uppercase; font-size: 14px; letter-spacing: 3px; }
+.post-date { text-transform: uppercase; font-size: 14px; }
 
 /*  custom bootstrap navbar reference from: https://stackoverflow.com/questions/18529274/change-navbar-color-in-twitter-bootstrap-3  */
 .navbar-custom { background-color: #28323C; color: #fff; border-radius: 0; }
