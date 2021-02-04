@@ -95,21 +95,22 @@ Configure&lt;AbpUnitOfWorkDefaultOptions&gt;(options =&gt;
 });
 </code></pre>
   <h2 id="启用迁移支持">启用迁移支持</h2>
-  <p>在EntityFrameworkCore.DbMigrations项目中的MigrationsDbContextFactory类的CreateDbContext修改如下代码:
-```C#
-public mytestMigrationsDbContext CreateDbContext(string[] args)
-{
-    mytestEfCoreEntityExtensionMappings.Configure();</p>
+  <p>在EntityFrameworkCore.DbMigrations项目中的MigrationsDbContextFactory类的CreateDbContext修改如下代码:</p>
 </blockquote>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var configuration = BuildConfiguration();
+<pre><code class="language-C#">public mytestMigrationsDbContext CreateDbContext(string[] args)
+{
+    mytestEfCoreEntityExtensionMappings.Configure();
 
-var builder = new DbContextOptionsBuilder&lt;mytestMigrationsDbContext&gt;()
-    .UseSqlite(configuration.GetConnectionString("Default"));
-    //.UseSqlServer(configuration.GetConnectionString("Default"));
+    var configuration = BuildConfiguration();
 
-return new mytestMigrationsDbContext(builder.Options); } ```
-</code></pre></div></div>
+    var builder = new DbContextOptionsBuilder&lt;mytestMigrationsDbContext&gt;()
+        .UseSqlite(configuration.GetConnectionString("Default"));
+        //.UseSqlServer(configuration.GetConnectionString("Default"));
+
+    return new mytestMigrationsDbContext(builder.Options);
+}
+</code></pre>
 
 <blockquote>
   <p>删除Migrations文件所有文件</p>
