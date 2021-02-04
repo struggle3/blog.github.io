@@ -149,11 +149,195 @@
 
             </div>
             <div class="col-md-10">
-                <div class="well">
-    <h1>关于我</h1>
-    <p>我是一名80名后程序猿爱生活、爱代码、爱技术喜欢研究开源项目。</p>
-</div>
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/abp/2020/04/10/abp-service.html">abp服务层开发</a></h2>
+        <span class="post-date">
+            
+            2020-04-10
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <blockquote>
+  <p>应用服务使用简单的CRUD，实现方式基于CrudAppService方式</p>
+</blockquote>
 
+<h1 id="1dto编写">1.DTO编写</h1>
+
+<blockquote>
+  <p>NewsItemDto.cs</p>
+</blockquote>
+
+<pre><code class="language-C#">using System;
+using Volo.Abp.Application.Dtos;
+
+namespace MyAbp.Application.Contracts.News.Dto
+{
+    public class NewsItemDto:EntityDto&lt;Guid&gt;
+    {
+        public string Title { get; set; }
+        public string Short { get; set; }
+        public string Full { get; set; }
+        public bool Published { get; set; } = false;
+        public DateTime? StartDateUtc { get; set; }
+        public DateTime? EndDateUtc { get; set; }
+        public bool AllowComments { get; set; } = false;
+        public int OrderBy { get; set; }
+    }
+}
+</code></pre>
+
+<blockquote>
+  <p>CreateNewsItemDto.cs</p>
+</blockquote>
+
+<pre><code class="language-C#">using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace MyAbp.Application.Contracts.News.Dto
+{
+    public class CreateNewsItemDto
+    {
+        [Required]
+        [StringLength(128)]
+        public string Title { get; set; }
+        [Required]
+        public string Short { get; set; }
+        [Required]
+        public string Full { get; set; }
+        public bool Published { get; set; } = false;
+        [Required]
+        public DateTime? StartDateUtc { get; set; }
+        [Required]
+        public DateTime? EndDateUtc { get; set; }
+        public bool AllowComments { get; set; } = false;
+        public int OrderBy { get; set; }
+    }
+}
+</code></pre>
+
+<blockquote>
+  <p>UpdateNewsItemDto.cs</p>
+</blockquote>
+
+<pre><code class="language-C#">using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace MyAbp.Application.Contracts.News.Dto
+{
+    public class UpdateNewsItemDto
+    {
+        [Required]
+        [StringLength(128)]
+        public string Title { get; set; }
+        [Required]
+        public string Short { get; set; }
+        [Required]
+        public string Full { get; set; }
+        public bool Published { get; set; } = false;
+        [Required]
+        public DateTime? StartDateUtc { get; set; }
+        [Required]
+        public DateTime? EndDateUtc { get; set; }
+        public bool AllowComments { get; set; } = false;
+        public int OrderBy { get; set; }
+    }
+}
+</code></pre>
+<h1 id="2接口编写">2.接口编写</h1>
+
+<pre><code class="language-C#">using System;
+using MyAbp.Application.Contracts.News.Dto;
+
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+
+namespace MyAbp.Application.Contracts.News
+{
+    public interface INewsItemAppService : ICrudAppService&lt;NewsItemDto,
+          Guid,
+          PagedAndSortedResultRequestDto,
+          CreateNewsItemDto,
+          UpdateNewsItemDto&gt;
+    {
+    }
+}
+</code></pre>
+
+<h1 id="3服务代码编写">3.服务代码编写</h1>
+
+<pre><code class="language-C#">using System;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Repositories;
+using MyAbp.Domain.News;
+using MyAbp.Application.Contracts.News.Dto;
+using MyAbp.Application.Contracts.News;
+
+namespace MyAbp.Application.News
+{
+
+    public class NewsItemAppService : CrudAppService&lt;NewsItem, NewsItemDto, Guid, PagedAndSortedResultRequestDto,
+           CreateNewsItemDto, UpdateNewsItemDto&gt;,
+       INewsItemAppService
+    {
+        public NewsItemAppService(IRepository&lt;NewsItem, Guid&gt; repository)
+           : base(repository)
+        {
+
+        }
+    }
+}
+</code></pre>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                abp <span>(10)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                abp <span>(10)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/blog.github.io/abp/2020/04/11/abp-angular.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/abp/2020/04/09/abp-domain.html" class="previous">后一篇</a>
+    
+</div>
             </div>
         </div>
     </div>

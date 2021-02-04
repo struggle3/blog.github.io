@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>野程序猿</title>
+	<link rel="icon" href="/blog.github.io/assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/blog.github.io/assets/js/jquery.min.js"></script>
+    <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
+    <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/blog.github.io/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/blog.github.io/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/blog.github.io/">野程序猿</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/blog.github.io/">首页</a></li>
+                    <li class="active"><a href="/blog.github.io/archive.html">归档</a></li>
+                    <li class="active"><a href="/blog.github.io/categories.html">分类</a></li>
+                    <li class="active"><a href="/blog.github.io/tags.html">标签</a></li>
+                    <li class="active"><a href="/blog.github.io/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/blog.github.io/">
+            <img src="/blog.github.io/assets/images/touxiang.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+        
+          <li><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+        
+          <li><a href="/blog.github.io/abp/2020/11/21/abp-publish.html">abp发布说明</a></li>
+        
+          <li><a href="/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html">abp集成ant blazor租户</a></li>
+        
+          <li><a href="/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html">abp集成ant blazor封装crudpage</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/">
+      jekyll中文
+    </a>
+  </li> 
+  
+  <li>
+    <a href="http://www.ithingsboard.com/">
+      ThingsBoard中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/abp/2020/04/09/abp-domain.html">abp领域层开发</a></h2>
+        <span class="post-date">
+            
+            2020-04-09
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="1-描述">1. 描述</h1>
+<h2 id="开发环境">开发环境</h2>
+
+<blockquote>
+  <ol>
+    <li>dotnet core 3.1.102</li>
+    <li>SQL 2017</li>
+    <li>vs code</li>
+    <li>volo.abp 2.3.0</li>
+  </ol>
+</blockquote>
+
+<h1 id="2-下载模板项目">2. 下载模板项目</h1>
+
+<blockquote>
+  <p>在abp.io或abp cli官网下载模板项目</p>
+</blockquote>
+
+<h1 id="3-领域层开发">3. 领域层开发</h1>
+
+<pre><code class="language-C#">using System;
+using System.Collections.Generic;
+using Volo.Abp.Domain.Entities.Auditing;
+
+namespace MyAbp.Domain.News
+{
+    //1、新闻聚合
+    public class NewsItem:CreationAuditedAggregateRoot&lt;Guid&gt;
+    {
+        public virtual string Title { get; protected set; }
+
+        public virtual string Short { get; protected set; }
+
+        public virtual string Full { get; protected set; }
+
+        public virtual  bool Published { get; protected set; }
+
+        public virtual DateTime? StartDateUtc { get; protected set; }
+
+        public virtual DateTime? EndDateUtc { get; protected set; }
+
+        public virtual bool AllowComments { get; protected set; }
+
+        public virtual int OrderBy{get;protected set;}
+
+        public virtual ICollection&lt;NewsCategoryLine&gt; Categorys { get; protected set; }
+
+        protected NewsItem() { }
+    }
+}
+
+using System;
+using Volo.Abp.Domain.Entities.Auditing;
+namespace MyAbp.Domain.News
+{
+    //1、评论聚合
+    public class NewsComment:CreationAuditedAggregateRoot&lt;Guid&gt;
+    {
+        public virtual string CommentTitle { get; protected set; }
+
+        public virtual string CommentText { get; protected set; }
+
+        public virtual Guid NewsItemId { get; protected set; }
+
+        protected NewsComment(){}
+    }
+}
+
+using System;
+using Volo.Abp.Domain.Entities.Auditing;
+
+namespace MyAbp.Domain.News
+{
+    //1、分类聚合
+    public class NewsCategory:CreationAuditedAggregateRoot&lt;Guid&gt;
+    {
+        public virtual string Name{get; protected set;}
+        protected NewsCategory(){}
+    }
+}
+
+using System;
+using Volo.Abp.Domain.Entities;
+
+namespace MyAbp.Domain.News
+{
+    public class NewsCategoryLine:Entity
+    {
+        //1、分类映射聚合
+        public virtual Guid NewsItemId { get; protected set; }
+        public virtual Guid NewsCategoryId { get; protected set; }
+        protected NewsCategoryLine()
+        {
+
+        }
+        protected internal NewsCategoryLine(Guid newsItemId, Guid newsCategoryId)
+        {
+            NewsItemId = newsItemId;
+            NewsCategoryId = newsCategoryId;
+        }
+
+        public override object[] GetKeys()
+        {
+            return new object[] { NewsItemId, NewsCategoryId };
+        }
+    }
+}
+</code></pre>
+
+<h1 id="4-基础设施层开发">4. 基础设施层开发</h1>
+
+<blockquote>
+  <ol>
+    <li>添加实体：MyAbpDbContext.cs代码</li>
+  </ol>
+</blockquote>
+
+<pre><code class="language-C#">using Microsoft.EntityFrameworkCore;
+using MyAbp.Users;
+using Volo.Abp.Data;
+using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
+using Volo.Abp.Users.EntityFrameworkCore;
+using MyAbp.Domain.News;
+
+namespace MyAbp.EntityFrameworkCore
+{
+    /* This is your actual DbContext used on runtime.
+     * It includes only your entities.
+     * It does not include entities of the used modules, because each module has already
+     * its own DbContext class. If you want to share some database tables with the used modules,
+     * just create a structure like done for AppUser.
+     *
+     * Don't use this DbContext for database migrations since it does not contain tables of the
+     * used modules (as explained above). See MyAbpMigrationsDbContext for migrations.
+     */
+    [ConnectionStringName("Default")]
+    public class MyAbpDbContext : AbpDbContext&lt;MyAbpDbContext&gt;
+    {
+        public DbSet&lt;AppUser&gt; Users { get; set; }
+
+        /* Add DbSet properties for your Aggregate Roots / Entities here.
+         * Also map them inside MyAbpDbContextModelCreatingExtensions.ConfigureMyAbp
+         */
+        //2、添加实体
+        public DbSet&lt;NewsItem&gt; NewsItems { get; set; }
+        public DbSet&lt;NewsComment&gt; NewsComments { get; set; }
+        public DbSet&lt;NewsCategory&gt; NewsCategorys { get; set; }
+        public DbSet&lt;NewsCategoryLine&gt; NewsCategoryLines { get; set; }
+        public MyAbpDbContext(DbContextOptions&lt;MyAbpDbContext&gt; options)
+            : base(options)
+        {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            /* Configure the shared tables (with included modules) here */
+
+            builder.Entity&lt;AppUser&gt;(b =&gt;
+            {
+                b.ToTable("AbpUsers"); //Sharing the same table "AbpUsers" with the IdentityUser
+                b.ConfigureByConvention();
+                b.ConfigureAbpUser();
+
+                //Moved customization to a method so we can share it with the MyAbpMigrationsDbContext class
+                b.ConfigureCustomUserProperties();
+            });
+
+            /* Configure your own tables/entities inside the ConfigureMyAbp method */
+
+            builder.ConfigureMyAbp();
+        }
+    }
+}
+
+</code></pre>
+<blockquote>
+  <ol>
+    <li>配置实体：MyAbpDbContextModelCreatingExtensions.cs代码</li>
+  </ol>
+</blockquote>
+
+<pre><code class="language-C#">using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Volo.Abp;
+using Volo.Abp.Users;
+using Volo.Abp.EntityFrameworkCore.Modeling;
+using MyAbp.Domain.News;
+
+namespace MyAbp.EntityFrameworkCore
+{
+    public static class MyAbpDbContextModelCreatingExtensions
+    {
+        public static void ConfigureMyAbp(this ModelBuilder builder)
+        {
+            Check.NotNull(builder, nameof(builder));
+
+            /* Configure your own tables/entities inside here */
+
+            //builder.Entity&lt;YourEntity&gt;(b =&gt;
+            //{
+            //    b.ToTable(MyAbpConsts.DbTablePrefix + "YourEntities", MyAbpConsts.DbSchema);
+
+            //    //...
+            //});
+            // 3、配置实体
+            builder.Entity&lt;NewsItem&gt;(b =&gt;
+            {
+                b.ToTable(MyAbpConsts.DbTablePrefix + "NewsItems", MyAbpConsts.DbSchema);
+                b.Property(x =&gt; x.Title).IsRequired().HasMaxLength(128);
+                b.ConfigureByConvention();
+            });
+
+            builder.Entity&lt;NewsComment&gt;(b =&gt;
+            {
+                b.ToTable(MyAbpConsts.DbTablePrefix + "NewsComments", MyAbpConsts.DbSchema);
+                b.Property(x =&gt; x.CommentTitle).IsRequired().HasMaxLength(128);
+                b.ConfigureByConvention();
+            });
+
+            builder.Entity&lt;NewsCategory&gt;(b =&gt;
+            {
+                b.ToTable(MyAbpConsts.DbTablePrefix + "NewsCategorys", MyAbpConsts.DbSchema);
+                b.Property(x =&gt; x.Name).IsRequired().HasMaxLength(128);
+                b.ConfigureByConvention();
+            });
+
+            builder.Entity&lt;NewsCategoryLine&gt;(b =&gt;
+            {
+                b.ToTable(MyAbpConsts.DbTablePrefix + "NewsCategoryLines", MyAbpConsts.DbSchema);
+                b.HasKey(nc =&gt; new { nc.NewsItemId, nc.NewsCategoryId });
+
+                b.HasOne&lt;NewsCategory&gt;().WithMany().HasForeignKey(pd =&gt; pd.NewsCategoryId).IsRequired();
+                b.HasOne&lt;NewsItem&gt;().WithMany(ni=&gt; ni.Categorys).HasForeignKey(ni =&gt; ni.NewsItemId).IsRequired();
+
+                b.HasIndex(nc =&gt; new { nc.NewsItemId, nc.NewsCategoryId });
+                b.ConfigureByConvention();
+            });
+        }
+
+        public static void ConfigureCustomUserProperties&lt;TUser&gt;(this EntityTypeBuilder&lt;TUser&gt; b)
+            where TUser: class, IUser
+        {
+            //b.Property&lt;string&gt;(nameof(AppUser.MyProperty))...
+        }
+    }
+}
+</code></pre>
+<h1 id="5-数据迁移">5. 数据迁移</h1>
+
+<blockquote>
+  <p>添加</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet ef migrations add newsitem <span class="nt">--startup-project</span> .<span class="se">\s</span>rc<span class="se">\M</span>yAbp.HttpApi.Host<span class="se">\ </span><span class="nt">-p</span> .<span class="se">\s</span>rc<span class="se">\M</span>yAbp.EntityFrameworkCore.DbMigrations<span class="se">\</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>迁移</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet ef database update <span class="nt">--startup-project</span> .<span class="se">\s</span>rc<span class="se">\M</span>yAbp.HttpApi.Host<span class="se">\ </span><span class="nt">-p</span> .<span class="se">\s</span>rc<span class="se">\M</span>yAbp.EntityFrameworkCore.DbMigrations<span class="se">\</span>
+</code></pre></div></div>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                abp <span>(10)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                abp <span>(10)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/blog.github.io/abp/2020/04/10/abp-service.html" class="next">前一篇</a>
+    
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 野程序猿版权所有
+            
+                <a href="https://www.bootcss.com/">
+                Bootstrap中文网
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>
