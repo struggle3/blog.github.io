@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>野程序员</title>
-		<description>欢迎来到野程序员的博客！</description>
-		<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia</link>
-		<atom:link href="https://github.com/zxixia/jekyll-xixia/jekyll-xixia/feed.xml" rel="self" type="application/rss+xml" />
+		<title>野程序猿</title>
+		<description>欢迎来到我的博客！</description>
+		<link>struggle3.github.io/blog.github.io/blog.github.io</link>
+		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
 				<title>abp集成SQLite</title>
@@ -89,8 +89,8 @@ Configure&amp;lt;AbpUnitOfWorkDefaultOptions&amp;gt;(options =&amp;gt;
 &lt;/blockquote&gt;
 </description>
 				<pubDate>Mon, 07 Dec 2020 22:00:00 +0800</pubDate>
-				<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/12/07/abp-sqlite.html</link>
-				<guid isPermaLink="true">https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/12/07/abp-sqlite.html</guid>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html</guid>
 			</item>
 		
 			<item>
@@ -263,8 +263,8 @@ ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span c
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Tue, 01 Dec 2020 22:00:00 +0800</pubDate>
-				<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/12/01/abp-deployment.html</link>
-				<guid isPermaLink="true">https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/12/01/abp-deployment.html</guid>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html</guid>
 			</item>
 		
 			<item>
@@ -282,8 +282,8 @@ ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span c
 &lt;/ol&gt;
 </description>
 				<pubDate>Sat, 21 Nov 2020 22:00:00 +0800</pubDate>
-				<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/21/abp-publish.html</link>
-				<guid isPermaLink="true">https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/21/abp-publish.html</guid>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/21/abp-publish.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/21/abp-publish.html</guid>
 			</item>
 		
 			<item>
@@ -552,12 +552,12 @@ namespace MyAbp.Blazor.Pages.tenant
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/jekyll-xixia/images/abp/0401.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/jekyll-xixia/images/abp/0402.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/abp/0401.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/blog.github.io/assets/images/abp/0402.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
 				<pubDate>Fri, 20 Nov 2020 22:00:00 +0800</pubDate>
-				<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/20/abp-blazor-tenant.html</link>
-				<guid isPermaLink="true">https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/20/abp-blazor-tenant.html</guid>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html</guid>
 			</item>
 		
 			<item>
@@ -997,8 +997,8 @@ namespace MyAbp.Blazor.Pages
 &lt;/code&gt;&lt;/pre&gt;
 </description>
 				<pubDate>Wed, 18 Nov 2020 22:00:00 +0800</pubDate>
-				<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/18/abp-blazor-crudpage.html</link>
-				<guid isPermaLink="true">https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/18/abp-blazor-crudpage.html</guid>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html</guid>
 			</item>
 		
 			<item>
@@ -1145,11 +1145,11 @@ namespace MyAbp.Blazor.Pages
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/jekyll-xixia/images/abp/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/abp/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
 				<pubDate>Mon, 16 Nov 2020 22:00:00 +0800</pubDate>
-				<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/16/abp-blazor-authentication.html</link>
-				<guid isPermaLink="true">https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/16/abp-blazor-authentication.html</guid>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html</guid>
 			</item>
 		
 			<item>
@@ -1504,17 +1504,17 @@ namespace MyAbp.Blazor.Pages
   &lt;li&gt;项目结构图&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;/jekyll-xixia/images/abp/01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/abp/01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;运行效果图&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;/jekyll-xixia/images/abp/02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/abp/02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 </description>
 				<pubDate>Thu, 12 Nov 2020 22:00:00 +0800</pubDate>
-				<link>https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/12/abp-antblazor.html</link>
-				<guid isPermaLink="true">https://github.com/zxixia/jekyll-xixia/jekyll-xixia/abp/2020/11/12/abp-antblazor.html</guid>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/12/abp-antblazor.html</guid>
 			</item>
 		
 	</channel>
