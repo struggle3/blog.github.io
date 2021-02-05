@@ -9,6 +9,8 @@ body { background-image: url(/blog.github.io/assets/images/canvas_bg.jpg); paddi
 
 .container { width: 100% !important; }
 
+.navbar-brand { padding: 0px !important; }
+
 .wrap { position: relative; min-height: 100%; }
 
 .footer { text-align: center; color: #fff; position: absolute; bottom: 0; left: 0; width: 100%; min-height: 40px; background-color: #28323C; }
