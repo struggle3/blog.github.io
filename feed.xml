@@ -74,7 +74,7 @@ firewall-cmd –permanent –zone=public –add-rich-rule=’rule source ipset=b
 				<description>&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 &lt;blockquote&gt;
-  &lt;p&gt;SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等性点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、代成本、零配置、自给自足的优势。&lt;/p&gt;
+  &lt;p&gt;SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等特点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、低成本、零配置、自给自足的优势。&lt;/p&gt;
   &lt;h2 id=&quot;dbmigrator连接字符串&quot;&gt;DbMigrator连接字符串&lt;/h2&gt;
   &lt;p&gt;在项目找到appsettings.json修改如下:&lt;/p&gt;
   &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;ConnectionStrings&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
