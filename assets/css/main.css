@@ -9,7 +9,7 @@ body { background-image: url(/blog.github.io/assets/images/canvas_bg.jpg); paddi
 
 .container { width: 100% !important; }
 
-.navbar-brand { padding: 0px !important; }
+.navbar-brand { padding: 10px 15px !important; }
 
 .wrap { position: relative; min-height: 100%; }
 
