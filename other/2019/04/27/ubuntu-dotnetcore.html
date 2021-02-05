@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="abp,abp vnext" />
-    <meta name="description" content="ABP VNext发布注意事项" />
+    <meta name="keywords" content="ubuntu,dotnet core" />
+    <meta name="description" content="使用ubuntu做为dotnet core开发环境" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -221,25 +221,67 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/blog.github.io/abp/2020/11/21/abp-publish.html">abp发布说明</a></h2>
+        <h2><a href="/blog.github.io/other/2019/04/27/ubuntu-dotnetcore.html">使用ubuntu做为dotnet core开发环境</a></h2>
         <span class="post-date">
             
-            2020-11-21
+            2019-04-27
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <blockquote>
-  <p>如果把ABP.VNext项目发布至产品环境时运行需要注意如下事项：</p>
-</blockquote>
+    <p>一、安装google浏览器</p>
 
-<ol>
-  <li>发布后请修改HttpApi.Host这项目中的appsettings.json文件中的CorsOrigins参数值改为前端服务地址</li>
-  <li>发布后请修改HttpApi.Host这项目中的appsettings.json文件中的AuthServer参数值改为认证服务地址</li>
-  <li>发布后请修改前端项目的appsettings.json文件中AuthServer中Authority参数值改为认证服务地址</li>
-  <li>发布后请修改前端项目的appsettings.json文件中RemoteServices中BaseUrl参数值改为HttpApi.Host服务地址</li>
-  <li>发布前在数据迁移时在DbMigrator中将IdentityServer相关的Clients参数的RootUrl进行对应修改</li>
-</ol>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、下载安装包(传送门：http://www.google.cn/intl/zh-CN/chrome/browser/desktop/index.html)
+2、使用sudo dpkg-i 安装名称
+</code></pre></div></div>
+
+<p>二、安装nodejs</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、下载官方最新
+2、解包:tar -zxvf xxx.tar.zx
+3、设置node和npm软链接
+      sudo ln -s 安装位置 /usr/local/bin/node
+      sudo ln -s 安装位置 /usr/local/bin/npm
+</code></pre></div></div>
+
+<p>三、安装angular/cli</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、命令：sudo npm install -g @angular/cli
+2、设置软链接： sudo ln -s 安装位置 /usr/local/bin/ng
+</code></pre></div></div>
+
+<p>四、安装git</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、添加git源：sudo add-apt-repository ppa:git-core/ppa
+2、更新源列表：sudo apt update
+3、安装git：sudo apt install git
+</code></pre></div></div>
+
+<p>五、安装vscod</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、下载deb安装包(传送门：https://code.visualstudio.com/Download)
+2、使用sudo dpkg -i 安装名称
+</code></pre></div></div>
+
+<p>六、安装dotnet core</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、按官网步骤进行即可（传送门：https://dotnet.microsoft.com/download/linux-package-manager/ubuntu16-04/runtime-current）
+</code></pre></div></div>
+
+<p>七、Ubuntu 16.04 和 windows 时间不同步的问题</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、每次进入Ubuntu 16.04后再回到windows，就会发现时间对不上，少了8小时，这是因为Ubuntu 16.04的时区设置不正确造成的，解决方法是执行下面的命令：sudo timedatectl set-local-rtc 1
+</code></pre></div></div>
+
+<p>八、替换源</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、地址
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse
+</code></pre></div></div>
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -251,7 +293,7 @@
       
          
             <li class="icon-style"><a href="/blog.github.io/categories.html">
-                abp <span>(10)</span>
+                other <span>(1)</span>
                 
             </a></li>
         
@@ -267,7 +309,7 @@
          
             <li class="icon-style">
                 <a href="/blog.github.io/tags.html">
-                abp <span>(10)</span>
+                ubuntu <span>(1)</span>
                 
                 </a>
             </li>
@@ -282,10 +324,8 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/blog.github.io/abp/2020/12/01/abp-deployment.html" class="next">前一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/thingsbaord/2019/12/30/thingsboard.html" class="next">前一篇</a>
     
-    
-    <a class="btn btn-default" href="/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html" class="previous">后一篇</a>
     
 </div>
             </div>
