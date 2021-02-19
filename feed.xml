@@ -7,6 +7,45 @@
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>docker安装</title>
+				<description>&lt;p&gt;基于Linux的docker的安装方法&lt;/p&gt;
+&lt;h1 id=&quot;脚本安装&quot;&gt;脚本安装&lt;/h1&gt;
+&lt;p&gt;直接使用官方给的安装脚本进行安装，脚本装安装最新版本docker容器，在生产环境中不建议使用此方法因为最新版可能存在一些bug导致一些异常问题。&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum update
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://get.docker.com/ | sh
+systemctl start docker 
+systemctl &lt;span class=&quot;nb&quot;&gt;enable 
+&lt;/span&gt;docker docker run hello-world
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h1 id=&quot;yum安装&quot;&gt;yum安装&lt;/h1&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum update
+&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/etc/yum.repos.d/docker.repo &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOF&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+[dockerrepo]
+name=Docker Repository 
+baseurl=https://yum.dockerproject.org/repo/main/centos/7 
+enabled=1
+gpgcheck=1 
+gpgkey=https://yum.dockerproject.org/gpg EOF 
+yum install docker
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h1 id=&quot;rpm安装&quot;&gt;rpm安装&lt;/h1&gt;
+&lt;h2 id=&quot;下载地址&quot;&gt;下载地址:&lt;/h2&gt;
+&lt;p&gt;https://download.docker.com/linux/centos/7/x86_64/stable/Packages/&lt;/p&gt;
+&lt;h2 id=&quot;步骤&quot;&gt;步骤:&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;下载docker-ce-17.03.0.ce-1.el7.centos.x86_64.rpm文件&lt;/li&gt;
+  &lt;li&gt;下载docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm文件&lt;/li&gt;
+  &lt;li&gt;在root下创建docker目录&lt;/li&gt;
+  &lt;li&gt;移动(mv docker* docker)以上两个文件到docker目录&lt;/li&gt;
+  &lt;li&gt;进入docker(cd docker)目录执行yum -y install *命令&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+				<pubDate>Fri, 12 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/12/docker-install.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/12/docker-install.html</guid>
+			</item>
+		
+			<item>
 				<title>firewalld常用命令</title>
 				<description>&lt;h2 id=&quot;常用命令&quot;&gt;常用命令&lt;/h2&gt;
 &lt;ol&gt;
@@ -2229,145 +2268,6 @@ namespace MyAbp.Blazor.Pages
 				<pubDate>Sat, 11 Apr 2020 22:00:00 +0800</pubDate>
 				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/11/abp-angular.html</link>
 				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/11/abp-angular.html</guid>
-			</item>
-		
-			<item>
-				<title>abp服务层开发</title>
-				<description>&lt;blockquote&gt;
-  &lt;p&gt;应用服务使用简单的CRUD，实现方式基于CrudAppService方式&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;1dto编写&quot;&gt;1.DTO编写&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;NewsItemDto.cs&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
-using Volo.Abp.Application.Dtos;
-
-namespace MyAbp.Application.Contracts.News.Dto
-{
-    public class NewsItemDto:EntityDto&amp;lt;Guid&amp;gt;
-    {
-        public string Title { get; set; }
-        public string Short { get; set; }
-        public string Full { get; set; }
-        public bool Published { get; set; } = false;
-        public DateTime? StartDateUtc { get; set; }
-        public DateTime? EndDateUtc { get; set; }
-        public bool AllowComments { get; set; } = false;
-        public int OrderBy { get; set; }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;CreateNewsItemDto.cs&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace MyAbp.Application.Contracts.News.Dto
-{
-    public class CreateNewsItemDto
-    {
-        [Required]
-        [StringLength(128)]
-        public string Title { get; set; }
-        [Required]
-        public string Short { get; set; }
-        [Required]
-        public string Full { get; set; }
-        public bool Published { get; set; } = false;
-        [Required]
-        public DateTime? StartDateUtc { get; set; }
-        [Required]
-        public DateTime? EndDateUtc { get; set; }
-        public bool AllowComments { get; set; } = false;
-        public int OrderBy { get; set; }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;UpdateNewsItemDto.cs&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace MyAbp.Application.Contracts.News.Dto
-{
-    public class UpdateNewsItemDto
-    {
-        [Required]
-        [StringLength(128)]
-        public string Title { get; set; }
-        [Required]
-        public string Short { get; set; }
-        [Required]
-        public string Full { get; set; }
-        public bool Published { get; set; } = false;
-        [Required]
-        public DateTime? StartDateUtc { get; set; }
-        [Required]
-        public DateTime? EndDateUtc { get; set; }
-        public bool AllowComments { get; set; } = false;
-        public int OrderBy { get; set; }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id=&quot;2接口编写&quot;&gt;2.接口编写&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
-using MyAbp.Application.Contracts.News.Dto;
-
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
-
-namespace MyAbp.Application.Contracts.News
-{
-    public interface INewsItemAppService : ICrudAppService&amp;lt;NewsItemDto,
-          Guid,
-          PagedAndSortedResultRequestDto,
-          CreateNewsItemDto,
-          UpdateNewsItemDto&amp;gt;
-    {
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&quot;3服务代码编写&quot;&gt;3.服务代码编写&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Repositories;
-using MyAbp.Domain.News;
-using MyAbp.Application.Contracts.News.Dto;
-using MyAbp.Application.Contracts.News;
-
-namespace MyAbp.Application.News
-{
-
-    public class NewsItemAppService : CrudAppService&amp;lt;NewsItem, NewsItemDto, Guid, PagedAndSortedResultRequestDto,
-           CreateNewsItemDto, UpdateNewsItemDto&amp;gt;,
-       INewsItemAppService
-    {
-        public NewsItemAppService(IRepository&amp;lt;NewsItem, Guid&amp;gt; repository)
-           : base(repository)
-        {
-
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-				<pubDate>Fri, 10 Apr 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/10/abp-service.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/04/10/abp-service.html</guid>
 			</item>
 		
 	</channel>

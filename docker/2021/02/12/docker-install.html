@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="keywords" content="docker安装" />
+    <meta name="description" content="介绍docker的安装方法" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -225,158 +225,93 @@
 
             </div>
             <div class="col-md-10">
-                <div class="well article">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></h2>
+        <span class="post-date">
+            
+            2021-02-12
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>基于Linux的docker的安装方法</p>
+<h1 id="脚本安装">脚本安装</h1>
+<p>直接使用官方给的安装脚本进行安装，脚本装安装最新版本docker容器，在生产环境中不建议使用此方法因为最新版可能存在一些bug导致一些异常问题。</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
+<span class="nv">$ </span>curl <span class="nt">-sSL</span> https://get.docker.com/ | sh
+systemctl start docker 
+systemctl <span class="nb">enable 
+</span>docker docker run hello-world
+</code></pre></div></div>
+<h1 id="yum安装">yum安装</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
+<span class="nb">cat</span> <span class="o">&gt;</span>/etc/yum.repos.d/docker.repo <span class="o">&lt;&lt;-</span><span class="no">EOF</span><span class="sh">
+[dockerrepo]
+name=Docker Repository 
+baseurl=https://yum.dockerproject.org/repo/main/centos/7 
+enabled=1
+gpgcheck=1 
+gpgkey=https://yum.dockerproject.org/gpg EOF 
+yum install docker
+</span></code></pre></div></div>
+<h1 id="rpm安装">rpm安装</h1>
+<h2 id="下载地址">下载地址:</h2>
+<p>https://download.docker.com/linux/centos/7/x86_64/stable/Packages/</p>
+<h2 id="步骤">步骤:</h2>
+<ol>
+  <li>下载docker-ce-17.03.0.ce-1.el7.centos.x86_64.rpm文件</li>
+  <li>下载docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm文件</li>
+  <li>在root下创建docker目录</li>
+  <li>移动(mv docker* docker)以上两个文件到docker目录</li>
+  <li>进入docker(cd docker)目录执行yum -y install *命令</li>
+</ol>
 
+    <hr style="border-top:1px solid #28323C;"/>
 
-    <h2>Iot</h2>
-    <ul>
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                docker <span>(1)</span>
+                
+            </a></li>
         
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2019-12 </span></span><a href="/blog.github.io/thingsbaord/2019/12/30/thingsboard.html"> ThingsBoard介绍</a></li>
-            
-            
-        
-        
+      
     </ul>
+      
 
-    <h2>Abp</h2>
-    <ul>
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                docker <span>(1)</span>
+                
+                </a>
+            </li>
         
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-12 </span></span><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html"> abp集成SQLite</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-12 </span></span><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html"> abpvnext部署</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-11 </span></span><a href="/blog.github.io/abp/2020/11/21/abp-publish.html"> abp发布说明</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-11 </span></span><a href="/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html"> abp集成ant blazor租户</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-11 </span></span><a href="/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html"> abp集成ant blazor封装crudpage</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-11 </span></span><a href="/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html"> abp集成ant blazor认证</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-11 </span></span><a href="/blog.github.io/abp/2020/11/12/abp-antblazor.html"> abp集成ant blazor</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-04 </span></span><a href="/blog.github.io/abp/2020/04/11/abp-angular.html"> abp前端开发</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-04 </span></span><a href="/blog.github.io/abp/2020/04/10/abp-service.html"> abp服务层开发</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-04 </span></span><a href="/blog.github.io/abp/2020/04/09/abp-domain.html"> abp领域层开发</a></li>
-            
-            
-        
-        
+      
+      
     </ul>
+      
 
-    <h2>Docker</h2>
-    <ul>
-        
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2021-02 </span></span><a href="/blog.github.io/docker/2021/02/12/docker-install.html"> docker安装</a></li>
-            
-            
-        
-        
-    </ul>
-
-    <h2>Firewalld</h2>
-    <ul>
-        
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2020-12 </span></span><a href="/blog.github.io/linux/2020/12/20/firewalld.html"> firewalld常用命令</a></li>
-            
-            
-        
-        
-    </ul>
-
-    <h2>Ubuntu</h2>
-    <ul>
-        
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    2019-04 </span></span><a href="/blog.github.io/other/2019/04/27/ubuntu-dotnetcore.html"> 使用ubuntu做为dotnet core开发环境</a></li>
-            
-            
-        
-        
-    </ul>
+    </div>
     
 </div>
-
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/linux/2020/12/20/firewalld.html" class="previous">后一篇</a>
+    
+</div>
             </div>
         </div>
     </div>
