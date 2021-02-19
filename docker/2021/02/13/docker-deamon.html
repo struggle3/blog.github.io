@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="野程序猿,abp,abp vnext,dotnet core,nop,orchard" />
-    <meta name="description" content="我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。" />
+    <meta name="keywords" content="docker加速" />
+    <meta name="description" content="介绍docker加速方法" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -238,162 +238,81 @@
             </div>
             <div class="col-md-10">
                 
-
 <div class="well article">
+        <h2><a href="/blog.github.io/docker/2021/02/13/docker-deamon.html">docker加速</a></h2>
+        <span class="post-date">
+            
+            2021-02-13
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <blockquote>
+  <p>由于docker镜像在国外导致国内pull相关镜像速度实在有点受不了。</p>
+</blockquote>
 
-    <span class="post-date">
-        <!--
-        
-        November
-        12th,
-        
-        2020
-        -->
-        
-        2020-11-12
-    </span>
+<blockquote>
+  <p>目前采用阿里云的<strong>容器镜像加速</strong>进行加速，方法很简单就是添加/etc/docker/daemon.json文件即可。</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /etc/docker
+<span class="nb">sudo tee</span> /etc/docker/daemon.json <span class="o">&lt;&lt;-</span><span class="sh">'</span><span class="no">EOF</span><span class="sh">'
+{
+  "registry-mirrors": ["https://yj8o3p4r.mirror.aliyuncs.com"]
+}
+</span><span class="no">EOF
+</span><span class="nb">sudo </span>systemctl daemon-reload
+<span class="nb">sudo </span>systemctl restart docker
+</code></pre></div></div>
+<p>参考文档地址：https://help.aliyun.com/document_detail/60750.html</p>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
     
-    <h4>
-        <a href="/blog.github.io/abp/2020/11/12/abp-antblazor.html">abp集成ant blazor</a>
-    </h4>
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                docker <span>(3)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
     
-    <div class="post-description">
-        将Ant Design of Blazor和ABP VNext进行集成
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                docker <span>(3)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
     </div>
     
 </div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        11th,
-        
-        2020
-        -->
-        
-        2020-04-11
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/abp/2020/04/11/abp-angular.html">abp前端开发</a>
-    </h4>
-    
-    <div class="post-description">
-        第一次使用ABP VNext进行angular前端开发
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        10th,
-        
-        2020
-        -->
-        
-        2020-04-10
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/abp/2020/04/10/abp-service.html">abp服务层开发</a>
-    </h4>
-    
-    <div class="post-description">
-        第一次使用ABP VNext进行服务层开发
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        9th,
-        
-        2020
-        -->
-        
-        2020-04-09
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/abp/2020/04/09/abp-domain.html">abp领域层开发</a>
-    </h4>
-    
-    <div class="post-description">
-        第一次使用ABP VNext进行领域层开发
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        December
-        30th,
-        
-        2019
-        -->
-        
-        2019-12-30
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/thingsbaord/2019/12/30/thingsboard.html">ThingsBoard介绍</a>
-    </h4>
-    
-    <div class="post-description">
-        一个非常优秀开源的物联网平台
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        27th,
-        
-        2019
-        -->
-        
-        2019-04-27
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/other/2019/04/27/ubuntu-dotnetcore.html">使用ubuntu做为dotnet core开发环境</a>
-    </h4>
-    
-    <div class="post-description">
-        使用ubuntu做为dotnet core开发环境
-    </div>
-    
-</div>
-
-
 <div class="pagination">
-  
-      
-        <a class="btn btn-default" href="/blog.github.io/index.html" class="previous">上一页</a>
-      
-  
-  <!-- <span class="page_number ">当前页: 2 - 2</span> -->
-  
+    
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/14/docker-compose.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/12/docker-install.html" class="previous">后一篇</a>
+    
 </div>
-
             </div>
         </div>
     </div>

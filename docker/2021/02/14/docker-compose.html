@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="野程序猿,abp,abp vnext,dotnet core,nop,orchard" />
-    <meta name="description" content="我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。" />
+    <meta name="keywords" content="docker compose安装" />
+    <meta name="description" content="介绍docker compose安装方法" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -238,162 +238,104 @@
             </div>
             <div class="col-md-10">
                 
-
 <div class="well article">
+        <h2><a href="/blog.github.io/docker/2021/02/14/docker-compose.html">docker compose安装</a></h2>
+        <span class="post-date">
+            
+            2021-02-14
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="docker-compose简介">docker-compose简介</h1>
 
-    <span class="post-date">
-        <!--
-        
-        November
-        12th,
-        
-        2020
-        -->
-        
-        2020-11-12
-    </span>
+<p>Docker Compose是Docker官方编排项目之一，负责快速在集群中部署分布式应用。</p>
+
+<p>Docker-Compose将所管理的容器分为三层，分别是工程（project），服务（service）以及容器（container）。</p>
+
+<p>Docker-Compose运行目录下的所有文件（docker-compose.yml，extends文件或环境变量文件等）组成一个工程，若无特殊指定工程名即为当前目录名。</p>
+
+<p>一个工程当中可包含多个服务，每个服务中定义了容器运行的镜像，参数，依赖。</p>
+
+<p>一个服务当中可包括多个容器实例Docker-Compose并没有解决负载均衡的问题因此需要借助其它工具实现服务发现及负载均衡。</p>
+
+<p>Docker-Compose的配置文件默认为docker-compose.yml可通过环境变量COMPOSE_FILE或-f参数自定义配置文件，如果定义了多个有依赖关系的服务及每个服务运行的容器。</p>
+
+<h1 id="docker-compose安装">docker-compose安装</h1>
+<p>下载地址：https://github.com/docker/compose/releases</p>
+
+<p>安装方法：移动是/usr/local/bin/目录下并赋于chmod a+x权限即可。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mv </span>docker-commpose /usr/local/bin/
+<span class="nb">chmod </span>a+x /usr/local/bin/docker-compose
+</code></pre></div></div>
+<p>检查版本：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nt">--version</span>
+</code></pre></div></div>
+
+<h1 id="docker-compose用法">docker-compose用法</h1>
+
+<ol>
+  <li>-f 指定yml文件位置</li>
+  <li>ps 显示所有容器信息</li>
+  <li>restart 重启容器</li>
+  <li>logs 查看日志</li>
+  <li>config -q 验证yml文件是否正确</li>
+  <li>stop 停止容器</li>
+  <li>start 启动容器</li>
+  <li>up -d 启动容器项目</li>
+  <li>pause 暂停容器</li>
+  <li>unpause 恢复暂停</li>
+  <li>rm 删除容器</li>
+</ol>
+
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
     
-    <h4>
-        <a href="/blog.github.io/abp/2020/11/12/abp-antblazor.html">abp集成ant blazor</a>
-    </h4>
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                docker <span>(3)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
     
-    <div class="post-description">
-        将Ant Design of Blazor和ABP VNext进行集成
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                docker <span>(3)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
     </div>
     
 </div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        11th,
-        
-        2020
-        -->
-        
-        2020-04-11
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/abp/2020/04/11/abp-angular.html">abp前端开发</a>
-    </h4>
-    
-    <div class="post-description">
-        第一次使用ABP VNext进行angular前端开发
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        10th,
-        
-        2020
-        -->
-        
-        2020-04-10
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/abp/2020/04/10/abp-service.html">abp服务层开发</a>
-    </h4>
-    
-    <div class="post-description">
-        第一次使用ABP VNext进行服务层开发
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        9th,
-        
-        2020
-        -->
-        
-        2020-04-09
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/abp/2020/04/09/abp-domain.html">abp领域层开发</a>
-    </h4>
-    
-    <div class="post-description">
-        第一次使用ABP VNext进行领域层开发
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        December
-        30th,
-        
-        2019
-        -->
-        
-        2019-12-30
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/thingsbaord/2019/12/30/thingsboard.html">ThingsBoard介绍</a>
-    </h4>
-    
-    <div class="post-description">
-        一个非常优秀开源的物联网平台
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        April
-        27th,
-        
-        2019
-        -->
-        
-        2019-04-27
-    </span>
-    
-    <h4>
-        <a href="/blog.github.io/other/2019/04/27/ubuntu-dotnetcore.html">使用ubuntu做为dotnet core开发环境</a>
-    </h4>
-    
-    <div class="post-description">
-        使用ubuntu做为dotnet core开发环境
-    </div>
-    
-</div>
-
-
 <div class="pagination">
-  
-      
-        <a class="btn btn-default" href="/blog.github.io/index.html" class="previous">上一页</a>
-      
-  
-  <!-- <span class="page_number ">当前页: 2 - 2</span> -->
-  
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/13/docker-deamon.html" class="previous">后一篇</a>
+    
 </div>
-
             </div>
         </div>
     </div>
