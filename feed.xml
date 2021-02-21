@@ -7,6 +7,330 @@
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>harbor安装</title>
+				<description>&lt;h1 id=&quot;1-必备条件&quot;&gt;1. 必备条件&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Python应该是2.7或更高版本&lt;/li&gt;
+  &lt;li&gt;Docker引擎应为1.10或更高版本&lt;/li&gt;
+  &lt;li&gt;DockerCompose需要为1.6.0或更高版本&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;2-harbor安装&quot;&gt;2. harbor安装&lt;/h1&gt;
+&lt;h2 id=&quot;21-官方地址&quot;&gt;2.1. 官方地址：&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/vmware/harbor/releases&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;22-修改harborcfg&quot;&gt;2.2. 修改harbor.cfg&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;hostname：目标的主机名或者完全限定域名&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ui_url_protocol：http或https。默认为http&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;db_password：用于db_auth的MySQL数据库的根密码。更改此密码进行任何生产用途&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;max_job_workers：（默认值为3）允许工作人员同步到远程目标,增加此数字允许系统中更多的并发复制作业。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;customize_crt：（on或off。默认为on）当此属性打开时prepare脚本将为注册表的令牌的生成/验证创
+建私钥和根证书&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ssl_cert：SSL证书的路径，仅当协议设置为https时才应用&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ssl_cert_key：SSL密钥的路径，仅当协议设置为https时才应用&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;secretkey_path：用于在复制策略中加密或解密远程注册表的密码的密钥路径&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;3-安装步骤&quot;&gt;3. 安装步骤&lt;/h1&gt;
+
+&lt;h2 id=&quot;31-创建https证书以及配置相关目录权限&quot;&gt;3.1 创建https证书以及配置相关目录权限&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;openssl genrsa -des3 -out server.key 2048 #生成2048位的私钥&lt;/li&gt;
+  &lt;li&gt;openssl req -new -key server.key -out server.csr #生成证书&lt;/li&gt;
+  &lt;li&gt;cp server.key server.key.org #备份私钥&lt;/li&gt;
+  &lt;li&gt;openssl rsa -in server.key.org -out server.key #退密钥保证nginx使用&lt;/li&gt;
+  &lt;li&gt;openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt&lt;/li&gt;
+  &lt;li&gt;mkdir -p /data/cert&lt;/li&gt;
+  &lt;li&gt;chmod -R 777 /data/cert #说明&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;32-复制harbor&quot;&gt;3.2 复制harbor&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;直接使用xftp上传到/usr/local/目录中&lt;/li&gt;
+  &lt;li&gt;解压tar -zxvf harbor-offline-installer-&lt;version&gt;.tgz&lt;/version&gt;&lt;/li&gt;
+  &lt;li&gt;进入/usr/local/harbor&lt;/li&gt;
+  &lt;li&gt;修改harbor.cfg相关参数&lt;/li&gt;
+  &lt;li&gt;执行./install.sh&lt;/li&gt;
+  &lt;li&gt;执行完成后显示Harbor has been installed and started successfully表示成功&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+Creating network &lt;span class=&quot;s2&quot;&gt;&quot;harbor_harbor&quot;&lt;/span&gt; with the default driver
+Creating harbor-log ... &lt;span class=&quot;k&quot;&gt;done
+&lt;/span&gt;Creating harbor-adminserver ... &lt;span class=&quot;k&quot;&gt;done
+&lt;/span&gt;Creating harbor-db          ... &lt;span class=&quot;k&quot;&gt;done
+&lt;/span&gt;Creating registry           ... &lt;span class=&quot;k&quot;&gt;done
+&lt;/span&gt;Creating harbor-ui          ... &lt;span class=&quot;k&quot;&gt;done
+&lt;/span&gt;Creating harbor-jobservice  ... &lt;span class=&quot;k&quot;&gt;done
+&lt;/span&gt;Creating nginx              ... &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+
+✔ &lt;span class=&quot;nt&quot;&gt;----Harbor&lt;/span&gt; has been installed and started successfully.----
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;harbor访问测试&quot;&gt;harbor访问测试&lt;/h2&gt;
+
+&lt;p&gt;地址:hub.somoiot.com&lt;/p&gt;
+
+&lt;p&gt;默认管理员用户名:admin&lt;/p&gt;
+
+&lt;p&gt;默认管理员密码:Harbor12345&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;访问地址为harbor.cfg文件中的hostname所设置的内容&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;34-harbor容器测试&quot;&gt;3.4 harbor容器测试&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker ps &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;通过以上命令如果出现如下结果表示harbor正常&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS                    PORTS                                                              NAMES
+f7bbedc5fff6        vmware/nginx-photon:1.11.13        &lt;span class=&quot;s2&quot;&gt;&quot;nginx -g 'daemon ...&quot;&lt;/span&gt;   5 minutes ago       Up 5 minutes              0.0.0.0:80-&amp;gt;80/tcp, 0.0.0.0:443-&amp;gt;443/tcp, 0.0.0.0:4443-&amp;gt;4443/tcp   nginx
+e0ec964c19bd        vmware/harbor-jobservice:v1.2.0    &lt;span class=&quot;s2&quot;&gt;&quot;/harbor/harbor_jo...&quot;&lt;/span&gt;   5 minutes ago       Up 5 minutes                                                                                 harbor-jobservice
+6c2492697c89        vmware/harbor-ui:v1.2.0            &lt;span class=&quot;s2&quot;&gt;&quot;/harbor/harbor_ui&quot;&lt;/span&gt;      5 minutes ago       Up 5 minutes                                                                                 harbor-ui
+80eb4ab639ec        vmware/registry:2.6.2-photon       &lt;span class=&quot;s2&quot;&gt;&quot;/entrypoint.sh se...&quot;&lt;/span&gt;   5 minutes ago       Up 5 minutes              5000/tcp                                                           registry
+edd9febe0a9c        vmware/harbor-db:v1.2.0            &lt;span class=&quot;s2&quot;&gt;&quot;docker-entrypoint...&quot;&lt;/span&gt;   5 minutes ago       Up 5 minutes              3306/tcp                                                           harbor-db
+a32c62e85ecf        vmware/harbor-adminserver:v1.2.0   &lt;span class=&quot;s2&quot;&gt;&quot;/harbor/harbor_ad...&quot;&lt;/span&gt;   5 minutes ago       Up 5 minutes                                                                                 harbor-adminserver
+e3f991179e33        vmware/harbor-log:v1.2.0           &lt;span class=&quot;s2&quot;&gt;&quot;/bin/sh -c 'crond...&quot;&lt;/span&gt;   5 minutes ago       Up 5 minutes              127.0.0.1:1514-&amp;gt;514/tcp                                            harbor-log
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;4-使用&quot;&gt;4. 使用&lt;/h1&gt;
+
+&lt;h2 id=&quot;41-服务端&quot;&gt;4.1. 服务端&lt;/h2&gt;
+
+&lt;h3 id=&quot;411-指定镜像仓库地址&quot;&gt;4.1.1. 指定镜像仓库地址&lt;/h3&gt;
+
+&lt;p&gt;添加/etc/docker/daemon.json配置以便于docker认证通过&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;insecure-registries&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ip&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;412-下载测试镜像&quot;&gt;4.1.2. 下载测试镜像&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker pull hello-world
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;413-给镜像重新打标签&quot;&gt;4.1.3. 给镜像重新打标签&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dockertag hello-world serverip/hello-world:latest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;414-登录进行上传&quot;&gt;4.1.4. 登录进行上传&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dockerlogin serverip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;42-docker客户端&quot;&gt;4.2. docker客户端&lt;/h2&gt;
+
+&lt;h3 id=&quot;421-指定镜像仓库地址&quot;&gt;4.2.1. 指定镜像仓库地址&lt;/h3&gt;
+
+&lt;p&gt;添加/etc/docker/daemon.json配置以便于docker认证通过&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;insecure-registries&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ip&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;422-下载测试镜像&quot;&gt;4.2.2. 下载测试镜像&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker pull ip/hello-world:latest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;注意:以上环境如果没有DNS解析服务必须要在/etc/hosts文件中添加一行解析记录&lt;/strong&gt;&lt;/p&gt;
+
+</description>
+				<pubDate>Tue, 16 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/16/harbor-install.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/16/harbor-install.html</guid>
+			</item>
+		
+			<item>
+				<title>docker容器管理</title>
+				<description>&lt;h1 id=&quot;基本概念&quot;&gt;基本概念&lt;/h1&gt;
+
+&lt;p&gt;Docker 包括三个基本概念:镜像（Image）、容器（Container）、仓库（Repository）理解了这三个概念，就理解了 Docker 的整个生命周期。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Docker 镜像（Image）是模板类似于生活中楼房的图纸建筑工人根据图纸建造楼房同时也和程序中类（class）相似，程序员可以通过类（class）创建相关实例。&lt;/li&gt;
+  &lt;li&gt;Docker 容器（Container）是镜像创建并运行的实例，可以当作为一个迷你的Linux系统和运行的相关应用程序。&lt;/li&gt;
+  &lt;li&gt;Docker 仓库（Repository）是存放镜像文件的地方，类似于程序中的对象创建工厂和IOC容器（可能比喻不是特别恰当）及git。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;基础命令&quot;&gt;基础命令&lt;/h1&gt;
+
+&lt;p&gt;命令是运维人员与docker交互的入口,命令除了单条使用外，还支持赋值、解析变量、嵌套使用。&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;序号&lt;/th&gt;
+      &lt;th&gt;名称&lt;/th&gt;
+      &lt;th&gt;作用&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;docker info&lt;/td&gt;
+      &lt;td&gt;守护进程的系统资源设置&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;docker search&lt;/td&gt;
+      &lt;td&gt;仓库的查询&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;docker pull&lt;/td&gt;
+      &lt;td&gt;仓库的下载&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;docker images&lt;/td&gt;
+      &lt;td&gt;镜像的查询&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;docker rmi&lt;/td&gt;
+      &lt;td&gt;镜像的删除&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;docker ps&lt;/td&gt;
+      &lt;td&gt;容器的查询&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;docker run&lt;/td&gt;
+      &lt;td&gt;容器的查询&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;docker start&lt;/td&gt;
+      &lt;td&gt;容器启动&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;docker stop&lt;/td&gt;
+      &lt;td&gt;容器停止&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;单个容器管理&quot;&gt;单个容器管理&lt;/h1&gt;
+&lt;p&gt;每个容器被创建后都会分配一个ID作为容器的唯一标示后续对容器的启动、停止、修改、删除等所有操作都是通过ID来完成类似数据库概念中的主键。&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;序号&lt;/th&gt;
+      &lt;th&gt;名称&lt;/th&gt;
+      &lt;th&gt;作用&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;docker ps –no-trunc&lt;/td&gt;
+      &lt;td&gt;查看&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;docker stop/start CONTAINERID&lt;/td&gt;
+      &lt;td&gt;停止&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;docker start/stop webapp&lt;/td&gt;
+      &lt;td&gt;通过容器别名启动/停止&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;docker inspect webapp&lt;/td&gt;
+      &lt;td&gt;通过容器别名启动/停止&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;docker logs webapp&lt;/td&gt;
+      &lt;td&gt;查看容器日志&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;docker stats webapp&lt;/td&gt;
+      &lt;td&gt;查看容器所占用的系统资源&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;docker exec 容器名 容器内执行的命令&lt;/td&gt;
+      &lt;td&gt;容器执行命令&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;docker exec -it 容器名 /bin/bash&lt;/td&gt;
+      &lt;td&gt;登入容器的bash&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;–restart=always&lt;/td&gt;
+      &lt;td&gt;容器的自动启动&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;-h x.xx.xx&lt;/td&gt;
+      &lt;td&gt;设置容器主机名&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;–dns xx.xx.xx.xx&lt;/td&gt;
+      &lt;td&gt;设置容器使用的 DNS 服务器&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;–dns-search&lt;/td&gt;
+      &lt;td&gt;DNS 搜索设置&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;13&lt;/td&gt;
+      &lt;td&gt;–add-host hostname:IP&lt;/td&gt;
+      &lt;td&gt;注入 hostname &amp;lt;&amp;gt; IP 解析&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;14&lt;/td&gt;
+      &lt;td&gt;–rm&lt;/td&gt;
+      &lt;td&gt;服务停止时自动删除&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+				<pubDate>Mon, 15 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/15/docker-manager.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/15/docker-manager.html</guid>
+			</item>
+		
+			<item>
 				<title>docker compose安装</title>
 				<description>&lt;h1 id=&quot;docker-compose简介&quot;&gt;docker-compose简介&lt;/h1&gt;
 
@@ -86,7 +410,7 @@
 			<item>
 				<title>docker安装</title>
 				<description>&lt;p&gt;基于Linux的docker的安装方法&lt;/p&gt;
-&lt;h1 id=&quot;脚本安装&quot;&gt;脚本安装&lt;/h1&gt;
+&lt;h1 id=&quot;1-脚本安装&quot;&gt;1. 脚本安装&lt;/h1&gt;
 &lt;p&gt;直接使用官方给的安装脚本进行安装，脚本装安装最新版本docker容器，在生产环境中不建议使用此方法因为最新版可能存在一些bug导致一些异常问题。&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum update
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://get.docker.com/ | sh
@@ -94,7 +418,7 @@ systemctl start docker
 systemctl &lt;span class=&quot;nb&quot;&gt;enable 
 &lt;/span&gt;docker docker run hello-world
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h1 id=&quot;yum安装&quot;&gt;yum安装&lt;/h1&gt;
+&lt;h1 id=&quot;2-yum安装&quot;&gt;2. yum安装&lt;/h1&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum update
 &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/etc/yum.repos.d/docker.repo &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOF&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
 [dockerrepo]
@@ -105,10 +429,13 @@ gpgcheck=1
 gpgkey=https://yum.dockerproject.org/gpg EOF 
 yum install docker
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h1 id=&quot;rpm安装推荐&quot;&gt;rpm安装（推荐）&lt;/h1&gt;
-&lt;h2 id=&quot;下载地址&quot;&gt;下载地址:&lt;/h2&gt;
+&lt;h1 id=&quot;3-rpm安装推荐&quot;&gt;3. rpm安装（推荐）&lt;/h1&gt;
+&lt;h2 id=&quot;31-下载地址&quot;&gt;3.1. 下载地址:&lt;/h2&gt;
+
 &lt;p&gt;https://download.docker.com/linux/centos/7/x86_64/stable/Packages/&lt;/p&gt;
-&lt;h2 id=&quot;步骤&quot;&gt;步骤:&lt;/h2&gt;
+
+&lt;h2 id=&quot;32-步骤&quot;&gt;3.2. 步骤:&lt;/h2&gt;
+
 &lt;ol&gt;
   &lt;li&gt;下载docker-ce-17.03.0.ce-1.el7.centos.x86_64.rpm文件&lt;/li&gt;
   &lt;li&gt;下载docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm文件&lt;/li&gt;
@@ -116,6 +443,21 @@ yum install docker
   &lt;li&gt;移动(mv docker* docker)以上两个文件到docker目录&lt;/li&gt;
   &lt;li&gt;进入docker(cd docker)目录执行yum -y install *命令&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h2 id=&quot;33-防火墙设置&quot;&gt;3.3. 防火墙设置&lt;/h2&gt;
+
+&lt;p&gt;因为docker会利用防火墙进行一些设置。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl stop firewalld &lt;span class=&quot;c&quot;&gt;#关闭防火墙&lt;/span&gt;
+systemctl disable firewalld &lt;span class=&quot;c&quot;&gt;#禁用开机自启&lt;/span&gt;
+getenforce &lt;span class=&quot;c&quot;&gt;#查看selinux是否为Disabled&lt;/span&gt;
+yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;iptables-services
+systemctl start iptables &lt;span class=&quot;c&quot;&gt;#启动&lt;/span&gt;
+systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;iptables &lt;span class=&quot;c&quot;&gt;#启用开机自启&lt;/span&gt;
+iptables &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#清空规则&lt;/span&gt;
+service iptables save &lt;span class=&quot;c&quot;&gt;#保存&lt;/span&gt;
+yum update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Fri, 12 Feb 2021 22:00:00 +0800</pubDate>
 				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/12/docker-install.html</link>
@@ -737,598 +1079,6 @@ namespace MyAbp.Blazor.Pages.tenant
 				<pubDate>Fri, 20 Nov 2020 22:00:00 +0800</pubDate>
 				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html</link>
 				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/20/abp-blazor-tenant.html</guid>
-			</item>
-		
-			<item>
-				<title>abp集成ant blazor封装crudpage</title>
-				<description>&lt;blockquote&gt;
-  &lt;p&gt;在OnDataGridReadAsync方法中是用于查询数据列表的方法，需要手动修改分页计算的代码。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;在ModalAsync为后缀的相关方法中需要手动修改模态框显示和隐藏的相关代码。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AntDesign;
-using AntDesign.TableModels;
-using JetBrains.Annotations;
-using Localization.Resources.AbpUi;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Localization;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
-using Volo.Abp.AspNetCore.Components.WebAssembly;
-using Volo.Abp.Authorization;
-using Volo.Abp.ObjectMapping;
-
-namespace MyAbp.Blazor.Pages
-{
-    public abstract class AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TKey&amp;gt;
-        : AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TKey,
-            PagedAndSortedResultRequestDto&amp;gt;
-        where TAppService : ICrudAppService&amp;lt;
-            TEntityDto,
-            TKey&amp;gt;
-        where TEntityDto : class, IEntityDto&amp;lt;TKey&amp;gt;, new()
-    {
-    }
-
-    public abstract class AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TKey,
-            TGetListInput&amp;gt;
-        : AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TKey,
-            TGetListInput,
-            TEntityDto&amp;gt;
-        where TAppService : ICrudAppService&amp;lt;
-            TEntityDto,
-            TKey,
-            TGetListInput&amp;gt;
-        where TEntityDto : class, IEntityDto&amp;lt;TKey&amp;gt;, new()
-        where TGetListInput : new()
-    {
-    }
-
-    public abstract class AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TKey,
-            TGetListInput,
-            TCreateInput&amp;gt;
-        : AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TCreateInput&amp;gt;
-        where TAppService : ICrudAppService&amp;lt;
-            TEntityDto,
-            TKey,
-            TGetListInput,
-            TCreateInput&amp;gt;
-        where TEntityDto : IEntityDto&amp;lt;TKey&amp;gt;
-        where TCreateInput : class, new()
-        where TGetListInput : new()
-    {
-    }
-
-    public abstract class AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput&amp;gt;
-        : AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TEntityDto,
-            TEntityDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput&amp;gt;
-        where TAppService : ICrudAppService&amp;lt;
-            TEntityDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput&amp;gt;
-        where TEntityDto : IEntityDto&amp;lt;TKey&amp;gt;
-        where TCreateInput : class, new()
-        where TUpdateInput : class, new()
-        where TGetListInput : new()
-    {
-    }
-
-    public abstract class AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TGetOutputDto,
-            TGetListOutputDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput&amp;gt;
-        : AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TGetOutputDto,
-            TGetListOutputDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput,
-            TGetListOutputDto,
-            TCreateInput,
-            TUpdateInput&amp;gt;
-        where TAppService : ICrudAppService&amp;lt;
-            TGetOutputDto,
-            TGetListOutputDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput&amp;gt;
-        where TGetOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
-        where TGetListOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
-        where TCreateInput : class, new()
-        where TUpdateInput : class, new()
-        where TGetListInput : new()
-    {
-    }
-
-    public abstract class AntDesignCrudPageBase&amp;lt;
-            TAppService,
-            TGetOutputDto,
-            TGetListOutputDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput,
-            TListViewModel,
-            TCreateViewModel,
-            TUpdateViewModel&amp;gt;
-        : OwningComponentBase
-        where TAppService : ICrudAppService&amp;lt;
-            TGetOutputDto,
-            TGetListOutputDto,
-            TKey,
-            TGetListInput,
-            TCreateInput,
-            TUpdateInput&amp;gt;
-        where TGetOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
-        where TGetListOutputDto : IEntityDto&amp;lt;TKey&amp;gt;
-        where TCreateInput : class
-        where TUpdateInput : class
-        where TGetListInput : new()
-        where TListViewModel : IEntityDto&amp;lt;TKey&amp;gt;
-        where TCreateViewModel : class, new()
-        where TUpdateViewModel : class, new()
-    {
-        [Inject] protected TAppService AppService { get; set; }
-        [Inject] protected IUiMessageService UiMessageService { get; set; }
-        [Inject] protected IStringLocalizer&amp;lt;AbpUiResource&amp;gt; UiLocalizer { get; set; }
-        [Inject] protected IAuthorizationService AuthorizationService { get; set; }
-
-        protected virtual int PageSize { get; set; } = LimitedResultRequestDto.DefaultMaxResultCount;
-
-        protected int CurrentPage;
-        protected string CurrentSorting;
-        protected int TotalCount;
-        protected IReadOnlyList&amp;lt;TListViewModel&amp;gt; Entities = Array.Empty&amp;lt;TListViewModel&amp;gt;();
-        protected TCreateViewModel NewEntity;
-        protected TKey EditingEntityId;
-        protected TUpdateViewModel EditingEntity;
-
-        protected string CreatePolicyName { get; set; }
-        protected string UpdatePolicyName { get; set; }
-        protected string DeletePolicyName { get; set; }
-
-        public bool HasCreatePermission { get; set; }
-        public bool HasUpdatePermission { get; set; }
-        public bool HasDeletePermission { get; set; }
-        public bool CreateVisible { get; set; }
-        public bool EditVisible { get; set; }
-
-        protected Type ObjectMapperContext { get; set; }
-
-        protected IObjectMapper ObjectMapper
-        {
-            get
-            {
-                if (_objectMapper != null)
-                {
-                    return _objectMapper;
-                }
-
-                if (ObjectMapperContext == null)
-                {
-                    return LazyGetRequiredService(ref _objectMapper);
-                }
-
-                return LazyGetRequiredService(
-                    typeof(IObjectMapper&amp;lt;&amp;gt;).MakeGenericType(ObjectMapperContext),
-                    ref _objectMapper
-                );
-            }
-        }
-
-        private IObjectMapper _objectMapper;
-
-        protected TService LazyGetRequiredService&amp;lt;TService&amp;gt;(ref TService reference)
-            =&amp;gt; LazyGetRequiredService(typeof(TService), ref reference);
-
-        protected TRef LazyGetRequiredService&amp;lt;TRef&amp;gt;(Type serviceType, ref TRef reference)
-        {
-            if (reference == null)
-            {
-                reference = (TRef)ScopedServices.GetRequiredService(serviceType);
-            }
-
-            return reference;
-        }
-
-        protected AntDesignCrudPageBase()
-        {
-            NewEntity = new TCreateViewModel();
-            EditingEntity = new TUpdateViewModel();
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            await SetPermissionsAsync();
-        }
-
-        protected virtual async Task SetPermissionsAsync()
-        {
-            if (CreatePolicyName != null)
-            {
-                HasCreatePermission = await AuthorizationService.IsGrantedAsync(CreatePolicyName);
-            }
-
-            if (UpdatePolicyName != null)
-            {
-                HasUpdatePermission = await AuthorizationService.IsGrantedAsync(UpdatePolicyName);
-            }
-
-            if (DeletePolicyName != null)
-            {
-                HasDeletePermission = await AuthorizationService.IsGrantedAsync(DeletePolicyName);
-            }
-        }
-
-        protected virtual async Task GetEntitiesAsync()
-        {
-            var input = await CreateGetListInputAsync();
-            var result = await AppService.GetListAsync(input);
-            Entities = MapToListViewModel(result.Items);
-            TotalCount = (int)result.TotalCount;
-        }
-
-        private IReadOnlyList&amp;lt;TListViewModel&amp;gt; MapToListViewModel(IReadOnlyList&amp;lt;TGetListOutputDto&amp;gt; dtos)
-        {
-            if (typeof(TGetListOutputDto) == typeof(TListViewModel))
-            {
-                return dtos.As&amp;lt;IReadOnlyList&amp;lt;TListViewModel&amp;gt;&amp;gt;();
-            }
-
-            return ObjectMapper.Map&amp;lt;IReadOnlyList&amp;lt;TGetListOutputDto&amp;gt;, List&amp;lt;TListViewModel&amp;gt;&amp;gt;(dtos);
-        }
-
-        protected virtual Task&amp;lt;TGetListInput&amp;gt; CreateGetListInputAsync()
-        {
-            var input = new TGetListInput();
-
-            if (input is ISortedResultRequest sortedResultRequestInput)
-            {
-                sortedResultRequestInput.Sorting = CurrentSorting;
-            }
-
-            if (input is IPagedResultRequest pagedResultRequestInput)
-            {
-                pagedResultRequestInput.SkipCount = CurrentPage * PageSize;
-            }
-
-            if (input is ILimitedResultRequest limitedResultRequestInput)
-            {
-                limitedResultRequestInput.MaxResultCount = PageSize;
-            }
-
-            return Task.FromResult(input);
-        }
-
-        protected virtual async Task OnDataGridReadAsync(QueryModel&amp;lt;TListViewModel&amp;gt; queryModel)
-        {
-            CurrentPage = queryModel.PageIndex-1;
-            PageSize = queryModel.PageSize;
-
-            await GetEntitiesAsync();
-
-            StateHasChanged();
-        }
-
-        protected virtual async Task OpenCreateModalAsync()
-        {
-            await CheckCreatePolicyAsync();
-            NewEntity = new TCreateViewModel();
-            CreateVisible = true;
-        }
-
-        protected virtual Task CloseCreateModalAsync()
-        {
-            CreateVisible = false;
-            return Task.CompletedTask;
-        }
-
-        protected virtual async Task OpenEditModalAsync(TKey id)
-        {
-            await CheckUpdatePolicyAsync();
-
-            var entityDto = await AppService.GetAsync(id);
-            EditingEntityId = id;
-            EditingEntity = MapToEditingEntity(entityDto);
-            EditVisible = true;
-        }
-
-        protected virtual TUpdateViewModel MapToEditingEntity(TGetOutputDto entityDto)
-        {
-            return ObjectMapper.Map&amp;lt;TGetOutputDto, TUpdateViewModel&amp;gt;(entityDto);
-        }
-
-        protected virtual TCreateInput MapToCreateInput(TCreateViewModel createViewModel)
-        {
-            if (typeof(TCreateInput) == typeof(TCreateViewModel))
-            {
-                return createViewModel.As&amp;lt;TCreateInput&amp;gt;();
-            }
-
-            return ObjectMapper.Map&amp;lt;TCreateViewModel, TCreateInput&amp;gt;(createViewModel);
-        }
-
-        protected virtual TUpdateInput MapToUpdateInput(TUpdateViewModel updateViewModel)
-        {
-            if (typeof(TUpdateInput) == typeof(TUpdateViewModel))
-            {
-                return updateViewModel.As&amp;lt;TUpdateInput&amp;gt;();
-            }
-
-            return ObjectMapper.Map&amp;lt;TUpdateViewModel, TUpdateInput&amp;gt;(updateViewModel);
-        }
-
-        protected virtual Task CloseEditModalAsync()
-        {
-            EditVisible = false;
-            return Task.CompletedTask;
-        }
-
-        protected virtual async Task CreateEntityAsync()
-        {
-            await CheckCreatePolicyAsync();
-            var createInput = MapToCreateInput(NewEntity);
-            await AppService.CreateAsync(createInput);
-            await GetEntitiesAsync();
-            CreateVisible = false;
-        }
-
-        protected virtual async Task UpdateEntityAsync()
-        {
-            await CheckUpdatePolicyAsync();
-            var updateInput = MapToUpdateInput(EditingEntity);
-            await AppService.UpdateAsync(EditingEntityId, updateInput);
-            await GetEntitiesAsync();
-            EditVisible = false;
-        }
-
-        protected virtual async Task DeleteEntityAsync(TListViewModel entity)
-        {
-            await CheckDeletePolicyAsync();
-            await AppService.DeleteAsync(entity.Id);
-            await GetEntitiesAsync();
-        }
-
-        protected virtual async Task CheckCreatePolicyAsync()
-        {
-            await CheckPolicyAsync(CreatePolicyName);
-        }
-
-        protected virtual async Task CheckUpdatePolicyAsync()
-        {
-            await CheckPolicyAsync(UpdatePolicyName);
-        }
-
-        protected virtual async Task CheckDeletePolicyAsync()
-        {
-            await CheckPolicyAsync(DeletePolicyName);
-        }
-
-        /// &amp;lt;summary&amp;gt;
-        /// Calls IAuthorizationService.CheckAsync for the given &amp;lt;see cref=&quot;policyName&quot;/&amp;gt;.
-        /// Throws &amp;lt;see cref=&quot;AbpAuthorizationException&quot;/&amp;gt; if given policy was not granted for the current user.
-        ///
-        /// Does nothing if &amp;lt;see cref=&quot;policyName&quot;/&amp;gt; is null or empty.
-        /// &amp;lt;/summary&amp;gt;
-        /// &amp;lt;param name=&quot;policyName&quot;&amp;gt;A policy name to check&amp;lt;/param&amp;gt;
-        protected virtual async Task CheckPolicyAsync([CanBeNull] string policyName)
-        {
-            if (string.IsNullOrEmpty(policyName))
-            {
-                return;
-            }
-            await AuthorizationService.CheckAsync(policyName);
-        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-				<pubDate>Wed, 18 Nov 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html</guid>
-			</item>
-		
-			<item>
-				<title>abp集成ant blazor认证</title>
-				<description>&lt;h2 id=&quot;添加认证回调&quot;&gt;添加认证回调&lt;/h2&gt;
-&lt;p&gt;在Pages文件中添加名为”Authentication.razor”文件并输入如下代码。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;@page &quot;/authentication/{action}&quot;
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-&amp;lt;RemoteAuthenticatorView Action=&quot;@Action&quot; /&amp;gt;
-
-@code{
-    [Parameter] 
-    public string Action { get; set; }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;渲染菜单&quot;&gt;渲染菜单&lt;/h2&gt;
-&lt;h3 id=&quot;重写菜单&quot;&gt;重写菜单&lt;/h3&gt;
-&lt;p&gt;继承IMenuContributor接口并重写ConfigureMenuAsync方法加入以下代码。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;public async Task ConfigureMenuAsync(MenuConfigurationContext context)
-        {
-
-            if (context.Menu.Name != StandardMenus.Main)
-            {
-                return;
-            }
-
-            var appLocalizer = context.GetLocalizer&amp;lt;MyAbpResource&amp;gt;();
-            var tenantLocalizer = context.GetLocalizer&amp;lt;AbpTenantManagementResource&amp;gt;();
-
-            context.Menu.Items.Insert(
-                0,
-                new ApplicationMenuItem(
-                    &quot;MyAbp.Home&quot;,
-                    appLocalizer[&quot;Menu:Home&quot;],
-                    &quot;/&quot;,
-                    icon: &quot;home&quot;
-                )
-            );
-
-
-            var administrationMenu = context.Menu.GetAdministration();
-            administrationMenu.Items.RemoveAll(m =&amp;gt; true);
-            administrationMenu.Icon = &quot;global&quot;;
-            administrationMenu.Url = &quot;/admin&quot;;
-
-            var tenantManagementMenuItem = new ApplicationMenuItem(TenantManagementMenuNames.GroupName, tenantLocalizer[&quot;Menu:TenantManagement&quot;], url: &quot;/tenant-management&quot;, icon: &quot;solution&quot;);
-            administrationMenu.AddItem(tenantManagementMenuItem);
-            if (await context.IsGrantedAsync(TenantManagementPermissions.Tenants.Default))
-            {
-                tenantManagementMenuItem.AddItem(new ApplicationMenuItem(TenantManagementMenuNames.Tenants, tenantLocalizer[&quot;Tenants&quot;], url: &quot;/tenant-management/tenants&quot;));
-            }
-
-            var hasRolePermission = await context.IsGrantedAsync(IdentityPermissions.Roles.Default);
-            var hasUserPermission = await context.IsGrantedAsync(IdentityPermissions.Users.Default);
-
-            if (hasRolePermission || hasUserPermission)
-            {
-                var identityLocalizer = context.GetLocalizer&amp;lt;IdentityResource&amp;gt;();
-
-                var identityMenuItem = new ApplicationMenuItem(IdentityMenuNames.GroupName, identityLocalizer[&quot;Menu:IdentityManagement&quot;], url:&quot;/identity&quot;, icon: &quot;team&quot;);
-                administrationMenu.AddItem(identityMenuItem);
-
-                if (hasRolePermission)
-                {
-                    identityMenuItem.AddItem(new ApplicationMenuItem(IdentityMenuNames.Roles, identityLocalizer[&quot;Roles&quot;], url: &quot;/identity/roles&quot;));
-                }
-
-                if (hasUserPermission)
-                {
-                    identityMenuItem.AddItem(new ApplicationMenuItem(IdentityMenuNames.Users, identityLocalizer[&quot;Users&quot;], url: &quot;/identity/users&quot;));
-                }
-            }
-        }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;获取菜单&quot;&gt;获取菜单&lt;/h3&gt;
-&lt;p&gt;在MainLayout.razor文件中替换如下代码。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;@inherits LayoutComponentBase
-@using Volo.Abp.Ui.Branding
-@using Volo.Abp.UI.Navigation;
-@inject IBrandingProvider BrandingProvider
-&amp;lt;AntDesign.Pro.Layout.BasicLayout Logo=&quot;@(&quot;https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg&quot;)&quot; MenuData=&quot;NavMenu.ToArray()&quot;&amp;gt;
-    &amp;lt;RightContentRender&amp;gt;
-
-    &amp;lt;/RightContentRender&amp;gt;
-    &amp;lt;ChildContent&amp;gt;
-        @Body
-    &amp;lt;/ChildContent&amp;gt;
-&amp;lt;/AntDesign.Pro.Layout.BasicLayout&amp;gt;
-@code
-{
-    private List&amp;lt;MenuDataItem&amp;gt; NavMenu { get; set; }
-
-    [Inject]
-    protected IMenuManager MenuManager { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        CreateMenu(await MenuManager.GetAsync(StandardMenus.Main));
-    }
-
-    protected void CreateMenu(ApplicationMenu Menu)
-    {
-        NavMenu = new List&amp;lt;MenuDataItem&amp;gt;();
-
-        foreach (var item in Menu.Items)
-        {
-            var menu = new MenuDataItem()
-            {
-                Path = item.Url,
-                Name = item.DisplayName,
-                Key = item.Name,
-                Icon = item.Icon
-            };
-
-            if (item.Items.Count&amp;gt;0)
-                menu.Children = CreateChildMenu(item).ToArray();
-
-            NavMenu.Add(menu);
-        }
-    }
-
-    protected List&amp;lt;MenuDataItem&amp;gt; CreateChildMenu(ApplicationMenuItem Menu)
-    {
-        List&amp;lt;MenuDataItem&amp;gt; menu = new List&amp;lt;MenuDataItem&amp;gt;();
-        foreach (var item in Menu.Items)
-        {
-            var child = new MenuDataItem()
-            {
-                Path=item.Url,
-                Name = item.DisplayName,
-                Key = item.Name,
-                Icon = item.Icon
-            };
-
-            if (item.Items.Count&amp;gt;0)
-                child.Children = CreateChildMenu(item).ToArray();
-            
-            menu.Add(child);
-        }
-        return menu;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;效果图&quot;&gt;效果图&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/abp/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-</description>
-				<pubDate>Mon, 16 Nov 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html</guid>
 			</item>
 		
 	</channel>

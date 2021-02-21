@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="abp,abp vnext,abp认证" />
-    <meta name="description" content="将Ant Design of Blazor和ABP VNext进行集成并配置认证" />
+    <meta name="keywords" content="docker容器管理" />
+    <meta name="description" content="介绍docker相关的单容器管理方法" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -251,157 +251,168 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/blog.github.io/abp/2020/11/16/abp-blazor-authentication.html">abp集成ant blazor认证</a></h2>
+        <h2><a href="/blog.github.io/docker/2021/02/15/docker-manager.html">docker容器管理</a></h2>
         <span class="post-date">
             
-            2020-11-16
+            2021-02-15
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <h2 id="添加认证回调">添加认证回调</h2>
-<p>在Pages文件中添加名为”Authentication.razor”文件并输入如下代码。</p>
-<pre><code class="language-C#">@page "/authentication/{action}"
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-&lt;RemoteAuthenticatorView Action="@Action" /&gt;
+    <h1 id="基本概念">基本概念</h1>
 
-@code{
-    [Parameter] 
-    public string Action { get; set; }
-}
-</code></pre>
-<h2 id="渲染菜单">渲染菜单</h2>
-<h3 id="重写菜单">重写菜单</h3>
-<p>继承IMenuContributor接口并重写ConfigureMenuAsync方法加入以下代码。</p>
-<pre><code class="language-C#">public async Task ConfigureMenuAsync(MenuConfigurationContext context)
-        {
+<p>Docker 包括三个基本概念:镜像（Image）、容器（Container）、仓库（Repository）理解了这三个概念，就理解了 Docker 的整个生命周期。</p>
+<ol>
+  <li>Docker 镜像（Image）是模板类似于生活中楼房的图纸建筑工人根据图纸建造楼房同时也和程序中类（class）相似，程序员可以通过类（class）创建相关实例。</li>
+  <li>Docker 容器（Container）是镜像创建并运行的实例，可以当作为一个迷你的Linux系统和运行的相关应用程序。</li>
+  <li>Docker 仓库（Repository）是存放镜像文件的地方，类似于程序中的对象创建工厂和IOC容器（可能比喻不是特别恰当）及git。</li>
+</ol>
 
-            if (context.Menu.Name != StandardMenus.Main)
-            {
-                return;
-            }
+<h1 id="基础命令">基础命令</h1>
 
-            var appLocalizer = context.GetLocalizer&lt;MyAbpResource&gt;();
-            var tenantLocalizer = context.GetLocalizer&lt;AbpTenantManagementResource&gt;();
+<p>命令是运维人员与docker交互的入口,命令除了单条使用外，还支持赋值、解析变量、嵌套使用。</p>
 
-            context.Menu.Items.Insert(
-                0,
-                new ApplicationMenuItem(
-                    "MyAbp.Home",
-                    appLocalizer["Menu:Home"],
-                    "/",
-                    icon: "home"
-                )
-            );
+<table>
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>名称</th>
+      <th>作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>docker info</td>
+      <td>守护进程的系统资源设置</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>docker search</td>
+      <td>仓库的查询</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>docker pull</td>
+      <td>仓库的下载</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>docker images</td>
+      <td>镜像的查询</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>docker rmi</td>
+      <td>镜像的删除</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>docker ps</td>
+      <td>容器的查询</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>docker run</td>
+      <td>容器的查询</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>docker start</td>
+      <td>容器启动</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>docker stop</td>
+      <td>容器停止</td>
+    </tr>
+  </tbody>
+</table>
 
+<h1 id="单个容器管理">单个容器管理</h1>
+<p>每个容器被创建后都会分配一个ID作为容器的唯一标示后续对容器的启动、停止、修改、删除等所有操作都是通过ID来完成类似数据库概念中的主键。</p>
 
-            var administrationMenu = context.Menu.GetAdministration();
-            administrationMenu.Items.RemoveAll(m =&gt; true);
-            administrationMenu.Icon = "global";
-            administrationMenu.Url = "/admin";
-
-            var tenantManagementMenuItem = new ApplicationMenuItem(TenantManagementMenuNames.GroupName, tenantLocalizer["Menu:TenantManagement"], url: "/tenant-management", icon: "solution");
-            administrationMenu.AddItem(tenantManagementMenuItem);
-            if (await context.IsGrantedAsync(TenantManagementPermissions.Tenants.Default))
-            {
-                tenantManagementMenuItem.AddItem(new ApplicationMenuItem(TenantManagementMenuNames.Tenants, tenantLocalizer["Tenants"], url: "/tenant-management/tenants"));
-            }
-
-            var hasRolePermission = await context.IsGrantedAsync(IdentityPermissions.Roles.Default);
-            var hasUserPermission = await context.IsGrantedAsync(IdentityPermissions.Users.Default);
-
-            if (hasRolePermission || hasUserPermission)
-            {
-                var identityLocalizer = context.GetLocalizer&lt;IdentityResource&gt;();
-
-                var identityMenuItem = new ApplicationMenuItem(IdentityMenuNames.GroupName, identityLocalizer["Menu:IdentityManagement"], url:"/identity", icon: "team");
-                administrationMenu.AddItem(identityMenuItem);
-
-                if (hasRolePermission)
-                {
-                    identityMenuItem.AddItem(new ApplicationMenuItem(IdentityMenuNames.Roles, identityLocalizer["Roles"], url: "/identity/roles"));
-                }
-
-                if (hasUserPermission)
-                {
-                    identityMenuItem.AddItem(new ApplicationMenuItem(IdentityMenuNames.Users, identityLocalizer["Users"], url: "/identity/users"));
-                }
-            }
-        }
-</code></pre>
-<h3 id="获取菜单">获取菜单</h3>
-<p>在MainLayout.razor文件中替换如下代码。</p>
-<pre><code class="language-C#">@inherits LayoutComponentBase
-@using Volo.Abp.Ui.Branding
-@using Volo.Abp.UI.Navigation;
-@inject IBrandingProvider BrandingProvider
-&lt;AntDesign.Pro.Layout.BasicLayout Logo="@("https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg")" MenuData="NavMenu.ToArray()"&gt;
-    &lt;RightContentRender&gt;
-
-    &lt;/RightContentRender&gt;
-    &lt;ChildContent&gt;
-        @Body
-    &lt;/ChildContent&gt;
-&lt;/AntDesign.Pro.Layout.BasicLayout&gt;
-@code
-{
-    private List&lt;MenuDataItem&gt; NavMenu { get; set; }
-
-    [Inject]
-    protected IMenuManager MenuManager { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        CreateMenu(await MenuManager.GetAsync(StandardMenus.Main));
-    }
-
-    protected void CreateMenu(ApplicationMenu Menu)
-    {
-        NavMenu = new List&lt;MenuDataItem&gt;();
-
-        foreach (var item in Menu.Items)
-        {
-            var menu = new MenuDataItem()
-            {
-                Path = item.Url,
-                Name = item.DisplayName,
-                Key = item.Name,
-                Icon = item.Icon
-            };
-
-            if (item.Items.Count&gt;0)
-                menu.Children = CreateChildMenu(item).ToArray();
-
-            NavMenu.Add(menu);
-        }
-    }
-
-    protected List&lt;MenuDataItem&gt; CreateChildMenu(ApplicationMenuItem Menu)
-    {
-        List&lt;MenuDataItem&gt; menu = new List&lt;MenuDataItem&gt;();
-        foreach (var item in Menu.Items)
-        {
-            var child = new MenuDataItem()
-            {
-                Path=item.Url,
-                Name = item.DisplayName,
-                Key = item.Name,
-                Icon = item.Icon
-            };
-
-            if (item.Items.Count&gt;0)
-                child.Children = CreateChildMenu(item).ToArray();
-            
-            menu.Add(child);
-        }
-        return menu;
-    }
-}
-</code></pre>
-<h2 id="效果图">效果图</h2>
-<p><img src="/blog.github.io/assets/images/abp/03.png" alt="" /></p>
+<table>
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>名称</th>
+      <th>作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>docker ps –no-trunc</td>
+      <td>查看</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>docker stop/start CONTAINERID</td>
+      <td>停止</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>docker start/stop webapp</td>
+      <td>通过容器别名启动/停止</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>docker inspect webapp</td>
+      <td>通过容器别名启动/停止</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>docker logs webapp</td>
+      <td>查看容器日志</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>docker stats webapp</td>
+      <td>查看容器所占用的系统资源</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>docker exec 容器名 容器内执行的命令</td>
+      <td>容器执行命令</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>docker exec -it 容器名 /bin/bash</td>
+      <td>登入容器的bash</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>–restart=always</td>
+      <td>容器的自动启动</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>-h x.xx.xx</td>
+      <td>设置容器主机名</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>–dns xx.xx.xx.xx</td>
+      <td>设置容器使用的 DNS 服务器</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>–dns-search</td>
+      <td>DNS 搜索设置</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>–add-host hostname:IP</td>
+      <td>注入 hostname &lt;&gt; IP 解析</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>–rm</td>
+      <td>服务停止时自动删除</td>
+    </tr>
+  </tbody>
+</table>
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -413,7 +424,7 @@
       
          
             <li class="icon-style"><a href="/blog.github.io/categories.html">
-                abp <span>(10)</span>
+                docker <span>(5)</span>
                 
             </a></li>
         
@@ -429,7 +440,7 @@
          
             <li class="icon-style">
                 <a href="/blog.github.io/tags.html">
-                abp <span>(10)</span>
+                docker <span>(5)</span>
                 
                 </a>
             </li>
@@ -444,10 +455,10 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/blog.github.io/abp/2020/11/18/abp-blazor-crudpage.html" class="next">前一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/16/harbor-install.html" class="next">前一篇</a>
     
     
-    <a class="btn btn-default" href="/blog.github.io/abp/2020/11/12/abp-antblazor.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/14/docker-compose.html" class="previous">后一篇</a>
     
 </div>
             </div>

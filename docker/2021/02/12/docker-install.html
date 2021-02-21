@@ -87,6 +87,10 @@
                 
             
                 
+            
+                
+            
+                
                     <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
                 
             
@@ -117,6 +121,10 @@
                 
             
         
+            
+                
+            
+                
             
                 
             
@@ -163,6 +171,10 @@
                 
             
                 
+            
+                
+            
+                
                     <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
                 
             
@@ -197,15 +209,15 @@
     <h1>最新发表</h1>
     <ul>
         
+          <li><a href="/blog.github.io/docker/2021/02/16/harbor-install.html">harbor安装</a></li>
+        
+          <li><a href="/blog.github.io/docker/2021/02/15/docker-manager.html">docker容器管理</a></li>
+        
           <li><a href="/blog.github.io/docker/2021/02/14/docker-compose.html">docker compose安装</a></li>
         
           <li><a href="/blog.github.io/docker/2021/02/13/docker-deamon.html">docker加速</a></li>
         
           <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
-        
-          <li><a href="/blog.github.io/linux/2020/12/20/firewalld.html">firewalld常用命令</a></li>
-        
-          <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
         
     </ul>
 </div>
@@ -248,7 +260,7 @@
     
     <div class="post-content">
     <p>基于Linux的docker的安装方法</p>
-<h1 id="脚本安装">脚本安装</h1>
+<h1 id="1-脚本安装">1. 脚本安装</h1>
 <p>直接使用官方给的安装脚本进行安装，脚本装安装最新版本docker容器，在生产环境中不建议使用此方法因为最新版可能存在一些bug导致一些异常问题。</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
 <span class="nv">$ </span>curl <span class="nt">-sSL</span> https://get.docker.com/ | sh
@@ -256,7 +268,7 @@ systemctl start docker
 systemctl <span class="nb">enable 
 </span>docker docker run hello-world
 </code></pre></div></div>
-<h1 id="yum安装">yum安装</h1>
+<h1 id="2-yum安装">2. yum安装</h1>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
 <span class="nb">cat</span> <span class="o">&gt;</span>/etc/yum.repos.d/docker.repo <span class="o">&lt;&lt;-</span><span class="no">EOF</span><span class="sh">
 [dockerrepo]
@@ -267,10 +279,13 @@ gpgcheck=1
 gpgkey=https://yum.dockerproject.org/gpg EOF 
 yum install docker
 </span></code></pre></div></div>
-<h1 id="rpm安装推荐">rpm安装（推荐）</h1>
-<h2 id="下载地址">下载地址:</h2>
+<h1 id="3-rpm安装推荐">3. rpm安装（推荐）</h1>
+<h2 id="31-下载地址">3.1. 下载地址:</h2>
+
 <p>https://download.docker.com/linux/centos/7/x86_64/stable/Packages/</p>
-<h2 id="步骤">步骤:</h2>
+
+<h2 id="32-步骤">3.2. 步骤:</h2>
+
 <ol>
   <li>下载docker-ce-17.03.0.ce-1.el7.centos.x86_64.rpm文件</li>
   <li>下载docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm文件</li>
@@ -278,6 +293,21 @@ yum install docker
   <li>移动(mv docker* docker)以上两个文件到docker目录</li>
   <li>进入docker(cd docker)目录执行yum -y install *命令</li>
 </ol>
+
+<h2 id="33-防火墙设置">3.3. 防火墙设置</h2>
+
+<p>因为docker会利用防火墙进行一些设置。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl stop firewalld <span class="c">#关闭防火墙</span>
+systemctl disable firewalld <span class="c">#禁用开机自启</span>
+getenforce <span class="c">#查看selinux是否为Disabled</span>
+yum <span class="nt">-y</span> <span class="nb">install </span>iptables-services
+systemctl start iptables <span class="c">#启动</span>
+systemctl <span class="nb">enable </span>iptables <span class="c">#启用开机自启</span>
+iptables <span class="nt">-F</span> <span class="c">#清空规则</span>
+service iptables save <span class="c">#保存</span>
+yum update
+</code></pre></div></div>
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -289,7 +319,7 @@ yum install docker
       
          
             <li class="icon-style"><a href="/blog.github.io/categories.html">
-                docker <span>(3)</span>
+                docker <span>(5)</span>
                 
             </a></li>
         
@@ -305,7 +335,7 @@ yum install docker
          
             <li class="icon-style">
                 <a href="/blog.github.io/tags.html">
-                docker <span>(3)</span>
+                docker <span>(5)</span>
                 
                 </a>
             </li>
