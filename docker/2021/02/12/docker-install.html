@@ -91,6 +91,8 @@
                 
             
                 
+            
+                
                     <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
                 
             
@@ -121,6 +123,8 @@
                 
             
         
+            
+                
             
                 
             
@@ -175,6 +179,8 @@
                 
             
                 
+            
+                
                     <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
                 
             
@@ -209,6 +215,8 @@
     <h1>最新发表</h1>
     <ul>
         
+          <li><a href="/blog.github.io/docker/2021/02/17/docker-network.html">docker网络管理</a></li>
+        
           <li><a href="/blog.github.io/docker/2021/02/16/harbor-install.html">harbor安装</a></li>
         
           <li><a href="/blog.github.io/docker/2021/02/15/docker-manager.html">docker容器管理</a></li>
@@ -216,8 +224,6 @@
           <li><a href="/blog.github.io/docker/2021/02/14/docker-compose.html">docker compose安装</a></li>
         
           <li><a href="/blog.github.io/docker/2021/02/13/docker-deamon.html">docker加速</a></li>
-        
-          <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
         
     </ul>
 </div>
@@ -264,9 +270,6 @@
 <p>直接使用官方给的安装脚本进行安装，脚本装安装最新版本docker容器，在生产环境中不建议使用此方法因为最新版可能存在一些bug导致一些异常问题。</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
 <span class="nv">$ </span>curl <span class="nt">-sSL</span> https://get.docker.com/ | sh
-systemctl start docker 
-systemctl <span class="nb">enable 
-</span>docker docker run hello-world
 </code></pre></div></div>
 <h1 id="2-yum安装">2. yum安装</h1>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update
@@ -294,7 +297,17 @@ yum install docker
   <li>进入docker(cd docker)目录执行yum -y install *命令</li>
 </ol>
 
-<h2 id="33-防火墙设置">3.3. 防火墙设置</h2>
+<h2 id="33-docker测试">3.3. docker测试</h2>
+
+<p>执行下面命令</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start docker 
+systemctl status docker 
+systemctl <span class="nb">enable </span>docker
+docker run hello-world
+</code></pre></div></div>
+
+<h2 id="34-防火墙设置可选">3.4. 防火墙设置（可选）</h2>
 
 <p>因为docker会利用防火墙进行一些设置。</p>
 
@@ -319,7 +332,7 @@ yum update
       
          
             <li class="icon-style"><a href="/blog.github.io/categories.html">
-                docker <span>(5)</span>
+                docker <span>(6)</span>
                 
             </a></li>
         
@@ -335,7 +348,7 @@ yum update
          
             <li class="icon-style">
                 <a href="/blog.github.io/tags.html">
-                docker <span>(5)</span>
+                docker <span>(6)</span>
                 
                 </a>
             </li>

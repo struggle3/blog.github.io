@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="docker网络管理" />
+    <meta name="description" content="介绍docker的网络管理" />
+    <script src="/blog.github.io/assets/js/jquery.min.js"></script>
+    <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
+    <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/blog.github.io/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/blog.github.io/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/blog.github.io/">
+                    <img src="/blog.github.io/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/blog.github.io/">首页</a></li>
+                    <li class="active"><a href="/blog.github.io/archive.html">归档</a></li>
+                    <li class="active"><a href="/blog.github.io/categories.html">分类</a></li>
+                    <li class="active"><a href="/blog.github.io/tags.html">标签</a></li>
+                    <li class="active"><a href="/blog.github.io/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/blog.github.io/">
+            <img src="/blog.github.io/assets/images/touxiang.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/blog.github.io/docker/2021/02/17/docker-network.html">docker网络管理</a></li>
+        
+          <li><a href="/blog.github.io/docker/2021/02/16/harbor-install.html">harbor安装</a></li>
+        
+          <li><a href="/blog.github.io/docker/2021/02/15/docker-manager.html">docker容器管理</a></li>
+        
+          <li><a href="/blog.github.io/docker/2021/02/14/docker-compose.html">docker compose安装</a></li>
+        
+          <li><a href="/blog.github.io/docker/2021/02/13/docker-deamon.html">docker加速</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+  <li>
+    <a href="http://www.ithingsboard.com/" target="_blank">
+      ThingsBoard中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/docker/2021/02/17/docker-network.html">docker网络管理</a></h2>
+        <span class="post-date">
+            
+            2021-02-17
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="1-介绍">1. 介绍</h1>
+
+<p>docker允许通过外部访问容器或容器互联的方式来提供网络服务，在一般使用中通过docker网桥与NAT的通信模板。</p>
+
+<p><img src="/blog.github.io/assets/images/docker/network.png" width="600" alt="" /></p>
+
+<p>从图中可以看出在Host主机中会一个网口和docker0进行通信，docker0就类似于一个交换机用于交换不同容器之间的数据交互从而完成通信。</p>
+
+<p>在docker0创建是会生成一个network namespace（命称空间）进行网络隔离一端在容器内部（eth0）另一端在Host主机中这样就是实现了容器与Host主机交互。</p>
+
+<p><strong>注意：docker0的ip地址就是容器的网关地址，容器的ip地址也是根据docker0进行分配的。</strong></p>
+
+<h2 id="11-外部网络访问容器dnat">1.1. 外部网络访问容器(DNAT)</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-p</span> 80:80 镜像
+
+iptables <span class="nt">-t</span> nat <span class="nt">-A</span> PREROUTING <span class="nt">-m</span> addrtype <span class="nt">--dst-type</span> LOCAL <span class="nt">-j</span> DOCKER
+
+iptables <span class="nt">-t</span> nat <span class="nt">-A</span> DOCKER <span class="o">!</span> <span class="nt">-i</span> docker0 <span class="nt">-p</span> tcp <span class="nt">-m</span> tcp <span class="nt">--dport</span> 80 <span class="nt">-j</span> DNAT <span class="nt">--to-destination</span> 172.17.0.2:80
+</code></pre></div></div>
+
+<h2 id="12-容器访问外部网络snat">1.2. 容器访问外部网络(SNAT)</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables <span class="nt">-t</span> nat <span class="nt">-A</span> POSTROUTING <span class="nt">-s</span> 172.17.0.0/16 <span class="nt">-o</span> docker0 <span class="nt">-j</span> MASQUERADE
+</code></pre></div></div>
+
+<h1 id="2-网络参数修改">2. 网络参数修改</h1>
+
+<p>可以根据实际情况在必要的时候进行相关配置。</p>
+
+<h2 id="21-进程网络修改">2.1. 进程网络修改</h2>
+
+<p>如果修改了进程的网络参数所有进程间的容器参数也会被修改。</p>
+
+<p>-b, –bridge=””	通过此参数可以自定义网桥设备，默认情况下docker会自动创建和使用docker0网桥设备。</p>
+
+<p>–bip 指定docker0的IP和掩码使用标准的CIDR形式:如 11.11.11.11/24。</p>
+
+<p>–dns 配置容器的DNS在启动docker进程是添加所有容器全部生效。</p>
+
+<h2 id="22-容器网络修改">2.2. 容器网络修改</h2>
+
+<p>容器网络修改只对当前容器生效。</p>
+
+<p>–dns 用于指定启动的容器的DNS</p>
+
+<p>–net 用于指定容器的网络通讯方式有以下四个值</p>
+
+<ul>
+  <li>bridge：docker默认方式是网桥模式</li>
+  <li>none：容器没有网络栈</li>
+  <li>container：使用其它容器的网络栈docker容器会加入其它容器的network namespace</li>
+  <li>host：表示容器使用Host的网络没有自己独立的网络栈,容器可以完全访问Host的网络,安全性较低。</li>
+</ul>
+
+<h2 id="23-暴露端口">2.3 暴露端口</h2>
+
+<p>-p /P选项的使用格式</p>
+
+<p>-p :ContainerPort将制定的容器端口映射至主机所有地址的一个动态端口</p>
+
+<p>-p HostPort:ContainerPort映射至指定的主机端口</p>
+
+<p>-p IP:HostPort:ContainerPort映射至指定的主机IP的主机端口</p>
+
+<p>-p IP::ContainerPort映射至指定的主机的IP的动态端口</p>
+
+<p>-P :暴露所需要的所有端口(大P)</p>
+
+<p><strong>备注:docker port ContainerName 可以查看容器当前的映射关系</strong></p>
+
+<h2 id="24-自定义docker0网桥地址">2.4. 自定义docker0网桥地址</h2>
+
+<p>修改/etc/docker/daemon.json文件</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="nl">"bip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"192.168.1.5/24"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"fixed-cidr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.20.0.0/16"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"fixed-cidr-v6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2001:db8::/64"</span><span class="p">,</span><span class="w"> </span><span class="nl">"mtu"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1500"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"default-gateway"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.20.1.1"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"default-gateway-v6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2001:db8:abcd::89"</span><span class="p">,</span><span class="w"> </span><span class="nl">"dns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"10.20.1.2"</span><span class="p">,</span><span class="s2">"10.20.1.3"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h1 id="3-网络隔离">3. 网络隔离</h1>
+
+<p>常见的方式是通过网络名称空间进行隔离。</p>
+
+<p>docker network ls 查看当前可用的网络类型</p>
+
+<p>docker network create -d <类型> <网络空间名称></网络空间名称></类型></p>
+
+<p>类型：</p>
+
+<p>docker network ls	查看当前可用的网络类型</p>
+
+<p>docker network create -d 类型 网络空间名称</p>
+
+<h2 id="31-创建两个网桥">3.1. 创建两个网桥</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create <span class="nt">-d</span> bridge lamp
+docker network create <span class="nt">-d</span> bridge lanp
+</code></pre></div></div>
+<h2 id="32-查看网络">3.2. 查看网络</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="33-运行镜像">3.3. 运行镜像</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-p</span> 81:80  <span class="nt">--name</span> nginx1 <span class="nt">-d</span> <span class="nt">--network</span><span class="o">=</span>lamp nginx
+docker run <span class="nt">-p</span> 82:80  <span class="nt">--name</span> nginx2 <span class="nt">-d</span> <span class="nt">--network</span><span class="o">=</span>lanp nginx
+</code></pre></div></div>
+
+<h2 id="33-查看ip">3.3. 查看IP</h2>
+
+<p>可以通过docker inspect命令进容器内查看Networks下面对应的Gateway参数就是刚则添加的两个网桥地址,此时两个容器之间无法进行通信但依旧可以连接外网。</p>
+
+<h3 id="331-本机网桥">3.3.1. 本机网桥</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>br-147dae318c84: <span class="nv">flags</span><span class="o">=</span>4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 172.20.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:f5ff:fe68:325b  prefixlen 64  scopeid 0x20&lt;<span class="nb">link</span><span class="o">&gt;</span>
+        ether 02:42:f5:68:32:5b  txqueuelen 0  <span class="o">(</span>Ethernet<span class="o">)</span>
+        RX packets 69  bytes 5749 <span class="o">(</span>5.6 KiB<span class="o">)</span>
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 132  bytes 15927 <span class="o">(</span>15.5 KiB<span class="o">)</span>
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+br-c14701e6b0f3: <span class="nv">flags</span><span class="o">=</span>4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 172.19.0.1  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:3eff:fe34:c4c1  prefixlen 64  scopeid 0x20&lt;<span class="nb">link</span><span class="o">&gt;</span>
+        ether 02:42:3e:34:c4:c1  txqueuelen 0  <span class="o">(</span>Ethernet<span class="o">)</span>
+        RX packets 76  bytes 14474 <span class="o">(</span>14.1 KiB<span class="o">)</span>
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 153  bytes 14521 <span class="o">(</span>14.1 KiB<span class="o">)</span>
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+</code></pre></div></div>
+
+<h3 id="332-nginx1容器ip">3.3.2. nginx1容器IP</h3>
+
+<p>使用docker inspect nginx1 /bin/bash进行容器</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"Networks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"lamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"IPAMConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"Links"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"Aliases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="s2">"21fb28ecbe99"</span><span class="w">
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="nl">"NetworkID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c14701e6b0f3a97e28c1a123ecc02d10e5fe59595053339e5b1ffa05b8f83a16"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"EndpointID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f3bb42a8709e20f2091672c27e162260b8c19d552e3b50915b7e3dae776d5fad"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"Gateway"</span><span class="p">:</span><span class="w"> </span><span class="s2">"172.19.0.1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"IPAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"172.19.0.2"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"IPPrefixLen"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"IPv6Gateway"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"GlobalIPv6Address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"GlobalIPv6PrefixLen"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"MacAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"02:42:ac:13:00:02"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<h3 id="333-nginx2容器ip">3.3.3. nginx2容器IP</h3>
+
+<p>使用docker inspect nginx2 /bin/bash进行容器</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"Networks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"lanp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"IPAMConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"Links"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"Aliases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="s2">"ecd1c3320b78"</span><span class="w">
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="nl">"NetworkID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"147dae318c84a71430c239ec348e62b682b124d93bafe7c2b99d5ef611bdae3e"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"EndpointID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f8f1abfff5df843447edbcf0f495181c276b08d97e752b09d5a6b2d883371de"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"Gateway"</span><span class="p">:</span><span class="w"> </span><span class="s2">"172.20.0.1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"IPAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"172.20.0.2"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"IPPrefixLen"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"IPv6Gateway"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"GlobalIPv6Address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"GlobalIPv6PrefixLen"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"MacAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"02:42:ac:14:00:02"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+<h1 id="4-linux桥接器进行主机间通讯">4. Linux桥接器进行主机间通讯</h1>
+
+<h2 id="41-通过配置文件修改">4.1. 通过配置文件修改</h2>
+
+<p>1.复制ifcfg-ens33</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> <span class="nt">-a</span> etc/sysconfig/network-scripts/ifcfg-ens33 ifcfg-br0
+</code></pre></div></div>
+
+<p>2.编辑ens33如下</p>
+
+<p>删除IP相关的配置并添加一个BRIDGE=br0即可。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">TYPE</span><span class="o">=</span>Ethernet
+<span class="nv">PROXY_METHOD</span><span class="o">=</span>none
+<span class="nv">BROWSER_ONLY</span><span class="o">=</span>no
+<span class="nv">BOOTPROTO</span><span class="o">=</span>static
+<span class="nv">DEFROUTE</span><span class="o">=</span><span class="nb">yes
+</span><span class="nv">IPV4_FAILURE_FATAL</span><span class="o">=</span>no
+<span class="nv">IPV6INIT</span><span class="o">=</span><span class="nb">yes
+</span><span class="nv">IPV6_AUTOCONF</span><span class="o">=</span><span class="nb">yes
+</span><span class="nv">IPV6_DEFROUTE</span><span class="o">=</span><span class="nb">yes
+</span><span class="nv">IPV6_FAILURE_FATAL</span><span class="o">=</span>no
+<span class="nv">IPV6_ADDR_GEN_MODE</span><span class="o">=</span>stable-privacy
+<span class="nv">NAME</span><span class="o">=</span>ens33
+<span class="nv">UUID</span><span class="o">=</span>3911e1b4-77c2-46bf-8e1d-c6f930688a70
+<span class="nv">DEVICE</span><span class="o">=</span>ens33
+<span class="nv">ONBOOT</span><span class="o">=</span><span class="nb">yes
+</span><span class="nv">BRIDGE</span><span class="o">=</span>br0
+</code></pre></div></div>
+
+<p>3.编辑br0</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DEVICE</span><span class="o">=</span>br0
+<span class="nv">TYPE</span><span class="o">=</span>Bridge  
+<span class="nv">ONBOOT</span><span class="o">=</span><span class="nb">yes 
+</span><span class="nv">BOOTPROTO</span><span class="o">=</span>static 
+<span class="nv">IPADDR</span><span class="o">=</span>192.168.80.139 
+<span class="nv">NETMASK</span><span class="o">=</span>255.255.255.0 
+<span class="nv">DNS</span><span class="o">=</span>8.8.8.8
+</code></pre></div></div>
+
+<p>4.重启网络</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service network restart
+</code></pre></div></div>
+<p><strong>这样ens33就没有地址br0就是一个可以正式工作的地址,但是docker并不能借助这个地址去通信。</strong></p>
+
+<h2 id="42-pipework">4.2. pipework</h2>
+
+<p>Jérôme Petazzoni 编写了一个叫 pipework 的 shell 脚本，可以帮助用户在比较复杂的场景中完成容器的连接。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install</span> <span class="nt">-y</span> git
+git clone https://github.com/jpetazzo/pipework <span class="o">[</span>root@localhost network-scripts]
+<span class="nb">cp </span>pipework/pipework /usr/local/bin/
+<span class="nb">chmod </span>a+x /usr/local/bin
+docker run <span class="nt">--name</span> nginx1  <span class="nt">--net</span><span class="o">=</span>none <span class="nt">-d</span> nginx <span class="c">#--net=none设置为空的目是为了让pip去指定</span>
+pipework br0 nginx1 192.168.80.135/24 <span class="c">#这个命令是不是永久生效的,需要加在开机脚里面</span>
+</code></pre></div></div>
+
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                docker <span>(6)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                docker <span>(6)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/16/harbor-install.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+            
+                <a href="https://www.bootcss.com/">
+                Bootstrap中文网
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>
