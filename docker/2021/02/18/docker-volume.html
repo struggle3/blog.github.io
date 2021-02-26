@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="ThingsBoard,ThingsBoard中文网,thingsboard,物联网平台" />
-    <meta name="description" content="一个非常优秀开源的物联网平台" />
+    <meta name="keywords" content="docker数据卷，docker volume" />
+    <meta name="description" content="介绍如何在docker内部以及容器之间管理数据" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -263,40 +263,99 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/blog.github.io/thingsbaord/2019/12/30/thingsboard.html">ThingsBoard介绍</a></h2>
+        <h2><a href="/blog.github.io/docker/2021/02/18/docker-volume.html">docker数据卷</a></h2>
         <span class="post-date">
             
-            2019-12-30
+            2021-02-18
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <p><strong>ThingsBoard是一个开源物联网平台，可实现物联网项目的快速开发、管理和扩展。</strong></p>
+    <h1 id="1-数据卷特性">1. 数据卷特性</h1>
 
-<p><strong>我们的目标是提供成熟的IoT云或本地解决方案以此做为您的IoT应用程序服务端基础架构。</strong></p>
+<p>数据卷是一个可供一个或多个容器使用的特殊目录，docker镜像由多个只读层叠加而成启动容器时docker会加载只读镜像层并在镜像栈顶部添加一个读写层。从而数据卷具有如下特性：</p>
 
-<h1 id="平台特点">平台特点</h1>
+<ul>
+  <li><strong>数据卷可以在容器之间共享和重用</strong></li>
+  <li><strong>对数据卷的修改会立马生效</strong></li>
+  <li><strong>对数据卷的更新，不会影响镜像</strong></li>
+  <li><strong>数据卷默认会一直存在，即使容器被删除</strong></li>
+</ul>
 
-<ol>
-  <li>设备管理，资产和客户并定义他们之间的关系。</li>
-  <li>基于设备和资产收集数据并进行可视化。</li>
-  <li>采集遥测数据并进行相关的事件处理进行警报响应。</li>
-  <li>基于远程RPC调用进行设备控制。</li>
-  <li>基于生命周期事件、REST API事件、RPC请求构建工作流。</li>
-  <li>基于动态设计和响应仪表板向你的客户提供设备或资产的遥测数据。</li>
-  <li>基于规则链自定义特定功能。</li>
-  <li>发布设备数据至第三方系统。</li>
-</ol>
+<p>如果运行中的容器修改了现有的一个已经存在的文件，那么该文件将会从读写层下面的的只读层复制到读写层，该文件的只读版本仍然存在，只是已经被读写层中隐藏了该文件的副本并<strong>写时复制</strong>。</p>
 
-<h1 id="设计原则">设计原则</h1>
+<p><img src="/blog.github.io/assets/images/docker/volume.jpg" width="500" alt="" /></p>
 
-<ol>
-  <li>高扩展: 使用领先开源技术构建的可水平扩展平台。</li>
-  <li>高容错：无单点故障集群中的每个节点都是相同的。</li>
-  <li>高性能：单个服务器节点可以根据用例处理几十甚至数十万个设备，集群可以处理数百万台设备。</li>
-  <li>高灵活：开发新功能可以方便的使用自定义部件、规则引擎等。</li>
-  <li>持久化：数据永久保存</li>
-</ol>
+<h1 id="2-数据卷意义">2. 数据卷意义</h1>
+
+<p>由于docker容器有自己的名称空间无法与宿主机的文件系统进行交互并且删除<strong>容器数据就会丢失</strong>，为了保障关闭或重启容器数据不受影响将应程序产生的进行<strong>数据保存</strong>可以使用数据卷做为解决方案。</p>
+
+<p><img src="/blog.github.io/assets/images/docker/volume2.jpg" width="500" alt="" /></p>
+
+<ul>
+  <li>数据卷可以在运行容器时即完成创建与绑定操作。当然，前提需要拥有对应的申明</li>
+  <li>数据卷的目的就是数据持久化</li>
+</ul>
+
+<p><img src="/blog.github.io/assets/images/docker/volume3.jpg" width="500" alt="" /></p>
+
+<h1 id="3-数据卷操作">3. 数据卷操作</h1>
+
+<h2 id="31-创建数据卷">3.1. 创建数据卷</h2>
+
+<p>命令格式：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume create <span class="o">[</span>OPTIONS] <span class="o">[</span>VOLUME]
+<span class="c">#Options:</span>
+<span class="c">#-d, --driver string 指定卷驱动程序名称</span>
+<span class="c">#–label list 设置卷的元数据</span>
+<span class="c">#-o, --opt map 设置驱动程序特定选项</span>
+</code></pre></div></div>
+<p>创建出来的数据卷位于宿主机/var/lib/docker/volumes/下。</p>
+
+<h2 id="32-删除数据卷">3.2. 删除数据卷</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">rm</span> <span class="o">[</span>VOLUME]
+</code></pre></div></div>
+
+<h2 id="33-列出数据卷">3.3. 列出数据卷</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="34-查看数据卷详情">3.4. 查看数据卷详情</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume inspect <span class="o">[</span>VOLUME]
+</code></pre></div></div>
+
+<h2 id="35-删除未使用数据卷">3.5. 删除未使用数据卷</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
+</code></pre></div></div>
+
+<h1 id="4-数据卷应用">4. 数据卷应用</h1>
+
+<ul>
+  <li>Docker-managed Volume</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> MOUNTDIR 镜像
+</code></pre></div></div>
+
+<ul>
+  <li>Bind-mount Volume</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> HOSTDIR:VOLUMEDIR	镜像
+</code></pre></div></div>
+
+<ul>
+  <li>Union Volume</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">--volumes-from</span> ContainerName 镜像
+</code></pre></div></div>
+
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -308,7 +367,7 @@
       
          
             <li class="icon-style"><a href="/blog.github.io/categories.html">
-                thingsbaord <span>(1)</span>
+                docker <span>(7)</span>
                 
             </a></li>
         
@@ -324,7 +383,7 @@
          
             <li class="icon-style">
                 <a href="/blog.github.io/tags.html">
-                IoT <span>(1)</span>
+                docker <span>(7)</span>
                 
                 </a>
             </li>
@@ -339,10 +398,8 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/blog.github.io/abp/2020/04/09/abp-domain.html" class="next">前一篇</a>
     
-    
-    <a class="btn btn-default" href="/blog.github.io/other/2019/04/27/ubuntu-dotnetcore.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/17/docker-network.html" class="previous">后一篇</a>
     
 </div>
             </div>

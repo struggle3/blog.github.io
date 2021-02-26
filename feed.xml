@@ -7,6 +7,99 @@
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>docker数据卷</title>
+				<description>&lt;h1 id=&quot;1-数据卷特性&quot;&gt;1. 数据卷特性&lt;/h1&gt;
+
+&lt;p&gt;数据卷是一个可供一个或多个容器使用的特殊目录，docker镜像由多个只读层叠加而成启动容器时docker会加载只读镜像层并在镜像栈顶部添加一个读写层。从而数据卷具有如下特性：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;数据卷可以在容器之间共享和重用&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;对数据卷的修改会立马生效&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;对数据卷的更新，不会影响镜像&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;数据卷默认会一直存在，即使容器被删除&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果运行中的容器修改了现有的一个已经存在的文件，那么该文件将会从读写层下面的的只读层复制到读写层，该文件的只读版本仍然存在，只是已经被读写层中隐藏了该文件的副本并&lt;strong&gt;写时复制&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/docker/volume.jpg&quot; width=&quot;500&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;2-数据卷意义&quot;&gt;2. 数据卷意义&lt;/h1&gt;
+
+&lt;p&gt;由于docker容器有自己的名称空间无法与宿主机的文件系统进行交互并且删除&lt;strong&gt;容器数据就会丢失&lt;/strong&gt;，为了保障关闭或重启容器数据不受影响将应程序产生的进行&lt;strong&gt;数据保存&lt;/strong&gt;可以使用数据卷做为解决方案。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/docker/volume2.jpg&quot; width=&quot;500&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;数据卷可以在运行容器时即完成创建与绑定操作。当然，前提需要拥有对应的申明&lt;/li&gt;
+  &lt;li&gt;数据卷的目的就是数据持久化&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/docker/volume3.jpg&quot; width=&quot;500&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;3-数据卷操作&quot;&gt;3. 数据卷操作&lt;/h1&gt;
+
+&lt;h2 id=&quot;31-创建数据卷&quot;&gt;3.1. 创建数据卷&lt;/h2&gt;
+
+&lt;p&gt;命令格式：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker volume create &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;OPTIONS] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;VOLUME]
+&lt;span class=&quot;c&quot;&gt;#Options:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#-d, --driver string 指定卷驱动程序名称&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#–label list 设置卷的元数据&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#-o, --opt map 设置驱动程序特定选项&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;创建出来的数据卷位于宿主机/var/lib/docker/volumes/下。&lt;/p&gt;
+
+&lt;h2 id=&quot;32-删除数据卷&quot;&gt;3.2. 删除数据卷&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker volume &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;VOLUME]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;33-列出数据卷&quot;&gt;3.3. 列出数据卷&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker volume &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;34-查看数据卷详情&quot;&gt;3.4. 查看数据卷详情&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker volume inspect &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;VOLUME]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;35-删除未使用数据卷&quot;&gt;3.5. 删除未使用数据卷&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker volume prune
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;4-数据卷应用&quot;&gt;4. 数据卷应用&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Docker-managed Volume&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; roc &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; MOUNTDIR 镜像
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Bind-mount Volume&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; roc &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; HOSTDIR:VOLUMEDIR	镜像
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Union Volume&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; roc &lt;span class=&quot;nt&quot;&gt;--volumes-from&lt;/span&gt; ContainerName 镜像
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Thu, 18 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/18/docker-volume.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/18/docker-volume.html</guid>
+			</item>
+		
+			<item>
 				<title>docker网络管理</title>
 				<description>&lt;h1 id=&quot;1-介绍&quot;&gt;1. 介绍&lt;/h1&gt;
 
@@ -1050,25 +1143,6 @@ ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span c
 				<pubDate>Tue, 01 Dec 2020 22:00:00 +0800</pubDate>
 				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html</link>
 				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html</guid>
-			</item>
-		
-			<item>
-				<title>abp发布说明</title>
-				<description>&lt;blockquote&gt;
-  &lt;p&gt;如果把ABP.VNext项目发布至产品环境时运行需要注意如下事项：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;发布后请修改HttpApi.Host这项目中的appsettings.json文件中的CorsOrigins参数值改为前端服务地址&lt;/li&gt;
-  &lt;li&gt;发布后请修改HttpApi.Host这项目中的appsettings.json文件中的AuthServer参数值改为认证服务地址&lt;/li&gt;
-  &lt;li&gt;发布后请修改前端项目的appsettings.json文件中AuthServer中Authority参数值改为认证服务地址&lt;/li&gt;
-  &lt;li&gt;发布后请修改前端项目的appsettings.json文件中RemoteServices中BaseUrl参数值改为HttpApi.Host服务地址&lt;/li&gt;
-  &lt;li&gt;发布前在数据迁移时在DbMigrator中将IdentityServer相关的Clients参数的RootUrl进行对应修改&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-				<pubDate>Sat, 21 Nov 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/21/abp-publish.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/11/21/abp-publish.html</guid>
 			</item>
 		
 	</channel>
