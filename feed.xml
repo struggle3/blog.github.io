@@ -7,6 +7,146 @@
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>docker远程</title>
+				<description>&lt;p&gt;docker同样可以以远程的方式进行访问，但存在安全风险在生产环境中不建议这样使用。&lt;/p&gt;
+
+&lt;p&gt;配置远程访问1
+修改/etc/docerk/daemon.jso文件&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;&quot;hosts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;tcp://0.0.0.0:2375&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;unix://var/run/docker.sock&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;配置远程访问2
+修改/usr/lib/systemd/system/docker.service&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;远程命令&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker &lt;span class=&quot;nt&quot;&gt;-H&lt;/span&gt; ip:port &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Sat, 20 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/20/docker-yuancheng.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/20/docker-yuancheng.html</guid>
+			</item>
+		
+			<item>
+				<title>docker资源限制</title>
+				<description>&lt;h1 id=&quot;1-前言&quot;&gt;1. 前言&lt;/h1&gt;
+
+&lt;p&gt;默认情况下docker容器是没有对资源进行限制的它会尽可能地使用宿主机能够使用的内存、CPU、IO最终的结果就是可能造成容器关闭、进程关闭等无法预料的后果。&lt;/p&gt;
+
+&lt;p&gt;可以通过CGroup(Control Groups)是Linux内核提供的一种可以限制、记录、隔离进程组(process groups)所使用的物理资源的机制。&lt;/p&gt;
+
+&lt;p&gt;2007年进入Linux2.6.24内核CGroups不是全新开发的它将进程管理从cpuset中剥离出来。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;默认情况下容器做任何限制，容器能够占用当前系统能给容器提供的所有资源；&lt;/li&gt;
+  &lt;li&gt;Docker限制可以从内存、CPU、Block I/O三个方面；&lt;/li&gt;
+  &lt;li&gt;OOME：Out Of Memory Exception；&lt;/li&gt;
+  &lt;li&gt;一旦发生OOME任何进程都有可能被杀死包括docker daemon；&lt;/li&gt;
+  &lt;li&gt;为此Docker调整了docker daemon的OOM优先级以免被内核关闭。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;2-建议&quot;&gt;2. 建议&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;应用做内存压力测试了解正常业务需求下使用的内存情况;&lt;/li&gt;
+  &lt;li&gt;一定要限制容器的内存使用上限；&lt;/li&gt;
+  &lt;li&gt;尽量保证宿主机的资源足够如果通过监控发现资源不足立即进行扩容或者对容器进行迁移；&lt;/li&gt;
+  &lt;li&gt;不要使用swap因为会导致内存计算复杂对调度器非常不友好。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;3-内存限制&quot;&gt;3. 内存限制&lt;/h1&gt;
+
+&lt;p&gt;在docker启动参数中和内存限制有关的包括（内存单位b、k、m、g）：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;-m –memory：容器能使用的最大内存大小，最小值为 4m；&lt;/li&gt;
+  &lt;li&gt;–memory-swap：容器能够使用的swap大小；&lt;/li&gt;
+  &lt;li&gt;–memory-swappiness：默认情况下，主机可以把容器使用的匿名页（anonymous page）swap出来，你可以设置一个0-100之间的值代表允许swap出来的比例；&lt;/li&gt;
+  &lt;li&gt;–memory-reservation：设置一个内存使用的soft limit设置值小于–m设置；&lt;/li&gt;
+  &lt;li&gt;–kernel-memory：容器能够使用的kernel memory大小，最小值为4m；&lt;/li&gt;
+  &lt;li&gt;–oom-kill-disable：是否运行OOM的时候杀死容器。只有设置了-m才可以把这个选项设置为false,否则容器会耗尽主机内存，而且导致主机应用被杀死。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;–memory-swap&lt;/th&gt;
+      &lt;th&gt;–memory&lt;/th&gt;
+      &lt;th&gt;作用&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;正数S&lt;/td&gt;
+      &lt;td&gt;正数M&lt;/td&gt;
+      &lt;td&gt;容器可用总空间为S,其中ram为M,swapy主(S-M),若S=M表示无swap资源可用&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;正数M&lt;/td&gt;
+      &lt;td&gt;相当于示设置swap&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;unset&lt;/td&gt;
+      &lt;td&gt;正数M&lt;/td&gt;
+      &lt;td&gt;若主机启用了swap,则容器的可用swap是2*M&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-1&lt;/td&gt;
+      &lt;td&gt;正数M&lt;/td&gt;
+      &lt;td&gt;若主机启用了swap,则容器可用主面的所有swap空间&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;注意:在容器内使用free命令看到swap的空间没有真实含义,例如看见的16G并不是真正意义上的16G&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;4-cpu限制&quot;&gt;4. CPU限制&lt;/h1&gt;
+
+&lt;p&gt;docker提供的CPU资源限制选项可以在多核系统上限制容器能利用哪些vCPU，但是对容器最多能使用的CPU时间有两种限制方式：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;一是有多个CPU密集型的容器竞争CPU时，设置各个容器能使用的CPU时间相对比例；&lt;/li&gt;
+  &lt;li&gt;二是以绝对的方式设置容器在每个调度周期内最多能使用的CPU时间。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;41-cpu限制&quot;&gt;4.1 CPU限制&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;–cpuset-cpus=””	允许使用的CPU集，值可以为1,3则限制容器只能使用第2个和第4个CPU；&lt;/li&gt;
+  &lt;li&gt;–cpus	能够限制容器可以使用的主机 CPU 个数，并且还可以指定如 1.5 之类的小数；&lt;/li&gt;
+  &lt;li&gt;-c,–cpu-shares=0 CPU共享权值（相对权重），默认值 1024；&lt;/li&gt;
+  &lt;li&gt;–cpuset-mems=””	允许在上执行的内存节点（MEMs）；&lt;/li&gt;
+  &lt;li&gt;–cpu-period=0	即可设置调度周期CFS周期的有效范围是 1ms~1s，对应的–cpu-period的数值范围是1000~1000000；&lt;/li&gt;
+  &lt;li&gt;–cpu-quota=0	设置在每个周期内容器能使用的CPU时间，容器的CPU配额必须不小于1ms，即–cpu-quota的值必须 &amp;gt;= 1000，单位微秒。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;42-针对period和quota的实例&quot;&gt;4.2. 针对period和quota的实例&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cpu-period&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;50000 &lt;span class=&quot;nt&quot;&gt;--cpu-quota&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;25000 ubuntu:16.04 /bin/bash
+docker run &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cpu-period&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10000 &lt;span class=&quot;nt&quot;&gt;--cpu-quota&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;20000 ubuntu:16.04 /bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;5-实验&quot;&gt;5. 实验&lt;/h1&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker pull lorel/docker-stress-ng &lt;span class=&quot;c&quot;&gt;#拉取压力测试镜像&lt;/span&gt;
+docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; stress &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; 256m lorel/docker-stress-ng:latest stress &lt;span class=&quot;nt&quot;&gt;-vm&lt;/span&gt; 2
+docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; stress &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cpus&lt;/span&gt; 2 lorel/docker-stress-ng:latest stress &lt;span class=&quot;nt&quot;&gt;--cpu&lt;/span&gt; 8
+docker run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; stress &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--cpuset-cpus&lt;/span&gt; 0 lorel/docker-stress-ng:latest stress &lt;span class=&quot;nt&quot;&gt;--cpu&lt;/span&gt; 8
+docker stats stress &lt;span class=&quot;c&quot;&gt;#查看压力测试&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Fri, 19 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/19/docker-xianzhi.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/19/docker-xianzhi.html</guid>
+			</item>
+		
+			<item>
 				<title>docker数据卷</title>
 				<description>&lt;h1 id=&quot;1-数据卷特性&quot;&gt;1. 数据卷特性&lt;/h1&gt;
 
@@ -882,267 +1022,6 @@ firewall-cmd –permanent –zone=public –add-rich-rule=’rule source ipset=b
 				<pubDate>Sun, 20 Dec 2020 22:00:00 +0800</pubDate>
 				<link>struggle3.github.io/blog.github.io/blog.github.io/linux/2020/12/20/firewalld.html</link>
 				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/linux/2020/12/20/firewalld.html</guid>
-			</item>
-		
-			<item>
-				<title>abp集成SQLite</title>
-				<description>&lt;h1 id=&quot;集成sqlite&quot;&gt;集成SQLite&lt;/h1&gt;
-&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等特点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、低成本、零配置、自给自足的优势。&lt;/p&gt;
-  &lt;h2 id=&quot;dbmigrator连接字符串&quot;&gt;DbMigrator连接字符串&lt;/h2&gt;
-  &lt;p&gt;在项目找到appsettings.json修改如下:&lt;/p&gt;
-  &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;ConnectionStrings&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Default&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Data Source=D:/mytest.db;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-  &lt;h2 id=&quot;httpapihost连接字符串&quot;&gt;HttpApi.Host连接字符串&lt;/h2&gt;
-  &lt;p&gt;在项目找到appsettings.json修改如下:&lt;/p&gt;
-  &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;ConnectionStrings&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Default&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Data Source=D:/mytest.db;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-  &lt;h2 id=&quot;安装sqlite支持&quot;&gt;安装Sqlite支持&lt;/h2&gt;
-  &lt;p&gt;在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。&lt;/p&gt;
-  &lt;h2 id=&quot;启用sqlite支持&quot;&gt;启用Sqlite支持&lt;/h2&gt;
-  &lt;p&gt;在EntityFrameworkCoreModule类中加入DependsOn如下代码:&lt;/p&gt;
-  &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;[DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))]
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;p&gt;在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码：&lt;/p&gt;
-  &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;Configure&amp;lt;AbpDbContextOptions&amp;gt;(options =&amp;gt;
-{
-    /* The main point to change your DBMS.
-        * See also mytestMigrationsDbContextFactory for EF Core tooling. */
-    //options.UseSqlServer();
-    options.UseSqlite();
-});
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;h2 id=&quot;禁用数据库事务&quot;&gt;禁用数据库事务&lt;/h2&gt;
-  &lt;p&gt;&lt;strong&gt;注意：如果不禁用数据事务会出现database is locked异常。&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码：&lt;/p&gt;
-  &lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;//禁用数据库事务
-Configure&amp;lt;AbpUnitOfWorkDefaultOptions&amp;gt;(options =&amp;gt;
-{
-    options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
-});
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;h2 id=&quot;启用迁移支持&quot;&gt;启用迁移支持&lt;/h2&gt;
-  &lt;p&gt;在EntityFrameworkCore.DbMigrations项目中的MigrationsDbContextFactory类的CreateDbContext修改如下代码:&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-C#&quot;&gt;public mytestMigrationsDbContext CreateDbContext(string[] args)
-{
-    mytestEfCoreEntityExtensionMappings.Configure();
-
-    var configuration = BuildConfiguration();
-
-    var builder = new DbContextOptionsBuilder&amp;lt;mytestMigrationsDbContext&amp;gt;()
-        .UseSqlite(configuration.GetConnectionString(&quot;Default&quot;));
-        //.UseSqlServer(configuration.GetConnectionString(&quot;Default&quot;));
-
-    return new mytestMigrationsDbContext(builder.Options);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;删除Migrations文件所有文件&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;执行命令&quot;&gt;执行命令&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;提示：同时也可以运行控制台的DbMigrator程序&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;添加&lt;/p&gt;
-  &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Add-Migration Initial_Sqlite
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-  &lt;p&gt;删除&lt;/p&gt;
-  &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Update-Database
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-&lt;/blockquote&gt;
-</description>
-				<pubDate>Mon, 07 Dec 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/07/abp-sqlite.html</guid>
-			</item>
-		
-			<item>
-				<title>abpvnext部署</title>
-				<description>&lt;h1 id=&quot;安装nginx&quot;&gt;安装nginx&lt;/h1&gt;
-
-&lt;h2 id=&quot;配置-epel源&quot;&gt;配置 EPEL源&lt;/h2&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; epel-release
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; update
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h2 id=&quot;安装nginx-1&quot;&gt;安装nginx&lt;/h2&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;nginx目录&quot;&gt;nginx目录&lt;/h3&gt;
-&lt;p&gt;默认的配置文件为：/etc/nginx/nginx.conf&lt;/p&gt;
-
-&lt;p&gt;自定义配置文件目录为: /etc/nginx/conf.d/&lt;/p&gt;
-
-&lt;div class=&quot;language-conf highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 前端配置
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
-        &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt;       &lt;span class=&quot;m&quot;&gt;8080&lt;/span&gt;;
-        &lt;span class=&quot;n&quot;&gt;server_name&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;;
-        &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;         /&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;local&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;appwasm&lt;/span&gt;;
-
-        &lt;span class=&quot;c&quot;&gt;# Load configuration files for the default server block.
-&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;include&lt;/span&gt; /&lt;span class=&quot;n&quot;&gt;etc&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;nginx&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;/*.&lt;span class=&quot;n&quot;&gt;conf&lt;/span&gt;;
-
-        &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; / {
-            &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;htm&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;try_files&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;uri&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;uri&lt;/span&gt;/ /&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt; =&lt;span class=&quot;m&quot;&gt;404&lt;/span&gt;;&lt;span class=&quot;c&quot;&gt;#必须配置404
-&lt;/span&gt;        }
-        &lt;span class=&quot;n&quot;&gt;error_page&lt;/span&gt;  &lt;span class=&quot;m&quot;&gt;404&lt;/span&gt;              /&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt;;
-    }
-&lt;span class=&quot;c&quot;&gt;# 后端api配置
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
-        &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt;       &lt;span class=&quot;m&quot;&gt;80&lt;/span&gt;;
-        &lt;span class=&quot;n&quot;&gt;server_name&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;;
-
-        &lt;span class=&quot;c&quot;&gt;#charset koi8-r;
-&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;#access_log  logs/host.access.log  main;
-&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; / {
-            &lt;span class=&quot;n&quot;&gt;proxy_pass&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;://&lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;htm&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;jsp&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;proxy_http_version&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Upgrade&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;http_upgrade&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Connection&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keep&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;alive&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;proxy_cache_bypass&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;http_upgrade&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;Forwarded&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;For&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;proxy_add_x_forwarded_for&lt;/span&gt;;
-            &lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;Forwarded&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;Proto&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;scheme&lt;/span&gt;;
-        }
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;操作nginx&quot;&gt;操作nginx&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;启动 nginx
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl start nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;停止nginx
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl stop nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;重启nginx
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl restart nginx
-nginx &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;查看nginx状态
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl status nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;启用开机启动nginx
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;禁用开机启动nginx
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl disable nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;防火墙firewalld&quot;&gt;防火墙firewalld&lt;/h1&gt;
-
-&lt;h2 id=&quot;开启80端口&quot;&gt;开启80端口&lt;/h2&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--zone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;public &lt;span class=&quot;nt&quot;&gt;--add-port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;80/tcp &lt;span class=&quot;nt&quot;&gt;--permanent&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;命令含义：
-–zone #作用域
-–add-port=80/tcp  #添加端口，格式为：端口/通讯协议
-–permanent   #永久生效，没有此参数重启后失效&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;重启防火墙&quot;&gt;重启防火墙&lt;/h2&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--reload&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;查看端口&quot;&gt;查看端口&lt;/h2&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--list-all&lt;/span&gt;
-firewall-cmd &lt;span class=&quot;nt&quot;&gt;--list-port&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;supervisor安装&quot;&gt;supervisor安装&lt;/h1&gt;
-
-&lt;h2 id=&quot;参考链接&quot;&gt;参考链接&lt;/h2&gt;
-
-&lt;p&gt;https://www.cnblogs.com/xueweihan/p/6195824.html&lt;/p&gt;
-
-&lt;p&gt;https://zhuanlan.zhihu.com/p/260071860&lt;/p&gt;
-
-&lt;p&gt;https://www.cnblogs.com/flaming/p/8149973.html&lt;/p&gt;
-
-&lt;h2 id=&quot;名词解释&quot;&gt;名词解释&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;supervisor：要安装的软件的名称。
-supervisord：装好supervisor软件后，supervisord用于启动supervisor服务。
-supervisorctl：用于管理supervisor配置文件中program和supervisor服务本身。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;使用yum命令安装推荐&quot;&gt;使用yum命令安装（推荐）&lt;/h2&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;epel-release
-yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; supervisor
-systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;supervisord &lt;span class=&quot;c&quot;&gt;# 开机自启动&lt;/span&gt;
-systemctl start supervisord &lt;span class=&quot;c&quot;&gt;# 启动supervisord服务&lt;/span&gt;
-systemctl stop supervisord &lt;span class=&quot;c&quot;&gt;# 停止supervisord服务&lt;/span&gt;
-systemctl status supervisord &lt;span class=&quot;c&quot;&gt;# 查看supervisord服务状态&lt;/span&gt;
-ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt;|grep supervisord &lt;span class=&quot;c&quot;&gt;# 查看是否存在supervisord进程&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;配置dotnet命令&quot;&gt;配置dotnet命令&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;在/etc/supervisord.d目录下添加一个ini文件，同时也可以通过/etc目录下面的supervisord.conf文件中的[include]files进行自定义加载ini文件路径。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[program:myapp]&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;dotnet Wang.MyApp.HttpApi.Host.dll --urls=http://localhost:5000#要执行的命令&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/local/apphost/#命令执行的目录&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ASPNETCORE__ENVIRONMENT=Production#环境变量&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;root#进程执行的用户身份&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;stopsignal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;INT&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;autostart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true#是否自动重启&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;autorestart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true#是否自动启动&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;startsecs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;10#自动重启间隔&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;stderr_logfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/var/log/supervisor/myapp_err.log#标准错误日志&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;stdout_logfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/var/log/supervisor/myapp_out.log#标准输出日志&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;注意：#后边的内容要去掉这里是注释但是supervisor不识别。&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;注意：#日志目录必须是已经存在的目录，不然会出现无法启动的情况。&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;卸载&quot;&gt;卸载&lt;/h2&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; remove supervisor
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-				<pubDate>Tue, 01 Dec 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/abp/2020/12/01/abp-deployment.html</guid>
 			</item>
 		
 	</channel>

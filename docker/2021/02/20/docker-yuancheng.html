@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="docker数据卷，docker volume" />
-    <meta name="description" content="介绍如何在docker内部以及容器之间管理数据" />
+    <meta name="keywords" content="docker远程" />
+    <meta name="description" content="介绍如何对docker进行远程" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -275,99 +275,32 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/blog.github.io/docker/2021/02/18/docker-volume.html">docker数据卷</a></h2>
+        <h2><a href="/blog.github.io/docker/2021/02/20/docker-yuancheng.html">docker远程</a></h2>
         <span class="post-date">
             
-            2021-02-18
+            2021-02-20
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <h1 id="1-数据卷特性">1. 数据卷特性</h1>
+    <p>docker同样可以以远程的方式进行访问，但存在安全风险在生产环境中不建议这样使用。</p>
 
-<p>数据卷是一个可供一个或多个容器使用的特殊目录，docker镜像由多个只读层叠加而成启动容器时docker会加载只读镜像层并在镜像栈顶部添加一个读写层。从而数据卷具有如下特性：</p>
+<p>配置远程访问1
+修改/etc/docerk/daemon.jso文件</p>
 
-<ul>
-  <li><strong>数据卷可以在容器之间共享和重用</strong></li>
-  <li><strong>对数据卷的修改会立马生效</strong></li>
-  <li><strong>对数据卷的更新，不会影响镜像</strong></li>
-  <li><strong>数据卷默认会一直存在，即使容器被删除</strong></li>
-</ul>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"hosts"</span><span class="p">:[</span><span class="s2">"tcp://0.0.0.0:2375"</span><span class="p">,</span><span class="s2">"unix://var/run/docker.sock"</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
 
-<p>如果运行中的容器修改了现有的一个已经存在的文件，那么该文件将会从读写层下面的的只读层复制到读写层，该文件的只读版本仍然存在，只是已经被读写层中隐藏了该文件的副本并<strong>写时复制</strong>。</p>
+<p>配置远程访问2
+修改/usr/lib/systemd/system/docker.service</p>
 
-<p><img src="/blog.github.io/assets/images/docker/volume.jpg" width="500" alt="" /></p>
-
-<h1 id="2-数据卷意义">2. 数据卷意义</h1>
-
-<p>由于docker容器有自己的名称空间无法与宿主机的文件系统进行交互并且删除<strong>容器数据就会丢失</strong>，为了保障关闭或重启容器数据不受影响将应程序产生的进行<strong>数据保存</strong>可以使用数据卷做为解决方案。</p>
-
-<p><img src="/blog.github.io/assets/images/docker/volume2.jpg" width="500" alt="" /></p>
-
-<ul>
-  <li>数据卷可以在运行容器时即完成创建与绑定操作。当然，前提需要拥有对应的申明</li>
-  <li>数据卷的目的就是数据持久化</li>
-</ul>
-
-<p><img src="/blog.github.io/assets/images/docker/volume3.jpg" width="500" alt="" /></p>
-
-<h1 id="3-数据卷操作">3. 数据卷操作</h1>
-
-<h2 id="31-创建数据卷">3.1. 创建数据卷</h2>
-
-<p>命令格式：</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume create <span class="o">[</span>OPTIONS] <span class="o">[</span>VOLUME]
-<span class="c">#Options:</span>
-<span class="c">#-d, --driver string 指定卷驱动程序名称</span>
-<span class="c">#–label list 设置卷的元数据</span>
-<span class="c">#-o, --opt map 设置驱动程序特定选项</span>
-</code></pre></div></div>
-<p>创建出来的数据卷位于宿主机/var/lib/docker/volumes/下。</p>
-
-<h2 id="32-删除数据卷">3.2. 删除数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">rm</span> <span class="o">[</span>VOLUME]
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">ExecStart</span><span class="p">=</span><span class="s">/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock</span>
 </code></pre></div></div>
 
-<h2 id="33-列出数据卷">3.3. 列出数据卷</h2>
+<p>远程命令</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">ls</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nt">-H</span> ip:port <span class="nb">command</span>
 </code></pre></div></div>
-
-<h2 id="34-查看数据卷详情">3.4. 查看数据卷详情</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume inspect <span class="o">[</span>VOLUME]
-</code></pre></div></div>
-
-<h2 id="35-删除未使用数据卷">3.5. 删除未使用数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
-</code></pre></div></div>
-
-<h1 id="4-数据卷应用">4. 数据卷应用</h1>
-
-<ul>
-  <li>Docker-managed Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> MOUNTDIR 镜像
-</code></pre></div></div>
-
-<ul>
-  <li>Bind-mount Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> HOSTDIR:VOLUMEDIR	镜像
-</code></pre></div></div>
-
-<ul>
-  <li>Union Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">--volumes-from</span> ContainerName 镜像
-</code></pre></div></div>
-
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -410,10 +343,8 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/19/docker-xianzhi.html" class="next">前一篇</a>
     
-    
-    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/17/docker-network.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/19/docker-xianzhi.html" class="previous">后一篇</a>
     
 </div>
             </div>

@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="docker数据卷，docker volume" />
-    <meta name="description" content="介绍如何在docker内部以及容器之间管理数据" />
+    <meta name="keywords" content="docker资源限制" />
+    <meta name="description" content="介绍如何对docker进行资源限制" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -275,97 +275,118 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/blog.github.io/docker/2021/02/18/docker-volume.html">docker数据卷</a></h2>
+        <h2><a href="/blog.github.io/docker/2021/02/19/docker-xianzhi.html">docker资源限制</a></h2>
         <span class="post-date">
             
-            2021-02-18
+            2021-02-19
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <h1 id="1-数据卷特性">1. 数据卷特性</h1>
+    <h1 id="1-前言">1. 前言</h1>
 
-<p>数据卷是一个可供一个或多个容器使用的特殊目录，docker镜像由多个只读层叠加而成启动容器时docker会加载只读镜像层并在镜像栈顶部添加一个读写层。从而数据卷具有如下特性：</p>
+<p>默认情况下docker容器是没有对资源进行限制的它会尽可能地使用宿主机能够使用的内存、CPU、IO最终的结果就是可能造成容器关闭、进程关闭等无法预料的后果。</p>
 
-<ul>
-  <li><strong>数据卷可以在容器之间共享和重用</strong></li>
-  <li><strong>对数据卷的修改会立马生效</strong></li>
-  <li><strong>对数据卷的更新，不会影响镜像</strong></li>
-  <li><strong>数据卷默认会一直存在，即使容器被删除</strong></li>
-</ul>
+<p>可以通过CGroup(Control Groups)是Linux内核提供的一种可以限制、记录、隔离进程组(process groups)所使用的物理资源的机制。</p>
 
-<p>如果运行中的容器修改了现有的一个已经存在的文件，那么该文件将会从读写层下面的的只读层复制到读写层，该文件的只读版本仍然存在，只是已经被读写层中隐藏了该文件的副本并<strong>写时复制</strong>。</p>
-
-<p><img src="/blog.github.io/assets/images/docker/volume.jpg" width="500" alt="" /></p>
-
-<h1 id="2-数据卷意义">2. 数据卷意义</h1>
-
-<p>由于docker容器有自己的名称空间无法与宿主机的文件系统进行交互并且删除<strong>容器数据就会丢失</strong>，为了保障关闭或重启容器数据不受影响将应程序产生的进行<strong>数据保存</strong>可以使用数据卷做为解决方案。</p>
-
-<p><img src="/blog.github.io/assets/images/docker/volume2.jpg" width="500" alt="" /></p>
+<p>2007年进入Linux2.6.24内核CGroups不是全新开发的它将进程管理从cpuset中剥离出来。</p>
 
 <ul>
-  <li>数据卷可以在运行容器时即完成创建与绑定操作。当然，前提需要拥有对应的申明</li>
-  <li>数据卷的目的就是数据持久化</li>
+  <li>默认情况下容器做任何限制，容器能够占用当前系统能给容器提供的所有资源；</li>
+  <li>Docker限制可以从内存、CPU、Block I/O三个方面；</li>
+  <li>OOME：Out Of Memory Exception；</li>
+  <li>一旦发生OOME任何进程都有可能被杀死包括docker daemon；</li>
+  <li>为此Docker调整了docker daemon的OOM优先级以免被内核关闭。</li>
 </ul>
 
-<p><img src="/blog.github.io/assets/images/docker/volume3.jpg" width="500" alt="" /></p>
+<h1 id="2-建议">2. 建议</h1>
 
-<h1 id="3-数据卷操作">3. 数据卷操作</h1>
+<ol>
+  <li>应用做内存压力测试了解正常业务需求下使用的内存情况;</li>
+  <li>一定要限制容器的内存使用上限；</li>
+  <li>尽量保证宿主机的资源足够如果通过监控发现资源不足立即进行扩容或者对容器进行迁移；</li>
+  <li>不要使用swap因为会导致内存计算复杂对调度器非常不友好。</li>
+</ol>
 
-<h2 id="31-创建数据卷">3.1. 创建数据卷</h2>
+<h1 id="3-内存限制">3. 内存限制</h1>
 
-<p>命令格式：</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume create <span class="o">[</span>OPTIONS] <span class="o">[</span>VOLUME]
-<span class="c">#Options:</span>
-<span class="c">#-d, --driver string 指定卷驱动程序名称</span>
-<span class="c">#–label list 设置卷的元数据</span>
-<span class="c">#-o, --opt map 设置驱动程序特定选项</span>
-</code></pre></div></div>
-<p>创建出来的数据卷位于宿主机/var/lib/docker/volumes/下。</p>
-
-<h2 id="32-删除数据卷">3.2. 删除数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">rm</span> <span class="o">[</span>VOLUME]
-</code></pre></div></div>
-
-<h2 id="33-列出数据卷">3.3. 列出数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">ls</span>
-</code></pre></div></div>
-
-<h2 id="34-查看数据卷详情">3.4. 查看数据卷详情</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume inspect <span class="o">[</span>VOLUME]
-</code></pre></div></div>
-
-<h2 id="35-删除未使用数据卷">3.5. 删除未使用数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
-</code></pre></div></div>
-
-<h1 id="4-数据卷应用">4. 数据卷应用</h1>
+<p>在docker启动参数中和内存限制有关的包括（内存单位b、k、m、g）：</p>
 
 <ul>
-  <li>Docker-managed Volume</li>
+  <li>-m –memory：容器能使用的最大内存大小，最小值为 4m；</li>
+  <li>–memory-swap：容器能够使用的swap大小；</li>
+  <li>–memory-swappiness：默认情况下，主机可以把容器使用的匿名页（anonymous page）swap出来，你可以设置一个0-100之间的值代表允许swap出来的比例；</li>
+  <li>–memory-reservation：设置一个内存使用的soft limit设置值小于–m设置；</li>
+  <li>–kernel-memory：容器能够使用的kernel memory大小，最小值为4m；</li>
+  <li>–oom-kill-disable：是否运行OOM的时候杀死容器。只有设置了-m才可以把这个选项设置为false,否则容器会耗尽主机内存，而且导致主机应用被杀死。</li>
 </ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> MOUNTDIR 镜像
-</code></pre></div></div>
+<table>
+  <thead>
+    <tr>
+      <th>–memory-swap</th>
+      <th>–memory</th>
+      <th>作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>正数S</td>
+      <td>正数M</td>
+      <td>容器可用总空间为S,其中ram为M,swapy主(S-M),若S=M表示无swap资源可用</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>正数M</td>
+      <td>相当于示设置swap</td>
+    </tr>
+    <tr>
+      <td>unset</td>
+      <td>正数M</td>
+      <td>若主机启用了swap,则容器的可用swap是2*M</td>
+    </tr>
+    <tr>
+      <td>-1</td>
+      <td>正数M</td>
+      <td>若主机启用了swap,则容器可用主面的所有swap空间</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>注意:在容器内使用free命令看到swap的空间没有真实含义,例如看见的16G并不是真正意义上的16G</strong></p>
+
+<h1 id="4-cpu限制">4. CPU限制</h1>
+
+<p>docker提供的CPU资源限制选项可以在多核系统上限制容器能利用哪些vCPU，但是对容器最多能使用的CPU时间有两种限制方式：</p>
 
 <ul>
-  <li>Bind-mount Volume</li>
+  <li>一是有多个CPU密集型的容器竞争CPU时，设置各个容器能使用的CPU时间相对比例；</li>
+  <li>二是以绝对的方式设置容器在每个调度周期内最多能使用的CPU时间。</li>
 </ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> HOSTDIR:VOLUMEDIR	镜像
+<h2 id="41-cpu限制">4.1 CPU限制</h2>
+<ol>
+  <li>–cpuset-cpus=””	允许使用的CPU集，值可以为1,3则限制容器只能使用第2个和第4个CPU；</li>
+  <li>–cpus	能够限制容器可以使用的主机 CPU 个数，并且还可以指定如 1.5 之类的小数；</li>
+  <li>-c,–cpu-shares=0 CPU共享权值（相对权重），默认值 1024；</li>
+  <li>–cpuset-mems=””	允许在上执行的内存节点（MEMs）；</li>
+  <li>–cpu-period=0	即可设置调度周期CFS周期的有效范围是 1ms~1s，对应的–cpu-period的数值范围是1000~1000000；</li>
+  <li>–cpu-quota=0	设置在每个周期内容器能使用的CPU时间，容器的CPU配额必须不小于1ms，即–cpu-quota的值必须 &gt;= 1000，单位微秒。</li>
+</ol>
+
+<h2 id="42-针对period和quota的实例">4.2. 针对period和quota的实例</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--cpu-period</span><span class="o">=</span>50000 <span class="nt">--cpu-quota</span><span class="o">=</span>25000 ubuntu:16.04 /bin/bash
+docker run <span class="nt">-it</span> <span class="nt">--cpu-period</span><span class="o">=</span>10000 <span class="nt">--cpu-quota</span><span class="o">=</span>20000 ubuntu:16.04 /bin/bash
 </code></pre></div></div>
 
-<ul>
-  <li>Union Volume</li>
-</ul>
+<h1 id="5-实验">5. 实验</h1>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">--volumes-from</span> ContainerName 镜像
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull lorel/docker-stress-ng <span class="c">#拉取压力测试镜像</span>
+docker run <span class="nt">--name</span> stress <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">-m</span> 256m lorel/docker-stress-ng:latest stress <span class="nt">-vm</span> 2
+docker run <span class="nt">--name</span> stress <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--cpus</span> 2 lorel/docker-stress-ng:latest stress <span class="nt">--cpu</span> 8
+docker run <span class="nt">--name</span> stress <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--cpuset-cpus</span> 0 lorel/docker-stress-ng:latest stress <span class="nt">--cpu</span> 8
+docker stats stress <span class="c">#查看压力测试</span>
 </code></pre></div></div>
 
 
@@ -410,10 +431,10 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/19/docker-xianzhi.html" class="next">前一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/20/docker-yuancheng.html" class="next">前一篇</a>
     
     
-    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/17/docker-network.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/18/docker-volume.html" class="previous">后一篇</a>
     
 </div>
             </div>
