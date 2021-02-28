@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="abp,abp vnext,abp sqlite" />
-    <meta name="description" content="将ABP VNext切换至SQLite" />
+    <meta name="keywords" content="docker镜像" />
+    <meta name="description" content="介绍docker镜像" />
     <script src="/blog.github.io/assets/js/jquery.min.js"></script>
     <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
     <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -287,93 +287,168 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></h2>
+        <h2><a href="/blog.github.io/docker/2021/02/21/docker-image.html">docker镜像</a></h2>
         <span class="post-date">
             
-            2020-12-07
+            2021-02-21
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <h1 id="集成sqlite">集成SQLite</h1>
-<h2 id="前言">前言</h2>
-<blockquote>
-  <p>SQLite是一款轻型的开源数据库引擎支持事务、跨平台、嵌入式等特点，在如今云计算被广泛应用的时代将其做为数据存储方式具体简单方便、低成本、零配置、自给自足的优势。</p>
-  <h2 id="dbmigrator连接字符串">DbMigrator连接字符串</h2>
-  <p>在项目找到appsettings.json修改如下:</p>
-  <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="dl">"</span><span class="s2">ConnectionStrings</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">Default</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Data Source=D:/mytest.db;</span><span class="dl">"</span>
-  <span class="p">}</span>
-</code></pre></div>  </div>
-  <h2 id="httpapihost连接字符串">HttpApi.Host连接字符串</h2>
-  <p>在项目找到appsettings.json修改如下:</p>
-  <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="dl">"</span><span class="s2">ConnectionStrings</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">Default</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Data Source=D:/mytest.db;</span><span class="dl">"</span>
-  <span class="p">}</span>
-</code></pre></div>  </div>
-  <h2 id="安装sqlite支持">安装Sqlite支持</h2>
-  <p>在EntityFrameworkCore项目中安装Volo.Abp.EntityFrameworkCore.Sqlite依赖包。</p>
-  <h2 id="启用sqlite支持">启用Sqlite支持</h2>
-  <p>在EntityFrameworkCoreModule类中加入DependsOn如下代码:</p>
-  <pre><code class="language-C#">[DependsOn(typeof(AbpEntityFrameworkCoreSqliteModule))]
-</code></pre>
-  <p>在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码：</p>
-  <pre><code class="language-C#">Configure&lt;AbpDbContextOptions&gt;(options =&gt;
-{
-    /* The main point to change your DBMS.
-        * See also mytestMigrationsDbContextFactory for EF Core tooling. */
-    //options.UseSqlServer();
-    options.UseSqlite();
-});
-</code></pre>
-  <h2 id="禁用数据库事务">禁用数据库事务</h2>
-  <p><strong>注意：如果不禁用数据事务会出现database is locked异常。</strong></p>
-</blockquote>
+    <p>Docker对container的使用基本是建立在LXC基础之上，然而LXC存在的问题是难以移动，难以通过标准化的模板去制作、重建、复制和移动container。</p>
 
-<blockquote>
-  <p>在EntityFrameworkCoreModule类中的ConfigureServices方法加入如下代码：</p>
-  <pre><code class="language-C#">//禁用数据库事务
-Configure&lt;AbpUnitOfWorkDefaultOptions&gt;(options =&gt;
-{
-    options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
-});
-</code></pre>
-  <h2 id="启用迁移支持">启用迁移支持</h2>
-  <p>在EntityFrameworkCore.DbMigrations项目中的MigrationsDbContextFactory类的CreateDbContext修改如下代码:</p>
-</blockquote>
+<h1 id="1-镜像的特性">1. 镜像的特性</h1>
 
-<pre><code class="language-C#">public mytestMigrationsDbContext CreateDbContext(string[] args)
-{
-    mytestEfCoreEntityExtensionMappings.Configure();
+<p>容器创建时需要指定镜像每个镜像都由唯一的标示Image ID和容器的Container ID一样，默认是128位可以使用前16为缩略形式，也可以使用镜像名与版本号两部分组合唯一标示，如果省略版本号默认使用最新版本标签(latesr)。</p>
 
-    var configuration = BuildConfiguration();
+<ul>
+  <li>镜像的分层：docker镜像通过联合文件系统 ( union filesystem ) 将各层文件系统叠加在一起；</li>
+  <li>bootfs：用于系统引导的文件系统包括bootloader和kernel容器启动完成后会被卸载以节省内存资源；</li>
+  <li>roofs：位于bootfs之上表现为docker容器的根文件系统；
+    <ul>
+      <li>传统模式中系统启动时内核挂载rootfs时会首先将其挂载为“只读”模式，完整性自检完成后将其挂载为
+读写模式；</li>
+      <li>Docker中rootfs由内核挂载为“只读”模式后通过UFS技术挂载一个“可写”层；</li>
+    </ul>
+  </li>
+</ul>
 
-    var builder = new DbContextOptionsBuilder&lt;mytestMigrationsDbContext&gt;()
-        .UseSqlite(configuration.GetConnectionString("Default"));
-        //.UseSqlServer(configuration.GetConnectionString("Default"));
+<p><img src="/blog.github.io/assets/images/docker/image1.png" width="500" alt="" /></p>
 
-    return new mytestMigrationsDbContext(builder.Options);
-}
-</code></pre>
+<ul>
+  <li>已有的分层只能读不能修改；</li>
+  <li>上层镜像优先级大于底层镜像；</li>
+</ul>
 
-<blockquote>
-  <p>删除Migrations文件所有文件</p>
-</blockquote>
+<p><img src="/blog.github.io/assets/images/docker/image2.png" width="500" alt="" /></p>
 
-<h2 id="执行命令">执行命令</h2>
+<h1 id="2-镜像的优点">2. 镜像的优点</h1>
 
-<blockquote>
-  <p><strong>提示：同时也可以运行控制台的DbMigrator程序</strong></p>
-</blockquote>
+<ul>
+  <li>
+    <p>共享资源：多个镜像从相同的基础镜像（base image）构建而来而且镜像的每一层都可以被共享。</p>
+  </li>
+  <li>
+    <p>节约资源：在宿主机只需在磁盘上保存一份基础镜像，内存中也只需加载一份基础镜像就可以为所有容器服务了。</p>
+  </li>
+  <li>
+    <p>快速部署：如果要部署多个容器基础镜像可以避免多次拷贝。</p>
+  </li>
+  <li>
+    <p>内存更省：因为多个容器共享基础镜像以及操作系统的磁盘缓存机制，多个容器中的进程命中缓存内容的几率大大增加。</p>
+  </li>
+  <li>
+    <p>升级方便：相比于copy-on-write类型的文件系统，基础镜像也是可以挂载为可写层（writeable），可以通过更新基础镜像而一次性更新其之上的容器。</p>
+  </li>
+  <li>
+    <p>允许在不更改基础镜像的同时修改其目录中的文件，所有写操作都发生在最上层可写层（writeable）中。</p>
+  </li>
+</ul>
 
-<blockquote>
-  <p>添加</p>
-  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Add-Migration Initial_Sqlite
-</code></pre></div>  </div>
-  <p>删除</p>
-  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Update-Database
-</code></pre></div>  </div>
-</blockquote>
+<h1 id="3-镜像的创建">3. 镜像的创建</h1>
+
+<p>在实际应用过程中创建镜像的方式有两种，第一种是通过可以将容器转换成镜像；第二种方是通过DockerFile生成对应镜像。</p>
+
+<p><strong>注意：镜像如果运行必须要有工作在前台的守护进程至少一个</strong></p>
+
+<h2 id="31-commit">3.1. commit</h2>
+
+<p>commit只是把当前的容器保存为镜像，如果在把commit的生成镜像运行成容器并不知道要执行什么命令，所以运行的还是原来命令。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker commit <span class="o">[</span>options] 容器ID <span class="o">[</span>repository:tag]
+</code></pre></div></div>
+
+<p>options说明：</p>
+
+<ul>
+  <li>-a :提交的镜像作者；</li>
+  <li>-c :使用Dockerfile指令来创建镜像；</li>
+  <li>-m :提交时的说明文字；</li>
+  <li>-p :在commit时，将容器暂停。</li>
+</ul>
+
+<h2 id="32-dockfile">3.2. Dockfile</h2>
+
+<p>Dockfile是一种被docker程序解释的脚本Dockerfile是由多条指令组成，每条指令对应Linux下面的一条命令。</p>
+
+<p>Docker程序将这些Dockerfile指令解析真正的Linux命令，Dockerfile有自己语法格式和支持的命令。</p>
+
+<p>Docker程序将读取Dockerfile根据指令生成定制的镜像。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build <span class="o">[</span>options]  <span class="nt">-t</span> xx/xx:xx
+</code></pre></div></div>
+
+<p>options说明：</p>
+
+<ul>
+  <li>
+    <p>–build-arg=[] :设置镜像创建时的变量；</p>
+  </li>
+  <li>
+    <p>–cpu-shares :设置 cpu 使用权重；</p>
+  </li>
+  <li>
+    <p>–cpu-period :限制 CPU CFS周期；</p>
+  </li>
+  <li>
+    <p>–cpu-quota :限制 CPU CFS配额；</p>
+  </li>
+  <li>
+    <p>–cpuset-cpus :指定使用的CPU id；</p>
+  </li>
+  <li>
+    <p>–cpuset-mems :指定使用的内存 id；</p>
+  </li>
+  <li>
+    <p>–disable-content-trust :忽略校验，默认开启；</p>
+  </li>
+  <li>
+    <p>-f :指定要使用的Dockerfile路径；</p>
+  </li>
+  <li>
+    <p>–force-rm :设置镜像过程中删除中间容器；</p>
+  </li>
+  <li>
+    <p>–isolation :使用容器隔离技术；</p>
+  </li>
+  <li>
+    <p>–label=[] :设置镜像使用的元数据；</p>
+  </li>
+  <li>
+    <p>-m :设置内存最大值；</p>
+  </li>
+  <li>
+    <p>–memory-swap :设置Swap的最大值为内存+swap，”-1”表示不限swap；</p>
+  </li>
+  <li>
+    <p>–no-cache :创建镜像的过程不使用缓存；</p>
+  </li>
+  <li>
+    <p>–pull :尝试去更新镜像的新版本；</p>
+  </li>
+  <li>
+    <p>–quiet, -q :安静模式，成功后只输出镜像 ID；</p>
+  </li>
+  <li>
+    <p>–rm :设置镜像成功后删除中间容器；</p>
+  </li>
+  <li>
+    <p>–shm-size :设置/dev/shm的大小，默认值是64M；</p>
+  </li>
+  <li>
+    <p>–ulimit :Ulimit配置。</p>
+  </li>
+  <li>
+    <p>–squash :将 Dockerfile 中所有的操作压缩为一层。</p>
+  </li>
+  <li>
+    <p>–tag, -t: 镜像的名字及标签，通常 name:tag 或者 name 格式；可以在一次构建中为一个镜像设置多个标签。</p>
+  </li>
+  <li>
+    <p>–network: 默认 default。在构建期间设置RUN指令的网络模式</p>
+  </li>
+</ul>
+
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -385,7 +460,7 @@ Configure&lt;AbpUnitOfWorkDefaultOptions&gt;(options =&gt;
       
          
             <li class="icon-style"><a href="/blog.github.io/categories.html">
-                abp <span>(10)</span>
+                docker <span>(11)</span>
                 
             </a></li>
         
@@ -401,7 +476,7 @@ Configure&lt;AbpUnitOfWorkDefaultOptions&gt;(options =&gt;
          
             <li class="icon-style">
                 <a href="/blog.github.io/tags.html">
-                abp <span>(10)</span>
+                docker <span>(11)</span>
                 
                 </a>
             </li>
@@ -416,10 +491,10 @@ Configure&lt;AbpUnitOfWorkDefaultOptions&gt;(options =&gt;
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/blog.github.io/linux/2020/12/20/firewalld.html" class="next">前一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/22/docker-dockerfile.html" class="next">前一篇</a>
     
     
-    <a class="btn btn-default" href="/blog.github.io/abp/2020/12/01/abp-deployment.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/blog.github.io/docker/2021/02/20/docker-yuancheng.html" class="previous">后一篇</a>
     
 </div>
             </div>

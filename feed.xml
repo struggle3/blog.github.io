@@ -7,6 +7,325 @@
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>dockerfile</title>
+				<description>&lt;h1 id=&quot;1-什么是dockerfile&quot;&gt;1. 什么是dockerfile&lt;/h1&gt;
+
+&lt;p&gt;Dockfile是一种被docker程序解释的脚本Dockerfile是由多条指令组成，每条指令对应Linux下面的一条命令。&lt;/p&gt;
+
+&lt;p&gt;Docker程序将这些Dockerfile指令解析真正的Linux命令，Dockerfile有自己语法格式和支持的命令。&lt;/p&gt;
+
+&lt;p&gt;Docker程序将读取Dockerfile根据指令生成定制的镜像。&lt;/p&gt;
+
+&lt;h1 id=&quot;2-dockerfile的基本结构&quot;&gt;2. Dockerfile的基本结构&lt;/h1&gt;
+
+&lt;p&gt;Dockerfile分为四部分：基础镜像信息、维护者信息、镜像操作指令和容器启动时执行指令，’#’ 为 Dockerfile 中的注释。&lt;/p&gt;
+
+&lt;h1 id=&quot;3-dockerfile文件说明&quot;&gt;3. Dockerfile文件说明&lt;/h1&gt;
+
+&lt;h2 id=&quot;31from指定基础-image&quot;&gt;3.1.FROM（指定基础 image）：&lt;/h2&gt;
+
+&lt;p&gt;构建指令，必须指定且需要在Dockerfile其他指令的前面，后续的指令都依赖于该指令指定的镜像，FROM指令指定的基础镜像可以是官方远程仓库中的也可以位于本地仓库。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ FROM centos:7.2
+ FROM centos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;32-maintainer指定镜像创建者信息&quot;&gt;3.2. MAINTAINER（指定镜像创建者信息）：&lt;/h1&gt;
+
+&lt;p&gt;构建指令，用于将镜像的制作者相关的信息写入到镜像中，当我们对该镜像执行docker inspect命令时，输出中有相应的字段记录该信息。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ MAINTAINER test &quot;test@tesm.com&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;33run执行命令&quot;&gt;3.3.RUN（执行命令）：&lt;/h2&gt;
+
+&lt;p&gt;构建指令，RUN可以运行任何被基础镜像支持的命令，如基础镜像选择了Centos那么软件管理部分只能使用Centos的包管理命令&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ RUN cd /tmp &amp;amp;&amp;amp; curl -L
+'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.8/bin/apache-tomcat-7.0.8.tar.gz' | tar -xz
+ RUN [&quot;/bin/bash&quot;, &quot;-c&quot;, &quot;echo hello&quot;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;34-cmd设置容器启动时执行的操作&quot;&gt;3.4. CMD（设置容器启动时执行的操作）：&lt;/h2&gt;
+
+&lt;p&gt;设置指令，用于容器启动时指定的操作，该操作可以是执行自定义脚本；也可以是执行系统命令；该指令只能在文件中存在一次如果有多个则只执行最后一条。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ CMD echo “Hello, World!”
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;35-entrypoint设置容器启动时执行的操作&quot;&gt;3.5. ENTRYPOINT（设置容器启动时执行的操作）:&lt;/h2&gt;
+
+&lt;p&gt;设置指令，指定容器启动时执行的命令可以多次设置但是只有最后一个有效。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ ENTRYPOINT ls -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;该指令的使用分为两种情况一种是独自使用另一种和CMD指令配合使用；当独自使用时如果你还使用了CMD命令且CMD是一个完整的可执行的命令；&lt;/strong&gt;
+&lt;strong&gt;那么CMD指令和ENTRYPOINT会互相覆盖只有最后一个CMD或者ENTRYPOINT有效，CMD指令将不会被执行只有ENTRYPOINT指令被执行。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ CMD echo “Hello, World!”
+ ENTRYPOINT ls -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;另一种用法和CMD指令配合使用来指定ENTRYPOINT的默认参数，这时CMD指令不是一个完整的可执行命令仅仅是参数部分ENTRYPOINT指令只能使用JSON方式指定执行命令而不能指定参数。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ FROM ubuntu
+ CMD [&quot;-l&quot;]
+ ENTRYPOINT [&quot;/usr/bin/ls&quot;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;36-user设置容器的用户&quot;&gt;3.6. USER（设置容器的用户）：&lt;/h2&gt;
+
+&lt;p&gt;设置指令，设置启动容器的用户默认是root用户&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ USER daemon = ENTRYPOINT [&quot;memcached&quot;, &quot;-u&quot;, &quot;daemon&quot;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;37-expose指定于外界交互的端口&quot;&gt;3.7. EXPOSE（指定于外界交互的端口）：&lt;/h2&gt;
+
+&lt;p&gt;设置指令，该指令会将容器中的端口映射成宿主机器中的某个端口。当你需要访问容器的时候，可以不是用容器的IP地址而是使用宿主机器的IP地址和映射后的端口。&lt;/p&gt;
+
+&lt;p&gt;整个操作需要两个步骤首先在 Dockerfile 使用 EXPOSE 设置需要映射的容器端口，然后在运行容器的时候指定-p选项加上EXPOSE设置的端口；这样EXPOSE设置的端口号会被随机映射成宿主机器中的一个端口号。&lt;/p&gt;
+
+&lt;p&gt;也可以指定需要映射到宿主机器的那个端口，这时要确保宿主机器上的端口号没有被使用EXPOSE指令可以一次设置多个端口号相应的运行容器的时候，可以配套的多次使用-p选项。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#映射一个端口&lt;/span&gt;
+ EXPOSE 22
+&lt;span class=&quot;c&quot;&gt;#相应的运行容器使用的命令&lt;/span&gt;
+ docker run -p port1 image
+
+&lt;span class=&quot;c&quot;&gt;#映射多个端口&lt;/span&gt;
+ EXPOSE port1 port2 port3
+&lt;span class=&quot;c&quot;&gt;#相应的运行容器使用的命令&lt;/span&gt;
+ docker run -p port1 -p port2 -p port3 image
+&lt;span class=&quot;c&quot;&gt;#还可以指定需要映射到宿主机器上的某个端口号&lt;/span&gt;
+ docker run -p host_port1:port1 -p host_port2:port2 -p host_port3:port3 image
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;38-env用于设置环境变量&quot;&gt;3.8. ENV（用于设置环境变量）：&lt;/h2&gt;
+
+&lt;p&gt;构建指令，在镜像中设置一个环境变量设置完成之后后续的RUN命令都可以使用容器启动后，可以通过docker inspect查看这个环境变量，也可以通过在docker run –env key=value时设置或修改环境变量。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;假如你安装了JAVA程序需要设置JAVA_HOME那么可以在Dockerfile中这样写：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ ENV JAVA_HOME /path/to/java/dirent
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;39-add从src复制文件到容器的dest路径&quot;&gt;3.9 ADD（从src复制文件到容器的dest路径）&lt;/h2&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ ADD &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;
+#&amp;lt;src&amp;gt; 是相对被构建的源目录的相对路径可以是文件或目录的路径也可以是一个远程的文件url&amp;lt;dest&amp;gt; 是容器中的绝对路径
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;310-copy-从sr复制文件到container的dest路径&quot;&gt;3.10. COPY （从sr复制文件到container的dest路径）&lt;/h2&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;311-volume指定挂载点&quot;&gt;3.11. VOLUME（指定挂载点）：&lt;/h2&gt;
+
+&lt;p&gt;设置指令，使容器中的一个目录具有持久化存储数据的功能该目录可以被容器本身使用也可以共享给其他容器使用，当容器中的应用有持久化数据的需求时可以在Dockerfile中使用该指令。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ FROM base
+ VOLUME [&quot;/tmp/data&quot;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;312-workdir切换目录&quot;&gt;3.12. WORKDIR（切换目录）：&lt;/h2&gt;
+
+&lt;p&gt;设置指令，可以多次切换(相当于cd命令)对RUN,CMD,ENTRYPOINT生效。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ WORKDIR /p1 WORKDIR p2 RUN vim a.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;313-onbuild在子镜像中执行&quot;&gt;3.13. ONBUILD（在子镜像中执行）：&lt;/h2&gt;
+
+&lt;p&gt;ONBUILD指定的命令在构建镜像时并不执行而是在它的子镜像中执行。&lt;/p&gt;
+
+&lt;div class=&quot;language-dockerfile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#示例：&lt;/span&gt;
+ ONBUILD ADD . /app/src
+ ONBUILD RUN /usr/local/bin/python-build --dir /app/src 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Mon, 22 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/22/docker-dockerfile.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/22/docker-dockerfile.html</guid>
+			</item>
+		
+			<item>
+				<title>docker镜像</title>
+				<description>&lt;p&gt;Docker对container的使用基本是建立在LXC基础之上，然而LXC存在的问题是难以移动，难以通过标准化的模板去制作、重建、复制和移动container。&lt;/p&gt;
+
+&lt;h1 id=&quot;1-镜像的特性&quot;&gt;1. 镜像的特性&lt;/h1&gt;
+
+&lt;p&gt;容器创建时需要指定镜像每个镜像都由唯一的标示Image ID和容器的Container ID一样，默认是128位可以使用前16为缩略形式，也可以使用镜像名与版本号两部分组合唯一标示，如果省略版本号默认使用最新版本标签(latesr)。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;镜像的分层：docker镜像通过联合文件系统 ( union filesystem ) 将各层文件系统叠加在一起；&lt;/li&gt;
+  &lt;li&gt;bootfs：用于系统引导的文件系统包括bootloader和kernel容器启动完成后会被卸载以节省内存资源；&lt;/li&gt;
+  &lt;li&gt;roofs：位于bootfs之上表现为docker容器的根文件系统；
+    &lt;ul&gt;
+      &lt;li&gt;传统模式中系统启动时内核挂载rootfs时会首先将其挂载为“只读”模式，完整性自检完成后将其挂载为
+读写模式；&lt;/li&gt;
+      &lt;li&gt;Docker中rootfs由内核挂载为“只读”模式后通过UFS技术挂载一个“可写”层；&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/docker/image1.png&quot; width=&quot;500&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;已有的分层只能读不能修改；&lt;/li&gt;
+  &lt;li&gt;上层镜像优先级大于底层镜像；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/docker/image2.png&quot; width=&quot;500&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;2-镜像的优点&quot;&gt;2. 镜像的优点&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;共享资源：多个镜像从相同的基础镜像（base image）构建而来而且镜像的每一层都可以被共享。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;节约资源：在宿主机只需在磁盘上保存一份基础镜像，内存中也只需加载一份基础镜像就可以为所有容器服务了。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;快速部署：如果要部署多个容器基础镜像可以避免多次拷贝。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;内存更省：因为多个容器共享基础镜像以及操作系统的磁盘缓存机制，多个容器中的进程命中缓存内容的几率大大增加。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;升级方便：相比于copy-on-write类型的文件系统，基础镜像也是可以挂载为可写层（writeable），可以通过更新基础镜像而一次性更新其之上的容器。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;允许在不更改基础镜像的同时修改其目录中的文件，所有写操作都发生在最上层可写层（writeable）中。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;3-镜像的创建&quot;&gt;3. 镜像的创建&lt;/h1&gt;
+
+&lt;p&gt;在实际应用过程中创建镜像的方式有两种，第一种是通过可以将容器转换成镜像；第二种方是通过DockerFile生成对应镜像。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：镜像如果运行必须要有工作在前台的守护进程至少一个&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;31-commit&quot;&gt;3.1. commit&lt;/h2&gt;
+
+&lt;p&gt;commit只是把当前的容器保存为镜像，如果在把commit的生成镜像运行成容器并不知道要执行什么命令，所以运行的还是原来命令。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker commit &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;options] 容器ID &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;repository:tag]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;options说明：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;-a :提交的镜像作者；&lt;/li&gt;
+  &lt;li&gt;-c :使用Dockerfile指令来创建镜像；&lt;/li&gt;
+  &lt;li&gt;-m :提交时的说明文字；&lt;/li&gt;
+  &lt;li&gt;-p :在commit时，将容器暂停。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;32-dockfile&quot;&gt;3.2. Dockfile&lt;/h2&gt;
+
+&lt;p&gt;Dockfile是一种被docker程序解释的脚本Dockerfile是由多条指令组成，每条指令对应Linux下面的一条命令。&lt;/p&gt;
+
+&lt;p&gt;Docker程序将这些Dockerfile指令解析真正的Linux命令，Dockerfile有自己语法格式和支持的命令。&lt;/p&gt;
+
+&lt;p&gt;Docker程序将读取Dockerfile根据指令生成定制的镜像。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker build &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;options]  &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; xx/xx:xx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;options说明：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;–build-arg=[] :设置镜像创建时的变量；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–cpu-shares :设置 cpu 使用权重；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–cpu-period :限制 CPU CFS周期；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–cpu-quota :限制 CPU CFS配额；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–cpuset-cpus :指定使用的CPU id；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–cpuset-mems :指定使用的内存 id；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–disable-content-trust :忽略校验，默认开启；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;-f :指定要使用的Dockerfile路径；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–force-rm :设置镜像过程中删除中间容器；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–isolation :使用容器隔离技术；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–label=[] :设置镜像使用的元数据；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;-m :设置内存最大值；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–memory-swap :设置Swap的最大值为内存+swap，”-1”表示不限swap；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–no-cache :创建镜像的过程不使用缓存；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–pull :尝试去更新镜像的新版本；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–quiet, -q :安静模式，成功后只输出镜像 ID；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–rm :设置镜像成功后删除中间容器；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–shm-size :设置/dev/shm的大小，默认值是64M；&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–ulimit :Ulimit配置。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–squash :将 Dockerfile 中所有的操作压缩为一层。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–tag, -t: 镜像的名字及标签，通常 name:tag 或者 name 格式；可以在一次构建中为一个镜像设置多个标签。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;–network: 默认 default。在构建期间设置RUN指令的网络模式&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+				<pubDate>Sun, 21 Feb 2021 22:00:00 +0800</pubDate>
+				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/21/docker-image.html</link>
+				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/21/docker-image.html</guid>
+			</item>
+		
+			<item>
 				<title>docker远程</title>
 				<description>&lt;p&gt;docker同样可以以远程的方式进行访问，但存在安全风险在生产环境中不建议这样使用。&lt;/p&gt;
 
@@ -895,133 +1214,6 @@ e3f991179e33        vmware/harbor-log:v1.2.0           &lt;span class=&quot;s2&q
 				<pubDate>Sat, 13 Feb 2021 22:00:00 +0800</pubDate>
 				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/13/docker-deamon.html</link>
 				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/13/docker-deamon.html</guid>
-			</item>
-		
-			<item>
-				<title>docker安装</title>
-				<description>&lt;p&gt;基于Linux的docker的安装方法&lt;/p&gt;
-&lt;h1 id=&quot;1-脚本安装&quot;&gt;1. 脚本安装&lt;/h1&gt;
-&lt;p&gt;直接使用官方给的安装脚本进行安装，脚本装安装最新版本docker容器，在生产环境中不建议使用此方法因为最新版可能存在一些bug导致一些异常问题。&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum update
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-sSL&lt;/span&gt; https://get.docker.com/ | sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h1 id=&quot;2-yum安装&quot;&gt;2. yum安装&lt;/h1&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum update
-&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/etc/yum.repos.d/docker.repo &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOF&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
-[dockerrepo]
-name=Docker Repository 
-baseurl=https://yum.dockerproject.org/repo/main/centos/7 
-enabled=1
-gpgcheck=1 
-gpgkey=https://yum.dockerproject.org/gpg EOF 
-yum install docker
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h1 id=&quot;3-rpm安装推荐&quot;&gt;3. rpm安装（推荐）&lt;/h1&gt;
-&lt;h2 id=&quot;31-下载地址&quot;&gt;3.1. 下载地址:&lt;/h2&gt;
-
-&lt;p&gt;https://download.docker.com/linux/centos/7/x86_64/stable/Packages/&lt;/p&gt;
-
-&lt;h2 id=&quot;32-步骤&quot;&gt;3.2. 步骤:&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;下载docker-ce-17.03.0.ce-1.el7.centos.x86_64.rpm文件&lt;/li&gt;
-  &lt;li&gt;下载docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm文件&lt;/li&gt;
-  &lt;li&gt;在root下创建docker目录&lt;/li&gt;
-  &lt;li&gt;移动(mv docker* docker)以上两个文件到docker目录&lt;/li&gt;
-  &lt;li&gt;进入docker(cd docker)目录执行yum -y install *命令&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;33-docker测试&quot;&gt;3.3. docker测试&lt;/h2&gt;
-
-&lt;p&gt;执行下面命令&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl start docker 
-systemctl status docker 
-systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;docker
-docker run hello-world
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;34-防火墙设置可选&quot;&gt;3.4. 防火墙设置（可选）&lt;/h2&gt;
-
-&lt;p&gt;因为docker会利用防火墙进行一些设置。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;systemctl stop firewalld &lt;span class=&quot;c&quot;&gt;#关闭防火墙&lt;/span&gt;
-systemctl disable firewalld &lt;span class=&quot;c&quot;&gt;#禁用开机自启&lt;/span&gt;
-getenforce &lt;span class=&quot;c&quot;&gt;#查看selinux是否为Disabled&lt;/span&gt;
-yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;iptables-services
-systemctl start iptables &lt;span class=&quot;c&quot;&gt;#启动&lt;/span&gt;
-systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;iptables &lt;span class=&quot;c&quot;&gt;#启用开机自启&lt;/span&gt;
-iptables &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#清空规则&lt;/span&gt;
-service iptables save &lt;span class=&quot;c&quot;&gt;#保存&lt;/span&gt;
-yum update
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-				<pubDate>Fri, 12 Feb 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/12/docker-install.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/docker/2021/02/12/docker-install.html</guid>
-			</item>
-		
-			<item>
-				<title>firewalld常用命令</title>
-				<description>&lt;h2 id=&quot;常用命令&quot;&gt;常用命令&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;查看是否开启
-systemctl status firewalld.service&lt;/li&gt;
-  &lt;li&gt;打开防火墙
-systemctl start firewalld.service&lt;/li&gt;
-  &lt;li&gt;停用防火墙
-systemctl disable firewalld&lt;/li&gt;
-  &lt;li&gt;禁用防火墙
-systemctl stop firewalld.service&lt;/li&gt;
-  &lt;li&gt;开机启动
-systemctl enable firewalld&lt;/li&gt;
-  &lt;li&gt;取消开机启动
-systemctl disable firewalld&lt;/li&gt;
-  &lt;li&gt;查看运行状态
-firewall-cmd –state&lt;/li&gt;
-  &lt;li&gt;查看接口信息
-firewall-cmd –list-all&lt;/li&gt;
-  &lt;li&gt;更新防火墙规则方法1:无需断开连接，动态更改规则
-firewall-cmd –reload&lt;/li&gt;
-  &lt;li&gt;更新防火墙规则方法2:断开连接，以重启的方式更改规则
-firewall-cmd –complete-reload&lt;/li&gt;
-  &lt;li&gt;查看帮助
-firewall-cmd –help
-–zone=NAME # 指定 Zone
-–permanent # 为永久生效
-–timeout=seconds # 持续一段时间，到期后自动移除，经常用于调试，且不能与 –permanent 同时使用&lt;/li&gt;
-  &lt;li&gt;追加一个8181端口，永久有效
-firewall-cmd –add-port=8181/tcp –permanent&lt;/li&gt;
-  &lt;li&gt;追加一段端口范围
-firewall-cmd –add-port=6000-6600/tcp&lt;/li&gt;
-  &lt;li&gt;开放 ftp 服务
-firewall-cmd –add-service=ftp&lt;/li&gt;
-  &lt;li&gt;添加eth0 接口至 public 信任等级，永久有效
-firewall-cmd –zone=public –add-interface=eth0 –permanent&lt;/li&gt;
-  &lt;li&gt;配置 public zone 的端口转发
-firewall-cmd –zone=public –add-masquerade&lt;/li&gt;
-  &lt;li&gt;然后转发 tcp 22 端口至 9527
-firewall-cmd –zone=public –add-forward-port=port=22:proto=tcp:toport=9527&lt;/li&gt;
-  &lt;li&gt;转发 22 端口数据至另一个 ip 的相同端口上
-firewall-cmd –zone=public –add-forward-port=port=22:proto=tcp:toaddr=192.168.1.123&lt;/li&gt;
-  &lt;li&gt;转发 22 端口数据至另一 ip 的 9527 端口上
-firewall-cmd –zone=public –add-forward-port=port=22:proto=tcp:toport=9527:toaddr=192.168.1.100&lt;/li&gt;
-  &lt;li&gt;IP 封禁
-firewall-cmd –permanent –add-rich-rule=”rule family=’ipv4’ source address=’192.168.1.123’ reject”&lt;/li&gt;
-  &lt;li&gt;通过 ipset 来封禁 ip
-firewall-cmd –permanent –zone=public –new-ipset=blacklist –type=hash:ip
-firewall-cmd –permanent –zone=public –ipset=blacklist –add-entry=192.168.1.123&lt;/li&gt;
-  &lt;li&gt;封禁网段
-firewall-cmd –permanent –zone=public –new-ipset=blacklist –type=hash:net
-firewall-cmd –permanent –zone=public –ipset=blacklist –add-entry=192.168.1.0/24&lt;/li&gt;
-  &lt;li&gt;倒入 ipset 规则 blacklist，然后封禁 blacklist
-firewall-cmd –permanent –zone=public –new-ipset-from-file=/path/blacklist.xml
-firewall-cmd –permanent –zone=public –add-rich-rule=’rule source ipset=blacklist drop’&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-				<pubDate>Sun, 20 Dec 2020 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/linux/2020/12/20/firewalld.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/linux/2020/12/20/firewalld.html</guid>
 			</item>
 		
 	</channel>
