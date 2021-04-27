@@ -7,7 +7,7 @@
 		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
-				<title>Spring Boot 日志</title>
+				<title>Spring Boot日志</title>
 				<description>&lt;p&gt;Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。&lt;/p&gt;
 
 &lt;p&gt;每种Logger都可以通过配置使用控制台或者文件输出日志内容。&lt;/p&gt;
@@ -239,7 +239,7 @@
 			</item>
 		
 			<item>
-				<title>Spring Boot 热部署</title>
+				<title>Spring Boot热部署</title>
 				<description>&lt;h3 id=&quot;1-介绍&quot;&gt;1. 介绍&lt;/h3&gt;
 
 &lt;p&gt;在开发中提升效率可以通过Spring Boot为开发者提供的热部署方式实现修改部分代码后，不需要每次重启即可在界面中看见修改的后的结果。&lt;/p&gt;
@@ -268,7 +268,7 @@
 			</item>
 		
 			<item>
-				<title>Spring Boot 配置类</title>
+				<title>Spring Boot配置类</title>
 				<description>&lt;h3 id=&quot;1-介绍&quot;&gt;1. 介绍&lt;/h3&gt;
 
 &lt;p&gt;通过@Configuration,@Import,@Conditional用于自定义配置类与XML配置文件等效，被注解的类内部包含一个或多个@Bean注解方法。可以被AnnotationConfigApplicationContext或者AnnotationConfigWebApplicationContext进行扫描。用于构建bean定义以及初始化Spring容器。&lt;/p&gt;
