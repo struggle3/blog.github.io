@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Bean实例化" />
+    <meta name="description" content="如何通过Spring容器进行Bean实例化" />
+    <script src="/blog.github.io/assets/js/jquery.min.js"></script>
+    <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
+    <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/blog.github.io/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/blog.github.io/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/blog.github.io/">
+                    <img src="/blog.github.io/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/blog.github.io/">首页</a></li>
+                    <li class="active"><a href="/blog.github.io/archive.html">归档</a></li>
+                    <li class="active"><a href="/blog.github.io/categories.html">分类</a></li>
+                    <li class="active"><a href="/blog.github.io/tags.html">标签</a></li>
+                    <li class="active"><a href="/blog.github.io/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/blog.github.io/">
+            <img src="/blog.github.io/assets/images/touxiang.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/blog.github.io/java/2021/03/16/springboot06.html">Spring Boot 日志</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/15/springboot05.html">Spring Boot 热部署</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/14/springboot04.html">Spring Boot 配置类</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/13/springboot03.html">Spring Boot属性注入配置</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/12/springboot02.html">Spring Boot配置文件</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/java/2021/03/03/spring03.html">Spring Bean实例化</a></h2>
+        <span class="post-date">
+            
+            2021-03-03
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>Bean实例化对象与new运算符效果一样，都是根据指定的类型创建一个实例，不同是Spring的Bean对象创建过程是由IoC容器完成。</p>
+
+<p>基于XML的配置方进行Bean对象实例化，在<bean></bean>标签中的class属性指定实例化对象的类型。</p>
+
+<p>Bean实例化注意要点：</p>
+
+<ol>
+  <li>
+    <bean />
+    <p>标签中的Id属性必须唯一</p>
+  </li>
+  <li>
+    <bean />
+    <p>标签中的Name属性不必唯一</p>
+  </li>
+  <li>
+    <bean />
+    <p>标签中的Class属性可以是实现类、可以是抽象类、不可以是接口</p>
+  </li>
+  <li>
+    <bean />
+    <p>标签中的Id和Name属性使用驼峰命名</p>
+  </li>
+  <li>
+    <alias>标签可以为Bean指定别名
+
+</alias>
+  </li>
+</ol>
+<h1 id="1-构造器实例化">1. 构造器实例化</h1>
+
+<p>默认使用无参的构造器进行bean实例化，通过XML的配置方式实例化代码如下：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"newsItemServiceImpl"</span> <span class="na">class=</span><span class="s">"org.example.NewsItemServiceImpl"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+</code></pre></div></div>
+
+<h1 id="2-静态工厂方法实例化">2. 静态工厂方法实例化</h1>
+
+<p>静态工厂方法创建的bean使用class属性来指定包含static工厂方法的类，并使用名为factory-method的属性来指定工厂方法本身的名称。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.example</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StaticFactory</span> <span class="o">{</span>
+    <span class="kd">public</span>  <span class="kd">static</span>  <span class="nc">NewsItemService</span> <span class="nf">createNewsItemService</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"静态工厂"</span><span class="o">);</span>
+        <span class="k">return</span>  <span class="k">new</span> <span class="nf">NewsItemServiceImpl</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"newsItemServiceImpl"</span> <span class="na">class=</span><span class="s">"org.example.StaticFactory"</span> <span class="na">factory-method=</span><span class="s">"createNewsItemService"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="nd">@Test</span>
+    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">testShowTitle</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="nc">ApplicationContext</span> <span class="n">ctx</span><span class="o">=</span><span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"applicationContext.xml"</span><span class="o">);</span>
+        <span class="nc">NewsItemServiceImpl</span> <span class="n">news</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"newsItemServiceImpl"</span><span class="o">,</span><span class="nc">NewsItemServiceImpl</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">news</span><span class="o">.</span><span class="na">showTitle</span><span class="o">();</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="3-实例工厂方法实例化">3. 实例工厂方法实例化</h1>
+
+<p>实例工厂通过实例化工厂本身之后，在去实例化bean对象并通过factory-bean指定工厂之后其次通过factory-method指定工厂内部的实例化方法进行对象创建。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.example</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InstanceFactory</span> <span class="o">{</span>
+    <span class="kd">public</span>  <span class="nc">NewsItemService</span> <span class="nf">createNewsItemService</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"实例工厂"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">NewsItemServiceImpl</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"instanceFactory"</span> <span class="na">class=</span><span class="s">"org.example.InstanceFactory"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"newsItemServiceImpl"</span> <span class="na">factory-bean=</span><span class="s">"instanceFactory"</span> <span class="na">factory-method=</span><span class="s">"createNewsItemService"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span>  <span class="kt">void</span> <span class="nf">testShowTitle</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="nc">ApplicationContext</span> <span class="n">ctx</span><span class="o">=</span><span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"applicationContext.xml"</span><span class="o">);</span>
+    <span class="nc">NewsItemServiceImpl</span> <span class="n">news</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"newsItemServiceImpl"</span><span class="o">,</span><span class="nc">NewsItemServiceImpl</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">news</span><span class="o">.</span><span class="na">showTitle</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                java <span>(17)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                Spring <span>(10)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/04/spring04.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/02/spring02.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+            <!-- 
+                <a href="https://www.bootcss.com/">
+                Bootstrap中文网
+                </a> -->
+                <!-- not the last, output a ',' -->
+                <!-- 
+             -->
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

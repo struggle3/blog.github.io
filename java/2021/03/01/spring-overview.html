@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Spring简介" />
+    <meta name="description" content="关于spring的简单介绍" />
+    <script src="/blog.github.io/assets/js/jquery.min.js"></script>
+    <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
+    <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/blog.github.io/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/blog.github.io/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/blog.github.io/">
+                    <img src="/blog.github.io/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/blog.github.io/">首页</a></li>
+                    <li class="active"><a href="/blog.github.io/archive.html">归档</a></li>
+                    <li class="active"><a href="/blog.github.io/categories.html">分类</a></li>
+                    <li class="active"><a href="/blog.github.io/tags.html">标签</a></li>
+                    <li class="active"><a href="/blog.github.io/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/blog.github.io/">
+            <img src="/blog.github.io/assets/images/touxiang.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/blog.github.io/java/2021/03/16/springboot06.html">Spring Boot 日志</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/15/springboot05.html">Spring Boot 热部署</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/14/springboot04.html">Spring Boot 配置类</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/13/springboot03.html">Spring Boot属性注入配置</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/12/springboot02.html">Spring Boot配置文件</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/java/2021/03/01/spring-overview.html">Spring简介</a></h2>
+        <span class="post-date">
+            
+            2021-03-01
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="1-spring框架是什么">1. Spring框架是什么</h1>
+<p>Spring最初是由Rod Johnson编写的，并且于2003年6月首次在Apache 2.0许可下发布的一个开源的Java Web应用解决方案,目的是解决Web应用开发的复杂性而创建的。</p>
+
+<p>Spring的核心是控制反转（IoC）和面向切面编程（AOP）。Spring是Java SE/EE开发平台下的轻量级开源框架。</p>
+
+<p>Spring的主要作用就是为代码“解耦”降低代码间的耦合度。就是让对象和对象之间关系不是使用代码关联而是通过配置的形式进行表达。</p>
+
+<p>Spring根据业务系统的功能特点使用Ioc降低业务对象之间耦合度。IoC使得主业务在相互调用过程中，不用再自己维护关系了，即不用再自己创建要使用的对象了。
+而是由Spring容器统一管理自动“注入”（注入即赋值）而AOP使得系统级服务得到了最大复用，且不用再由程序员手工将系统级服务“混杂”到主业务逻辑中了而是由容器统一完成。</p>
+
+<h1 id="2-spring优点">2. Spring优点？</h1>
+
+<p>Spring类似于一个Web开发脚手架由Spring Boot、Spring Cloud、Spring Security、Spring Data等许多模块组成。</p>
+
+<h2 id="21-轻量">2.1. 轻量</h2>
+
+<p>Spring框架使用的jar都比较小，一般在1M以下或者几百kb,Spring核心功能的所需的jar总共在3M左右。</p>
+
+<p>Spring框架运行占用的资源少，运行效率高，不依赖其他jar。</p>
+
+<h2 id="22-面向接口编程">2.2. 面向接口编程</h2>
+
+<p>Spring提供了Ioc控制反转由容器创建对象并管理对象之间的的依赖关系，将程序代码中的对象创建由容器完成实现对象之间的依赖解耦合。</p>
+
+<h2 id="23-aop编程的支持">2.3. AOP编程的支持</h2>
+
+<p>通过Spring提供的AOP功能，方便进行面向切面的编程，许多不容易用传统OOP实现的功能可以通过AOP轻松应付在Spring中，开发人员可以从繁杂的事务管理代码中解脱出来，通过声明式方式灵活地进行事务的管理，提高开发效率和质量。</p>
+
+<h2 id="24-框架集成">2.4. 框架集成</h2>
+
+<p>Spring可以很方便的集成各种开源框架同时降低各种框架的使用难度并在一定程序上简化和统一了使用方法，Spring提供了对各种框架集成接口（如Struts,Hibernate、MyBatis）等的。</p>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                java <span>(17)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                Spring <span>(10)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/02/spring02.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/01/spring-boot-road.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+            <!-- 
+                <a href="https://www.bootcss.com/">
+                Bootstrap中文网
+                </a> -->
+                <!-- not the last, output a ',' -->
+                <!-- 
+             -->
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

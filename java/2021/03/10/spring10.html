@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Spring MVC环境搭建" />
+    <meta name="description" content="如何搭建SpringMVC环境" />
+    <script src="/blog.github.io/assets/js/jquery.min.js"></script>
+    <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
+    <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/blog.github.io/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/blog.github.io/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/blog.github.io/">
+                    <img src="/blog.github.io/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/blog.github.io/">首页</a></li>
+                    <li class="active"><a href="/blog.github.io/archive.html">归档</a></li>
+                    <li class="active"><a href="/blog.github.io/categories.html">分类</a></li>
+                    <li class="active"><a href="/blog.github.io/tags.html">标签</a></li>
+                    <li class="active"><a href="/blog.github.io/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/blog.github.io/">
+            <img src="/blog.github.io/assets/images/touxiang.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/blog.github.io/java/2021/03/16/springboot06.html">Spring Boot 日志</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/15/springboot05.html">Spring Boot 热部署</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/14/springboot04.html">Spring Boot 配置类</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/13/springboot03.html">Spring Boot属性注入配置</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/12/springboot02.html">Spring Boot配置文件</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></h2>
+        <span class="post-date">
+            
+            2021-03-10
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h4 id="1-环境信息">1. 环境信息</h4>
+
+<ol>
+  <li>jdk 1.8</li>
+  <li>idea 2019.3</li>
+  <li>tomcat 8.5.45</li>
+</ol>
+
+<h4 id="2-项目环境">2. 项目环境</h4>
+
+<h5 id="21-pomxml">2.1. pom.xml</h5>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+  <span class="nt">&lt;groupId&gt;</span>org.lei<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>spring_web<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
+
+  <span class="nt">&lt;name&gt;</span>spring_web Maven Webapp<span class="nt">&lt;/name&gt;</span>
+  <span class="c">&lt;!-- FIXME change it to the project's website --&gt;</span>
+  <span class="nt">&lt;url&gt;</span>http://www.example.com<span class="nt">&lt;/url&gt;</span>
+
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+    <span class="nt">&lt;maven.compiler.source&gt;</span>1.8<span class="nt">&lt;/maven.compiler.source&gt;</span>
+    <span class="nt">&lt;maven.compiler.target&gt;</span>1.8<span class="nt">&lt;/maven.compiler.target&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
+
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.11<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="c">&lt;!--    spring web--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-web<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.1.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!--    spring mvc--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.1.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!--   java servlet--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>javax.servlet-api<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>3.0.1<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>compile<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+
+  <span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;finalName&gt;</span>spring_web<span class="nt">&lt;/finalName&gt;</span>
+  <span class="nt">&lt;/build&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+
+</code></pre></div></div>
+
+<h5 id="22webxml">2.2.web.xml</h5>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">&lt;!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" &gt;</span>
+
+<span class="nt">&lt;web-app&gt;</span>
+  <span class="nt">&lt;display-name&gt;</span>Archetype Created Web Application<span class="nt">&lt;/display-name&gt;</span>
+
+  <span class="c">&lt;!--编码过滤--&gt;</span>
+  <span class="nt">&lt;filter&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>encoding<span class="nt">&lt;/filter-name&gt;</span>
+    <span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="nt">&lt;/filter-class&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+      <span class="nt">&lt;param-name&gt;</span>encoding<span class="nt">&lt;/param-name&gt;</span>
+      <span class="nt">&lt;param-value&gt;</span>UTF-8<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+      <span class="nt">&lt;param-name&gt;</span>forceRequestEncoding<span class="nt">&lt;/param-name&gt;</span>
+      <span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+      <span class="nt">&lt;param-name&gt;</span>forceResponseEncoding<span class="nt">&lt;/param-name&gt;</span>
+      <span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+  <span class="nt">&lt;/filter&gt;</span>
+  <span class="nt">&lt;filter-mapping&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>encoding<span class="nt">&lt;/filter-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+  <span class="nt">&lt;/filter-mapping&gt;</span>
+  <span class="c">&lt;!-- Servlet请求转发 --&gt;</span>
+  <span class="nt">&lt;servlet&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>springmvc<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+      <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+      <span class="nt">&lt;param-value&gt;</span>classpath:servlet-context.xml<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+    <span class="c">&lt;!--    表示启动容时初始化Servlet--&gt;</span>
+    <span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
+  <span class="nt">&lt;/servlet&gt;</span>
+  <span class="c">&lt;!--  拦截所有请求至DispatcherServlet--&gt;</span>
+  <span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>springmvc<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>*.do<span class="nt">&lt;/url-pattern&gt;</span>
+  <span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;/web-app&gt;</span>
+
+</code></pre></div></div>
+
+<h5 id="23-servlet-contextxml">2.3 servlet-context.xml</h5>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="na">xmlns:mvc=</span><span class="s">"http://www.springframework.org/schema/mvc"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!--     扫描控制器--&gt;</span>
+    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">"com.controller"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--        &lt;context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/&gt;--&gt;</span>
+    <span class="nt">&lt;/context:component-scan&gt;</span>
+    <span class="c">&lt;!--    使用Servlet处理静态文件--&gt;</span>
+    <span class="nt">&lt;mvc:default-servlet-handler&gt;&lt;/mvc:default-servlet-handler&gt;</span>
+    <span class="c">&lt;!--    使用注解驱动--&gt;</span>
+    <span class="nt">&lt;mvc:annotation-driven&gt;&lt;/mvc:annotation-driven&gt;</span>
+    <span class="c">&lt;!--     视图解析器 --&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"prefix"</span> <span class="na">value=</span><span class="s">"/WEB-INF/jsp/"</span><span class="nt">&gt;&lt;/property&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"suffix"</span> <span class="na">value=</span><span class="s">".jsp"</span><span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;/beans&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>注意：此文件为spring配置文件，位于项目中src/main/resources文件夹中</strong></p>
+
+<h5 id="24-homecontrollerjava">2.4 HomeController.java</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">package</span> <span class="nn">com.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="o">;</span>
+
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"home"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ModelAndView</span> <span class="nf">home</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="nc">ModelAndView</span> <span class="n">modelAndView</span><span class="o">=</span><span class="k">new</span> <span class="nc">ModelAndView</span><span class="o">();</span>
+
+        <span class="n">modelAndView</span><span class="o">.</span><span class="na">addObject</span><span class="o">(</span><span class="s">"home"</span><span class="o">,</span><span class="s">"MVC"</span><span class="o">);</span>
+
+        <span class="n">modelAndView</span><span class="o">.</span><span class="na">setViewName</span><span class="o">(</span><span class="s">"home"</span><span class="o">);</span>
+
+        <span class="k">return</span>  <span class="n">modelAndView</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p><strong>注意：此文件为普通java源文件，位于项目中src/main/java/com/controller文件夹中</strong></p>
+
+<h5 id="24-jsp文件">2.4 jsp文件</h5>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">contentType=</span><span class="s">"text/html;charset=UTF-8"</span> <span class="na">language=</span><span class="s">"java"</span> <span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>你好，${home}<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>注意：此文件为jsp面页文件，位于项目中src/main/webapp/WEB-INF/jsp文件夹中</strong></p>
+
+<h4 id="2-配置tomcat">2. 配置Tomcat</h4>
+
+<h5 id="21-运行idea点击run-edit-configurations如下图所示">2.1. 运行IDEA,点击Run-&gt;EDit Configurations，如下图所示：</h5>
+
+<p><img src="/blog.github.io/assets/images/spring/spring1001.png" alt="" />
+<img src="/blog.github.io/assets/images/spring/spring1002.png" alt="" /></p>
+
+<h5 id="22-点击templates选择tomcat-server-local如下图所示">2.2. 点击Templates，选择Tomcat Server-&gt;Local，如下图所示：</h5>
+
+<p><img src="/blog.github.io/assets/images/spring/spring1003.png" alt="" /></p>
+
+<h5 id="23-点击右侧的configure如下图所示">2.3. 点击右侧的Configure，如下图所示：</h5>
+
+<p><img src="/blog.github.io/assets/images/spring/spring1004.png" alt="" /></p>
+
+<h5 id="24-选择本地tomcat路径如下图所示">2.4. 选择本地tomcat路径，如下图所示：</h5>
+
+<p><img src="/blog.github.io/assets/images/spring/spring1005.png" alt="" /></p>
+
+<h5 id="25-点击create-configiger如下图所示">2.5. 点击Create Configiger，如下图所示：</h5>
+
+<p><img src="/blog.github.io/assets/images/spring/spring1006.png" alt="" /></p>
+
+<h5 id="26-点击fix如下图所示">2.6. 点击Fix，如下图所示：</h5>
+
+<p><img src="/blog.github.io/assets/images/spring/spring1007.png" alt="" /></p>
+
+<h5 id="27-点击ok如下图所示">2.7. 点击OK，如下图所示：</h5>
+
+<p><img src="/blog.github.io/assets/images/spring/spring1008.png" alt="" /></p>
+
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                java <span>(17)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                Spring <span>(10)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/11/springboot01.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/09/spring09.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+            <!-- 
+                <a href="https://www.bootcss.com/">
+                Bootstrap中文网
+                </a> -->
+                <!-- not the last, output a ',' -->
+                <!-- 
+             -->
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

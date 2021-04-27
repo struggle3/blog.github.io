@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Spring AOP实现" />
+    <meta name="description" content="如何使用Spring AOP实现功能" />
+    <script src="/blog.github.io/assets/js/jquery.min.js"></script>
+    <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
+    <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/blog.github.io/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/blog.github.io/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/blog.github.io/">
+                    <img src="/blog.github.io/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/blog.github.io/">首页</a></li>
+                    <li class="active"><a href="/blog.github.io/archive.html">归档</a></li>
+                    <li class="active"><a href="/blog.github.io/categories.html">分类</a></li>
+                    <li class="active"><a href="/blog.github.io/tags.html">标签</a></li>
+                    <li class="active"><a href="/blog.github.io/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/blog.github.io/">
+            <img src="/blog.github.io/assets/images/touxiang.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/blog.github.io/java/2021/03/16/springboot06.html">Spring Boot 日志</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/15/springboot05.html">Spring Boot 热部署</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/14/springboot04.html">Spring Boot 配置类</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/13/springboot03.html">Spring Boot属性注入配置</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/12/springboot02.html">Spring Boot配置文件</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/java/2021/03/07/spring07.html">Spring AOP实现</a></h2>
+        <span class="post-date">
+            
+            2021-03-07
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="1-aspectj-的开发环境">1. AspectJ 的开发环境</h1>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.11<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-context<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>5.2.13.RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-aspects<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>5.2.13.RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<h1 id="2-伪业务代码">2. 伪业务代码</h1>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//接口</span>
+<span class="kn">package</span> <span class="nn">org.example.service</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">NewsItemService</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">showTitle</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="nf">createTitle</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">//实现</span>
+<span class="kn">package</span> <span class="nn">org.example.service.impl</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.example.dao.NewsItemDao</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.example.service.NewsItemService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsItemServiceImpl</span> <span class="kd">implements</span> <span class="nc">NewsItemService</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">showTitle</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">;</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"service方法执行。"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">createTitle</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"123"</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h1 id="3-定义切面">3. 定义切面</h1>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.example</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.JoinPoint</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.ProceedingJoinPoint</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.annotation.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span>
+
+
+<span class="nd">@Aspect</span>
+<span class="nd">@Component</span>
+<span class="cm">/**
+ * 定义切面
+ * 设置：@Aspect
+ *
+ * 1.定义切入点 Pointcut
+ * 2.定义通知 Before
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyAspect</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     * 定义切入点
+     * 定义规则，规定被拦载的方法，需要处理什么方法
+     */</span>
+    <span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(* org.example.service.impl.NewsItemServiceImpl.showTitle(..))"</span><span class="o">)</span>
+    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">MyPointcut</span><span class="o">(){}</span>
+
+    <span class="cm">/**
+     * 在目标方法执行之前执行。
+     * 被注解为前置通知的方法，可以包含一个JoinPoint类型参数。
+     * 该类型的对象本身就是切入点表达式。
+     * 通过该参数，可获取切入点表达式、方法签名、目标对象等。
+     * 不光前置通知的方法可以包含一个JoinPoint类型参数，所有的通知方法均可包含该参数。
+     */</span>
+    <span class="nd">@Before</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"MyPointcut()"</span><span class="o">)</span>
+    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">myBefore</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前置通知。"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@After</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"MyPointcut()"</span><span class="o">)</span>
+    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">MyAfter</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后置通知。"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 在目标方法执行之后执行。由于是目标方法之后执行，所以可以获取到目标方法的返回值。
+     * 该注解的returning属性就是用于指定接收方法返回值的变量名的。所以被注解为后置通知的方法，除了可以包含JoinPoint参数外，还可以包含用于接收返回值的变量。
+     * 建议使用Object类型，因为目标方法的返回值可能是任何类型。
+     * @param result
+     */</span>
+    <span class="nd">@AfterReturning</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"execution(* org.example.service.impl.NewsItemServiceImpl.createTitle())"</span><span class="o">,</span><span class="n">returning</span> <span class="o">=</span> <span class="s">"result"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">MyReturning</span><span class="o">(</span><span class="nc">Object</span> <span class="n">result</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"返回内容："</span><span class="o">+</span><span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Around</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"MyPointcut()"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">MyAround</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">point</span><span class="o">){</span>
+        <span class="nc">Object</span> <span class="n">object</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前置通知之前"</span><span class="o">);</span>
+            <span class="n">object</span><span class="o">=</span><span class="n">point</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"返回通知"</span><span class="o">);</span>
+        <span class="o">}</span>
+       <span class="k">catch</span> <span class="o">(</span><span class="nc">Throwable</span> <span class="n">throwable</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">throwable</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+
+           <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"异常通知"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后置通知之后"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">object</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h1 id="4-启用aop">4. 启用AOP</h1>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">"org.example"</span><span class="nt">&gt;&lt;/context:component-scan&gt;</span>
+<span class="nt">&lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;</span>
+</code></pre></div></div>
+
+<h1 id="5-测试">5. 测试</h1>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nd">@Test</span>
+    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">testShowTitle</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="nc">ApplicationContext</span> <span class="n">ctx</span><span class="o">=</span><span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"applicationContext.xml"</span><span class="o">);</span>
+        <span class="nc">NewsItemService</span> <span class="n">news</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"newsItemServiceImpl"</span><span class="o">,</span><span class="nc">NewsItemService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">news</span><span class="o">.</span><span class="na">showTitle</span><span class="o">();</span>
+        <span class="n">news</span><span class="o">.</span><span class="na">createTitle</span><span class="o">();</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                java <span>(17)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                Spring <span>(10)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/08/spring08.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/06/spring06.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+            <!-- 
+                <a href="https://www.bootcss.com/">
+                Bootstrap中文网
+                </a> -->
+                <!-- not the last, output a ',' -->
+                <!-- 
+             -->
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

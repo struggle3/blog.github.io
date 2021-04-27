@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/blog.github.io/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Spring AOP简介" />
+    <meta name="description" content="如何使用Spring AOP扩展功能" />
+    <script src="/blog.github.io/assets/js/jquery.min.js"></script>
+    <script src="/blog.github.io/assets/js/bootstrap.min.js"></script>
+    <link href="/blog.github.io/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/blog.github.io/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/blog.github.io/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/blog.github.io/">
+                    <img src="/blog.github.io/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/blog.github.io/">首页</a></li>
+                    <li class="active"><a href="/blog.github.io/archive.html">归档</a></li>
+                    <li class="active"><a href="/blog.github.io/categories.html">分类</a></li>
+                    <li class="active"><a href="/blog.github.io/tags.html">标签</a></li>
+                    <li class="active"><a href="/blog.github.io/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/blog.github.io/">
+            <img src="/blog.github.io/assets/images/touxiang.gif" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/docker/2021/02/12/docker-install.html">docker安装</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/blog.github.io/abp/2020/12/07/abp-sqlite.html">abp集成SQLite</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/blog.github.io/java/2021/03/16/springboot06.html">Spring Boot 日志</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/15/springboot05.html">Spring Boot 热部署</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/14/springboot04.html">Spring Boot 配置类</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/13/springboot03.html">Spring Boot属性注入配置</a></li>
+        
+          <li><a href="/blog.github.io/java/2021/03/12/springboot02.html">Spring Boot配置文件</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/blog.github.io/java/2021/03/06/spring06.html">Spring AOP简介</a></h2>
+        <span class="post-date">
+            
+            2021-03-06
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>AOP（Aspect Orient Programming）面向切面编程从动态角度考虑程序运行过程，AOP底层就是采用了JDK动态代理与CGLIB的动态代理。</p>
+
+<p>AOP是Spring框架中可以利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。</p>
+
+<h4 id="1-面向切面编程的好处">1. 面向切面编程的好处？</h4>
+<ol>
+  <li>减少重复；</li>
+  <li>专注业务；</li>
+</ol>
+
+<p><strong>注意：面向切面编程只是面向对象编程的一种补充。</strong></p>
+
+<p><img src="/blog.github.io/assets/images/spring/spring0210.png" alt="" /></p>
+
+<h4 id="2-aop术语">2. AOP术语</h4>
+<h5 id="21-切面aspect">2.1 切面（Aspect）</h5>
+
+<p>切入点与通知的结合，切入点是指要拦截的具体类和方法，通知是指拦截方法后具体要做的是什么，切面是横切关注点的抽象。</p>
+
+<h5 id="22-连接点joinpoint">2.2 连接点（JoinPoint）</h5>
+
+<p>连接点指可以被切面织入的具体方法，通常业务接口中的方法均为连接点。</p>
+
+<h5 id="23-切入点pointcut">2.3 切入点（Pointcut）</h5>
+
+<p>定义规则，规定被拦载的方法，需要处理什么方法</p>
+
+<h5 id="24-目标对象target">2.4 目标对象（Target）</h5>
+
+<p>目标对象指将要被增强的对象，即包含主业务逻辑的类的对象，则该类称为目标类，该类对象称为目标对象。</p>
+
+<h5 id="25-通知advice">2.5 通知（Advice）</h5>
+
+<p>通知表示切面的执行代码块（扩展功能），通知定义了增强（Advice也表示增强）代码切入到目标代码的时间点（某种操作）。</p>
+
+<ol>
+  <li>前置通知(Before)</li>
+  <li>后置通知(After)</li>
+  <li>环绕通知(Around)</li>
+  <li>异常通知(AfterThrowing)</li>
+  <li>最终通知(Retention)</li>
+</ol>
+
+<h5 id="26-织入weave">2.6 织入（Weave）</h5>
+
+<p>将切面应用到目标对象并生成代理对象的这个过程称之为织入</p>
+
+<h5 id="27-引入introduction">2.7 引入（Introduction）</h5>
+
+<p>在不修改原有程序的情况下，在程序运期为类动态添加方法或字段的过程称之为引入</p>
+
+<h4 id="3-aspectj切入点表达式">3. AspectJ切入点表达式</h4>
+
+<p>AspectJ定义了专门的表达式用于指定切入点,表达式的原型是：</p>
+
+<p>execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?)</p>
+
+<p>execution(访问权限 方法返回值 方法声明(参数) 异常类型)</p>
+
+<p>参数说明：</p>
+<ol>
+  <li>modifiers-pattern] 访问权限类型</li>
+  <li>ret-type-pattern 返回值类型</li>
+  <li>declaring-type-pattern 包名类名</li>
+  <li>name-pattern(param-pattern) 方法名(参数类型和参数个数)</li>
+  <li>throws-pattern 抛出异常类型</li>
+  <li>？表示可选的部分</li>
+</ol>
+
+<p>符号说明：</p>
+<ol>
+  <li>*表示0到N个字符</li>
+  <li>..用在方法参数中，表示任意多个参数；用在包名后面，表示当前包及子包</li>
+  <li>+用在类名后，表示当前类及其子类，用在接口后，表示当前接口及其实现类</li>
+</ol>
+
+<p>举例：</p>
+
+<p><strong>execution(public * *(..))</strong>
+指定切入点为：任意公共方法。</p>
+
+<p><strong>execution(* set*(..))</strong>
+指定切入点为：任何一个以“set”开始的方法。</p>
+
+<p><strong>execution(* com.service.<em>.</em>(..))</strong>
+指定切入点为：定义在 service 包里的任意类的任意方法。</p>
+
+<p><strong>execution(* com.service..<em>.</em>(..))</strong>
+指定切入点为：定义在service包或者子包里的任意类的任意方法。“..”出现在类名中时，后面必须跟“*”，表示包、子包下的所有类。</p>
+
+<p><strong>execution(* <em>..service.</em>.*(..))</strong>
+指定所有包下的serivce子包下所有类（接口）中所有方法为切入点</p>
+
+<p><strong>execution(* <em>.service.</em>.*(..))</strong>
+指定只有一级包下的 serivce 子包下所有类（接口）中所有方法为切入点</p>
+
+<p><strong>execution(* <em>.IService.</em>(..))</strong>
+指定只有一级包下的 ISerivce 接口中所有方法为切入点</p>
+
+<p><strong>execution(* <em>..IService.</em>(..))</strong>
+指定所有包下的 ISerivce 接口中所有方法为切入点</p>
+
+<p><strong>execution(* com.service.IService.*(..))</strong>
+指定切入点为：IService 接口中的任意方法。</p>
+
+<p><strong>execution(* com.service.IService+.*(..))</strong></p>
+
+<p>指定切入点为：IService 若为接口，则为接口中的任意方法及其所有实现类中的任意方法；若为类，则为该类及其子类中的任意方法。</p>
+
+<p><strong>execution(* sayHi(String,int)))</strong>
+指定切入点为：所有的 ayHi(String,int)方法,sayHi()方法的第一个参数是String，第二个参数是int。</p>
+
+<p>如果方法中的参数类型是java.lang包下的类可以直接使用类名，否则必须使用全限定类名，如 sayHi( java.util.List, int)。</p>
+
+<p><strong>execution(* sayHi(String,*)))</strong></p>
+
+<p>指定切入点为：所有的sayHi()方法，该方法第一个参数为String，第二个参数可以是任意类型。</p>
+
+<p>如sayHi(String s1,String s2)和joke(String s1,double d2)都是，但sayHi(String s1,double d2,String s3)不是。</p>
+
+<p><strong>execution(* sayHi(String,..)))</strong></p>
+
+<p>指定切入点为：所有的sayHi()方法，该方法第一个参数为String，后面可以有任意个参数。</p>
+
+<p>且参数类型不限。如sayHi(String s1)、sayHi(String s1,String s2)和sayHi(String s1,double d2,String s3)</p>
+
+<p><strong>execution(* sayHi(Object))</strong></p>
+
+<p>指定切入点为：所有的sayHi()方法，方法拥有一个参数并且参数是Object类型。sayHi(Object ob)是，但sayHi(String s)与sayHi(User u)均不是。</p>
+
+<p><strong>execution(* sayHi(Object+)))</strong></p>
+
+<p>指定切入点为：所有的sayHi()方法，方法拥有一个参数，且参数是Object类型或该类的子类。</p>
+
+<p>不仅sayHi(Object ob)是，sayHi(String s)和sayHi(User u)也是。</p>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/blog.github.io/categories.html">
+                java <span>(17)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/blog.github.io/tags.html">
+                Spring <span>(10)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/07/spring07.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/blog.github.io/java/2021/03/05/spring05.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+            <!-- 
+                <a href="https://www.bootcss.com/">
+                Bootstrap中文网
+                </a> -->
+                <!-- not the last, output a ',' -->
+                <!-- 
+             -->
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>
