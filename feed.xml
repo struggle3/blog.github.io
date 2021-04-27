@@ -3,8 +3,8 @@
 	<channel>
 		<title>ye程序员</title>
 		<description>我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。</description>
-		<link>struggle3.github.io/blog.github.io/blog.github.io</link>
-		<atom:link href="struggle3.github.io/blog.github.io/blog.github.io/feed.xml" rel="self" type="application/rss+xml" />
+		<link></link>
+		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
 				<title>Spring Boot日志</title>
@@ -234,8 +234,8 @@
 &lt;p&gt;&lt;strong&gt;注意：如果启用日志记录框架，配置文件中的设置将不生效&lt;/strong&gt;&lt;/p&gt;
 </description>
 				<pubDate>Tue, 16 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/16/springboot06.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/16/springboot06.html</guid>
+				<link>/java/2021/03/16/springboot06.html</link>
+				<guid isPermaLink="true">/java/2021/03/16/springboot06.html</guid>
 			</item>
 		
 			<item>
@@ -263,8 +263,8 @@
 &lt;/ol&gt;
 </description>
 				<pubDate>Mon, 15 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/15/springboot05.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/15/springboot05.html</guid>
+				<link>/java/2021/03/15/springboot05.html</link>
+				<guid isPermaLink="true">/java/2021/03/15/springboot05.html</guid>
 			</item>
 		
 			<item>
@@ -404,8 +404,8 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Sun, 14 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/14/springboot04.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/14/springboot04.html</guid>
+				<link>/java/2021/03/14/springboot04.html</link>
+				<guid isPermaLink="true">/java/2021/03/14/springboot04.html</guid>
 			</item>
 		
 			<item>
@@ -670,8 +670,8 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Sat, 13 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/13/springboot03.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/13/springboot03.html</guid>
+				<link>/java/2021/03/13/springboot03.html</link>
+				<guid isPermaLink="true">/java/2021/03/13/springboot03.html</guid>
 			</item>
 		
 			<item>
@@ -807,7 +807,7 @@
       &lt;li&gt;IDEA&lt;/li&gt;
     &lt;/ul&gt;
 
-    &lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/springboot1201.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;img src=&quot;/assets/images/spring/springboot1201.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;Windows
@@ -818,7 +818,7 @@ java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; 包名.jar
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;java属性（System.getProperties()）
-&lt;img src=&quot;/blog.github.io/assets/images/spring/springboot1202.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;/assets/images/spring/springboot1202.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
   &lt;li&gt;spring.application.json内联JSON
     &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; xxx.jar &lt;span class=&quot;nt&quot;&gt;--spring&lt;/span&gt;.application.json &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'{&quot;acme&quot;：{&quot;name&quot;：&quot;test&quot;}}}'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
@@ -891,8 +891,8 @@ java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; 包名.jar
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Fri, 12 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/12/springboot02.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/12/springboot02.html</guid>
+				<link>/java/2021/03/12/springboot02.html</link>
+				<guid isPermaLink="true">/java/2021/03/12/springboot02.html</guid>
 			</item>
 		
 			<item>
@@ -928,23 +928,23 @@ java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; 包名.jar
 
 &lt;h5 id=&quot;21-点击create-new-project如下图所示&quot;&gt;2.1. 点击Create New Project，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/springboot1101.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/springboot1101.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;22-点击next如下图所示&quot;&gt;2.2. 点击Next，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/springboot1102.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/springboot1102.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;23-点击next如下图所示&quot;&gt;2.3. 点击Next，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/springboot1103.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/springboot1103.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;24-点击next如下图所示&quot;&gt;2.4. 点击Next，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/springboot1104.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/springboot1104.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-项目结构说明&quot;&gt;2. 项目结构说明：&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/springboot1105.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/springboot1105.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;.mvn：maven相关内容，如果电脑中不环境可以用maven进行编译。&lt;/li&gt;
@@ -1007,8 +1007,8 @@ java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; 包名.jar
 
 </description>
 				<pubDate>Thu, 11 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/11/springboot01.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/11/springboot01.html</guid>
+				<link>/java/2021/03/11/springboot01.html</link>
+				<guid isPermaLink="true">/java/2021/03/11/springboot01.html</guid>
 			</item>
 		
 			<item>
@@ -1219,37 +1219,37 @@ java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; 包名.jar
 
 &lt;h5 id=&quot;21-运行idea点击run-edit-configurations如下图所示&quot;&gt;2.1. 运行IDEA,点击Run-&amp;gt;EDit Configurations，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1001.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1002.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring1001.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/assets/images/spring/spring1002.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;22-点击templates选择tomcat-server-local如下图所示&quot;&gt;2.2. 点击Templates，选择Tomcat Server-&amp;gt;Local，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1003.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring1003.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;23-点击右侧的configure如下图所示&quot;&gt;2.3. 点击右侧的Configure，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1004.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring1004.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;24-选择本地tomcat路径如下图所示&quot;&gt;2.4. 选择本地tomcat路径，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1005.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring1005.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;25-点击create-configiger如下图所示&quot;&gt;2.5. 点击Create Configiger，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1006.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring1006.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;26-点击fix如下图所示&quot;&gt;2.6. 点击Fix，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1007.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring1007.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;27-点击ok如下图所示&quot;&gt;2.7. 点击OK，如下图所示：&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring1008.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring1008.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 </description>
 				<pubDate>Wed, 10 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/10/spring10.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/10/spring10.html</guid>
+				<link>/java/2021/03/10/spring10.html</link>
+				<guid isPermaLink="true">/java/2021/03/10/spring10.html</guid>
 			</item>
 		
 			<item>
@@ -1282,7 +1282,7 @@ java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; 包名.jar
 
 &lt;p&gt;Spring的事务管理主要用到两个事务相关的接口,但是自身不管理事务，而是提供了多种事务管理器，将事务管理的职责委托给Hibernate、JPA、JTA等持久化框架的事务来实现。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/blog.github.io/assets/images/spring/spring0901.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/spring/spring0901.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;31-事务管理器接口&quot;&gt;3.1. 事务管理器接口&lt;/h5&gt;
 
@@ -1745,8 +1745,8 @@ jdbc.password=123456
 
 </description>
 				<pubDate>Tue, 09 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/09/spring09.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/09/spring09.html</guid>
+				<link>/java/2021/03/09/spring09.html</link>
+				<guid isPermaLink="true">/java/2021/03/09/spring09.html</guid>
 			</item>
 		
 			<item>
@@ -1926,8 +1926,8 @@ jdbc.password=123456
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Mon, 08 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/08/spring08.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/08/spring08.html</guid>
+				<link>/java/2021/03/08/spring08.html</link>
+				<guid isPermaLink="true">/java/2021/03/08/spring08.html</guid>
 			</item>
 		
 			<item>
@@ -2089,8 +2089,8 @@ jdbc.password=123456
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Sun, 07 Mar 2021 22:00:00 +0800</pubDate>
-				<link>struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/07/spring07.html</link>
-				<guid isPermaLink="true">struggle3.github.io/blog.github.io/blog.github.io/java/2021/03/07/spring07.html</guid>
+				<link>/java/2021/03/07/spring07.html</link>
+				<guid isPermaLink="true">/java/2021/03/07/spring07.html</guid>
 			</item>
 		
 	</channel>
