@@ -6,8 +6,8 @@
     <title>ye程序员</title>
 	<link rel="icon" href="/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="harbor安装" />
-    <meta name="description" content="介绍harbor构建企业级私有仓库" />
+    <meta name="keywords" content="野程序猿,ye程序员,abp,abp vnext,dotnet core,nop,orchard" />
+    <meta name="description" content="我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。" />
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -724,218 +724,114 @@
             </div>
             <div class="col-md-10">
                 
+
 <div class="well article">
-        <h2><a href="/docker/2021/02/16/harbor-install.html">harbor安装</a></h2>
-        <span class="post-date">
-            
-            2021-02-16
-        </span>
-        <hr style="border-top:1px solid #28323C;"/>
-    
-    <div class="post-content">
-    <h1 id="1-必备条件">1. 必备条件</h1>
 
-<ul>
-  <li>Python应该是2.7或更高版本</li>
-  <li>Docker引擎应为1.10或更高版本</li>
-  <li>DockerCompose需要为1.6.0或更高版本</li>
-</ul>
-
-<h1 id="2-harbor安装">2. harbor安装</h1>
-<h2 id="21-官方地址">2.1. 官方地址：</h2>
-
-<ul>
-  <li>https://github.com/vmware/harbor/releases</li>
-</ul>
-
-<h2 id="22-修改harborcfg">2.2. 修改harbor.cfg</h2>
-
-<ul>
-  <li>
-    <p>hostname：目标的主机名或者完全限定域名</p>
-  </li>
-  <li>
-    <p>ui_url_protocol：http或https。默认为http</p>
-  </li>
-  <li>
-    <p>db_password：用于db_auth的MySQL数据库的根密码。更改此密码进行任何生产用途</p>
-  </li>
-  <li>
-    <p>max_job_workers：（默认值为3）允许工作人员同步到远程目标,增加此数字允许系统中更多的并发复制作业。</p>
-  </li>
-  <li>
-    <p>customize_crt：（on或off。默认为on）当此属性打开时prepare脚本将为注册表的令牌的生成/验证创
-建私钥和根证书</p>
-  </li>
-  <li>
-    <p>ssl_cert：SSL证书的路径，仅当协议设置为https时才应用</p>
-  </li>
-  <li>
-    <p>ssl_cert_key：SSL密钥的路径，仅当协议设置为https时才应用</p>
-  </li>
-  <li>
-    <p>secretkey_path：用于在复制策略中加密或解密远程注册表的密码的密钥路径</p>
-  </li>
-</ul>
-
-<h1 id="3-安装步骤">3. 安装步骤</h1>
-
-<h2 id="31-创建https证书以及配置相关目录权限">3.1 创建https证书以及配置相关目录权限</h2>
-
-<ul>
-  <li>openssl genrsa -des3 -out server.key 2048 #生成2048位的私钥</li>
-  <li>openssl req -new -key server.key -out server.csr #生成证书</li>
-  <li>cp server.key server.key.org #备份私钥</li>
-  <li>openssl rsa -in server.key.org -out server.key #退密钥保证nginx使用</li>
-  <li>openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt</li>
-  <li>mkdir -p /data/cert</li>
-  <li>mv server.* /data/cert</li>
-  <li>chmod -R 777 /data/cert #说明</li>
-</ul>
-
-<h2 id="32-复制harbor">3.2 复制harbor</h2>
-
-<ul>
-  <li>直接使用xftp上传到/usr/local/目录中</li>
-  <li>解压tar -zxvf harbor-offline-installer-<version>.tgz</version></li>
-  <li>进入/usr/local/harbor</li>
-  <li>修改harbor.cfg相关参数</li>
-  <li>执行./install.sh</li>
-  <li>执行完成后显示Harbor has been installed and started successfully表示成功</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Creating network <span class="s2">"harbor_harbor"</span> with the default driver
-Creating harbor-log ... <span class="k">done
-</span>Creating harbor-adminserver ... <span class="k">done
-</span>Creating harbor-db          ... <span class="k">done
-</span>Creating registry           ... <span class="k">done
-</span>Creating harbor-ui          ... <span class="k">done
-</span>Creating harbor-jobservice  ... <span class="k">done
-</span>Creating nginx              ... <span class="k">done</span>
-
-✔ <span class="nt">----Harbor</span> has been installed and started successfully.----
-
-</code></pre></div></div>
-
-<h2 id="harbor访问测试">harbor访问测试</h2>
-
-<p>地址:hub.somoiot.com</p>
-
-<p>默认管理员用户名:admin</p>
-
-<p>默认管理员密码:Harbor12345</p>
-
-<p><strong>访问地址为harbor.cfg文件中的hostname所设置的内容</strong></p>
-
-<h2 id="34-harbor容器测试">3.4 harbor容器测试</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps <span class="nt">-a</span>
-</code></pre></div></div>
-
-<p>通过以上命令如果出现如下结果表示harbor正常</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS                    PORTS                                                              NAMES
-f7bbedc5fff6        vmware/nginx-photon:1.11.13        <span class="s2">"nginx -g 'daemon ..."</span>   5 minutes ago       Up 5 minutes              0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp, 0.0.0.0:4443-&gt;4443/tcp   nginx
-e0ec964c19bd        vmware/harbor-jobservice:v1.2.0    <span class="s2">"/harbor/harbor_jo..."</span>   5 minutes ago       Up 5 minutes                                                                                 harbor-jobservice
-6c2492697c89        vmware/harbor-ui:v1.2.0            <span class="s2">"/harbor/harbor_ui"</span>      5 minutes ago       Up 5 minutes                                                                                 harbor-ui
-80eb4ab639ec        vmware/registry:2.6.2-photon       <span class="s2">"/entrypoint.sh se..."</span>   5 minutes ago       Up 5 minutes              5000/tcp                                                           registry
-edd9febe0a9c        vmware/harbor-db:v1.2.0            <span class="s2">"docker-entrypoint..."</span>   5 minutes ago       Up 5 minutes              3306/tcp                                                           harbor-db
-a32c62e85ecf        vmware/harbor-adminserver:v1.2.0   <span class="s2">"/harbor/harbor_ad..."</span>   5 minutes ago       Up 5 minutes                                                                                 harbor-adminserver
-e3f991179e33        vmware/harbor-log:v1.2.0           <span class="s2">"/bin/sh -c 'crond..."</span>   5 minutes ago       Up 5 minutes              127.0.0.1:1514-&gt;514/tcp                                            harbor-log
-
-</code></pre></div></div>
-
-<h1 id="4-使用">4. 使用</h1>
-
-<h2 id="41-服务端">4.1. 服务端</h2>
-
-<h3 id="411-指定镜像仓库地址">4.1.1. 指定镜像仓库地址</h3>
-
-<p>添加/etc/docker/daemon.json配置以便于docker认证通过</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"insecure-registries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"ip"</span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-<h3 id="412-下载测试镜像">4.1.2. 下载测试镜像</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull hello-world
-</code></pre></div></div>
-<h3 id="413-给镜像重新打标签">4.1.3. 给镜像重新打标签</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dockertag hello-world serverip/hello-world:latest
-</code></pre></div></div>
-
-<h3 id="414-登录进行上传">4.1.4. 登录进行上传</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dockerlogin serverip
-</code></pre></div></div>
-
-<h2 id="42-docker客户端">4.2. docker客户端</h2>
-
-<h3 id="421-指定镜像仓库地址">4.2.1. 指定镜像仓库地址</h3>
-
-<p>添加/etc/docker/daemon.json配置以便于docker认证通过</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"insecure-registries"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"ip"</span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-<h3 id="422-下载测试镜像">4.2.2. 下载测试镜像</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull ip/hello-world:latest
-</code></pre></div></div>
-
-<p><strong>注意:以上环境如果没有DNS解析服务必须要在/etc/hosts文件中添加一行解析记录</strong></p>
-
-
-    <hr style="border-top:1px solid #28323C;"/>
-
-    <!-- tags and categories under post -->
-    
-    <ul class="list-unstyled list-inline">
-      <li><i class="icon-folder-open"></i></li>
-      
-      
-         
-            <li class="icon-style"><a href="/categories.html">
-                docker <span>(11)</span>
-                
-            </a></li>
+    <span class="post-date">
+        <!--
         
-      
-    </ul>
-      
-
-    
-    <ul class="list-unstyled list-inline">
-      <li><i class="icon-tags"></i></li>
-      
-      
-         
-            <li class="icon-style">
-                <a href="/tags.html">
-                docker <span>(11)</span>
-                
-                </a>
-            </li>
+        April
+        11th,
         
-      
-      
-    </ul>
-      
-
+        2020
+        -->
+        
+        2020-04-11
+    </span>
+    
+    <h4>
+        <a href="/abp/2020/04/11/abp-angular.html">abp前端开发</a>
+    </h4>
+    
+    <div class="post-description">
+        第一次使用ABP VNext进行angular前端开发
     </div>
     
 </div>
-<div class="pagination">
+
+<div class="well article">
+
+    <span class="post-date">
+        <!--
+        
+        April
+        10th,
+        
+        2020
+        -->
+        
+        2020-04-10
+    </span>
     
-    <a class="btn btn-default" href="/docker/2021/02/17/docker-network.html" class="next">前一篇</a>
+    <h4>
+        <a href="/abp/2020/04/10/abp-service.html">abp服务层开发</a>
+    </h4>
     
-    
-    <a class="btn btn-default" href="/docker/2021/02/15/docker-manager.html" class="previous">后一篇</a>
+    <div class="post-description">
+        第一次使用ABP VNext进行服务层开发
+    </div>
     
 </div>
+
+<div class="well article">
+
+    <span class="post-date">
+        <!--
+        
+        April
+        9th,
+        
+        2020
+        -->
+        
+        2020-04-09
+    </span>
+    
+    <h4>
+        <a href="/abp/2020/04/09/abp-domain.html">abp领域层开发</a>
+    </h4>
+    
+    <div class="post-description">
+        第一次使用ABP VNext进行领域层开发
+    </div>
+    
+</div>
+
+<div class="well article">
+
+    <span class="post-date">
+        <!--
+        
+        April
+        27th,
+        
+        2019
+        -->
+        
+        2019-04-27
+    </span>
+    
+    <h4>
+        <a href="/other/2019/04/27/ubuntu-dotnetcore.html">使用ubuntu做为dotnet core开发环境</a>
+    </h4>
+    
+    <div class="post-description">
+        使用ubuntu做为dotnet core开发环境
+    </div>
+    
+</div>
+
+
+<div class="pagination">
+  
+      
+        <a class="btn btn-default" href="/page6" class="previous">上一页</a>
+      
+  
+  <!-- <span class="page_number ">当前页: 7 - 7</span> -->
+  
+</div>
+
             </div>
         </div>
     </div>
