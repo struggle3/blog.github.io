@@ -17,6 +17,10 @@ table, th, td { padding-left: 10px; border: 1px solid #000; }
 
 .wrap { position: relative; min-height: 100%; }
 
+.well { margin-bottom: 10px; }
+
+.pagination { margin: 10px 0; }
+
 .footer { text-align: center; color: #fff; position: absolute; bottom: 0; left: 0; width: 100%; min-height: 40px; background-color: #28323C; }
 
 .footer a { /* color: #aaa; */ color: #aaa; }
@@ -39,7 +43,7 @@ table, th, td { padding-left: 10px; border: 1px solid #000; }
 /* Xixia logo */
 .sidebar-header { text-align: center; margin-bottom: 10px; }
 
-.container-left { margin: 0; padding-bottom: 60px; }
+.container-left { margin: 0; padding-bottom: 30px; }
 
 /* post style */
 .article { font-size: 14px; color: #28323C; }
