@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="docker资源限制" />
+    <meta name="description" content="介绍如何对docker进行资源限制" />
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?417785846428737cc886d2095c0511c3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">首页</a></li>
+                    <li class="active"><a href="/archive.html">归档</a></li>
+                    <li class="active"><a href="/categories.html">分类</a></li>
+                    <li class="active"><a href="/tags.html">标签</a></li>
+                    <li class="active"><a href="/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/touxiang.jpg" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/02/spring02.html">Spring开发环境</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/01/spring-overview.html">Spring简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/11/springboot01.html">Spring Boot简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/java/2021/03/17/springmvc01.html">Spring MVC</a></li>
+        
+          <li><a href="/java/2021/03/16/springboot06.html">Spring Boot日志</a></li>
+        
+          <li><a href="/java/2021/03/15/springboot05.html">Spring Boot热部署</a></li>
+        
+          <li><a href="/java/2021/03/14/springboot04.html">Spring Boot配置类</a></li>
+        
+          <li><a href="/java/2021/03/13/springboot03.html">Spring Boot属性注入配置</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/docker/2020/02/19/docker-xianzhi.html">docker资源限制</a></h2>
+        <span class="post-date">
+            
+            2020-02-19
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="1-前言">1. 前言</h1>
+
+<p>默认情况下docker容器是没有对资源进行限制的它会尽可能地使用宿主机能够使用的内存、CPU、IO最终的结果就是可能造成容器关闭、进程关闭等无法预料的后果。</p>
+
+<p>可以通过CGroup(Control Groups)是Linux内核提供的一种可以限制、记录、隔离进程组(process groups)所使用的物理资源的机制。</p>
+
+<p>2007年进入Linux2.6.24内核CGroups不是全新开发的它将进程管理从cpuset中剥离出来。</p>
+
+<ul>
+  <li>默认情况下容器做任何限制，容器能够占用当前系统能给容器提供的所有资源；</li>
+  <li>Docker限制可以从内存、CPU、Block I/O三个方面；</li>
+  <li>OOME：Out Of Memory Exception；</li>
+  <li>一旦发生OOME任何进程都有可能被杀死包括docker daemon；</li>
+  <li>为此Docker调整了docker daemon的OOM优先级以免被内核关闭。</li>
+</ul>
+
+<h1 id="2-建议">2. 建议</h1>
+
+<ol>
+  <li>应用做内存压力测试了解正常业务需求下使用的内存情况;</li>
+  <li>一定要限制容器的内存使用上限；</li>
+  <li>尽量保证宿主机的资源足够如果通过监控发现资源不足立即进行扩容或者对容器进行迁移；</li>
+  <li>不要使用swap因为会导致内存计算复杂对调度器非常不友好。</li>
+</ol>
+
+<h1 id="3-内存限制">3. 内存限制</h1>
+
+<p>在docker启动参数中和内存限制有关的包括（内存单位b、k、m、g）：</p>
+
+<ul>
+  <li>-m –memory：容器能使用的最大内存大小，最小值为 4m；</li>
+  <li>–memory-swap：容器能够使用的swap大小；</li>
+  <li>–memory-swappiness：默认情况下，主机可以把容器使用的匿名页（anonymous page）swap出来，你可以设置一个0-100之间的值代表允许swap出来的比例；</li>
+  <li>–memory-reservation：设置一个内存使用的soft limit设置值小于–m设置；</li>
+  <li>–kernel-memory：容器能够使用的kernel memory大小，最小值为4m；</li>
+  <li>–oom-kill-disable：是否运行OOM的时候杀死容器。只有设置了-m才可以把这个选项设置为false,否则容器会耗尽主机内存，而且导致主机应用被杀死。</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>–memory-swap</th>
+      <th>–memory</th>
+      <th>作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>正数S</td>
+      <td>正数M</td>
+      <td>容器可用总空间为S,其中ram为M,swapy主(S-M),若S=M表示无swap资源可用</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>正数M</td>
+      <td>相当于示设置swap</td>
+    </tr>
+    <tr>
+      <td>unset</td>
+      <td>正数M</td>
+      <td>若主机启用了swap,则容器的可用swap是2*M</td>
+    </tr>
+    <tr>
+      <td>-1</td>
+      <td>正数M</td>
+      <td>若主机启用了swap,则容器可用主面的所有swap空间</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>注意:在容器内使用free命令看到swap的空间没有真实含义,例如看见的16G并不是真正意义上的16G</strong></p>
+
+<h1 id="4-cpu限制">4. CPU限制</h1>
+
+<p>docker提供的CPU资源限制选项可以在多核系统上限制容器能利用哪些vCPU，但是对容器最多能使用的CPU时间有两种限制方式：</p>
+
+<ul>
+  <li>一是有多个CPU密集型的容器竞争CPU时，设置各个容器能使用的CPU时间相对比例；</li>
+  <li>二是以绝对的方式设置容器在每个调度周期内最多能使用的CPU时间。</li>
+</ul>
+
+<h2 id="41-cpu限制">4.1 CPU限制</h2>
+<ol>
+  <li>–cpuset-cpus=””	允许使用的CPU集，值可以为1,3则限制容器只能使用第2个和第4个CPU；</li>
+  <li>–cpus	能够限制容器可以使用的主机 CPU 个数，并且还可以指定如 1.5 之类的小数；</li>
+  <li>-c,–cpu-shares=0 CPU共享权值（相对权重），默认值 1024；</li>
+  <li>–cpuset-mems=””	允许在上执行的内存节点（MEMs）；</li>
+  <li>–cpu-period=0	即可设置调度周期CFS周期的有效范围是 1ms~1s，对应的–cpu-period的数值范围是1000~1000000；</li>
+  <li>–cpu-quota=0	设置在每个周期内容器能使用的CPU时间，容器的CPU配额必须不小于1ms，即–cpu-quota的值必须 &gt;= 1000，单位微秒。</li>
+</ol>
+
+<h2 id="42-针对period和quota的实例">4.2. 针对period和quota的实例</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--cpu-period</span><span class="o">=</span>50000 <span class="nt">--cpu-quota</span><span class="o">=</span>25000 ubuntu:16.04 /bin/bash
+docker run <span class="nt">-it</span> <span class="nt">--cpu-period</span><span class="o">=</span>10000 <span class="nt">--cpu-quota</span><span class="o">=</span>20000 ubuntu:16.04 /bin/bash
+</code></pre></div></div>
+
+<h1 id="5-实验">5. 实验</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull lorel/docker-stress-ng <span class="c">#拉取压力测试镜像</span>
+docker run <span class="nt">--name</span> stress <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">-m</span> 256m lorel/docker-stress-ng:latest stress <span class="nt">-vm</span> 2
+docker run <span class="nt">--name</span> stress <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--cpus</span> 2 lorel/docker-stress-ng:latest stress <span class="nt">--cpu</span> 8
+docker run <span class="nt">--name</span> stress <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--cpuset-cpus</span> 0 lorel/docker-stress-ng:latest stress <span class="nt">--cpu</span> 8
+docker stats stress <span class="c">#查看压力测试</span>
+</code></pre></div></div>
+
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                docker <span>(11)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                docker <span>(11)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/docker/2020/02/20/docker-yuancheng.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/docker/2020/02/18/docker-volume.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+             
+                <a href="http://www.beian.miit.gov.cn">
+                蜀ICP备19012996号-3
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

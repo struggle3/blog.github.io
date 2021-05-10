@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+	<link rel="icon" href="/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="docker数据卷，docker volume" />
+    <meta name="description" content="介绍如何在docker内部以及容器之间管理数据" />
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?417785846428737cc886d2095c0511c3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">首页</a></li>
+                    <li class="active"><a href="/archive.html">归档</a></li>
+                    <li class="active"><a href="/categories.html">分类</a></li>
+                    <li class="active"><a href="/tags.html">标签</a></li>
+                    <li class="active"><a href="/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/touxiang.jpg" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/02/spring02.html">Spring开发环境</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/01/spring-overview.html">Spring简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/11/springboot01.html">Spring Boot简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/java/2021/03/17/springmvc01.html">Spring MVC</a></li>
+        
+          <li><a href="/java/2021/03/16/springboot06.html">Spring Boot日志</a></li>
+        
+          <li><a href="/java/2021/03/15/springboot05.html">Spring Boot热部署</a></li>
+        
+          <li><a href="/java/2021/03/14/springboot04.html">Spring Boot配置类</a></li>
+        
+          <li><a href="/java/2021/03/13/springboot03.html">Spring Boot属性注入配置</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/docker/2020/02/18/docker-volume.html">docker数据卷</a></h2>
+        <span class="post-date">
+            
+            2020-02-18
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <h1 id="1-数据卷特性">1. 数据卷特性</h1>
+
+<p>数据卷是一个可供一个或多个容器使用的特殊目录，docker镜像由多个只读层叠加而成启动容器时docker会加载只读镜像层并在镜像栈顶部添加一个读写层。从而数据卷具有如下特性：</p>
+
+<ul>
+  <li><strong>数据卷可以在容器之间共享和重用</strong></li>
+  <li><strong>对数据卷的修改会立马生效</strong></li>
+  <li><strong>对数据卷的更新，不会影响镜像</strong></li>
+  <li><strong>数据卷默认会一直存在，即使容器被删除</strong></li>
+</ul>
+
+<p>如果运行中的容器修改了现有的一个已经存在的文件，那么该文件将会从读写层下面的的只读层复制到读写层，该文件的只读版本仍然存在，只是已经被读写层中隐藏了该文件的副本并<strong>写时复制</strong>。</p>
+
+<p><img src="/assets/images/docker/volume.jpg" width="500" alt="" /></p>
+
+<h1 id="2-数据卷意义">2. 数据卷意义</h1>
+
+<p>由于docker容器有自己的名称空间无法与宿主机的文件系统进行交互并且删除<strong>容器数据就会丢失</strong>，为了保障关闭或重启容器数据不受影响将应程序产生的进行<strong>数据保存</strong>可以使用数据卷做为解决方案。</p>
+
+<p><img src="/assets/images/docker/volume2.jpg" width="500" alt="" /></p>
+
+<ul>
+  <li>数据卷可以在运行容器时即完成创建与绑定操作。当然，前提需要拥有对应的申明</li>
+  <li>数据卷的目的就是数据持久化</li>
+</ul>
+
+<p><img src="/assets/images/docker/volume3.jpg" width="500" alt="" /></p>
+
+<h1 id="3-数据卷操作">3. 数据卷操作</h1>
+
+<h2 id="31-创建数据卷">3.1. 创建数据卷</h2>
+
+<p>命令格式：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume create <span class="o">[</span>OPTIONS] <span class="o">[</span>VOLUME]
+<span class="c">#Options:</span>
+<span class="c">#-d, --driver string 指定卷驱动程序名称</span>
+<span class="c">#–label list 设置卷的元数据</span>
+<span class="c">#-o, --opt map 设置驱动程序特定选项</span>
+</code></pre></div></div>
+<p>创建出来的数据卷位于宿主机/var/lib/docker/volumes/下。</p>
+
+<h2 id="32-删除数据卷">3.2. 删除数据卷</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">rm</span> <span class="o">[</span>VOLUME]
+</code></pre></div></div>
+
+<h2 id="33-列出数据卷">3.3. 列出数据卷</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="34-查看数据卷详情">3.4. 查看数据卷详情</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume inspect <span class="o">[</span>VOLUME]
+</code></pre></div></div>
+
+<h2 id="35-删除未使用数据卷">3.5. 删除未使用数据卷</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
+</code></pre></div></div>
+
+<h1 id="4-数据卷应用">4. 数据卷应用</h1>
+
+<ul>
+  <li>Docker-managed Volume</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> MOUNTDIR 镜像
+</code></pre></div></div>
+
+<ul>
+  <li>Bind-mount Volume</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> HOSTDIR:VOLUMEDIR	镜像
+</code></pre></div></div>
+
+<ul>
+  <li>Union Volume</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">--volumes-from</span> ContainerName 镜像
+</code></pre></div></div>
+
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                docker <span>(11)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                docker <span>(11)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/docker/2020/02/19/docker-xianzhi.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/docker/2020/02/17/docker-network.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+             
+                <a href="http://www.beian.miit.gov.cn">
+                蜀ICP备19012996号-3
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

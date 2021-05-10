@@ -40,6 +40,8 @@ table, th, td { padding-left: 10px; border: 1px solid #000; }
 
 .sidebar a:hover { color: #e74c3c; }
 
+.img-circle { width: 100%; }
+
 /* Xixia logo */
 .sidebar-header { text-align: center; margin-bottom: 10px; }
 
