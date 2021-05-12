@@ -19,7 +19,7 @@ table, th, td { padding-left: 10px; border: 1px solid #000; }
 
 .well { margin-bottom: 10px; }
 
-.pagination { margin: 10px 0; }
+.pagination { margin: 1px; }
 
 .footer { text-align: center; color: #fff; position: absolute; bottom: 0; left: 0; width: 100%; min-height: 40px; background-color: #28323C; }
 
@@ -40,7 +40,7 @@ table, th, td { padding-left: 10px; border: 1px solid #000; }
 
 .sidebar a:hover { color: #e74c3c; }
 
-.img-circle { width: 100%; }
+.img-circle { width: 150px; max-width: 200px; }
 
 /* Xixia logo */
 .sidebar-header { text-align: center; margin-bottom: 10px; }

@@ -603,6 +603,153 @@
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeController</span> <span class="o">{}</span>
 </code></pre></div></div>
 
+<h4 id="11-配置组件扫描">1.1. 配置组件扫描</h4>
+
+<p>需要在Spring MVC的配置文件中将控制器注入到Sping IOC容器中，保证控制器能在项目中正常使用并处理相关请求。</p>
+
+<p>在servlet-context.xml可以使用&lt;context:component-scan base-package=”com.controller”/&gt;和&lt;bean class=”com.controller.HomeController”/&gt;的两种方法进行配置。</p>
+
+<h3 id="2-requestmapping-注解类型">2. RequestMapping 注解类型</h3>
+
+<p>RequestMapping是一个用来处理请求地址映射的注解可用于类或方法上。用于类上表示类中的所有响应请求的方法都是以该地址作为基地址。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="o">;</span>
+
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"home"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ModelAndView</span> <span class="nf">Home</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="nc">ModelAndView</span> <span class="n">model</span><span class="o">=</span><span class="k">new</span> <span class="nc">ModelAndView</span><span class="o">();</span>
+        <span class="k">return</span>  <span class="n">model</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="21-参数说明">2.1. 参数说明</h4>
+
+<ol>
+  <li>value:请求的实际地址</li>
+  <li>method:请求的method类型包含GET、POST、PUT、DELETE等</li>
+  <li>consumes:请求的提交内容类型（Content-Type）</li>
+  <li>produces:返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回</li>
+  <li>params:指定request中必须包含某些参数值是，才让该方法处理</li>
+  <li>headers:指定request中必须包含某些指定的header值，才能让该方法处理请求</li>
+</ol>
+
+<h4 id="22-返回类型">2.2. 返回类型</h4>
+
+<ol>
+  <li>ModelAndView:跳转页面并传递数据</li>
+  <li>Model:传递数据</li>
+  <li>String:视图名称</li>
+  <li>void:传递数据不跳转（ajax比较常用）</li>
+</ol>
+
+<h4 id="23-请求参数中文乱码">2.3. 请求参数中文乱码</h4>
+
+<p>如果在请示包含中文字符出现乱码现象则需要配置过滤器，而Spring框架本身也默认提供一个org.springframework.web.filter.CharacterEncodingFilter过滤器。</p>
+
+<p>通常我们在web.xml中配置过滤器即可解决Spring MVC的请求参数的中文乱码问题。保证过滤器注册在其它过滤器之前，因为过滤器的执行是按照其注册顺序进行的。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--编码过滤--&gt;</span>
+    <span class="nt">&lt;filter&gt;</span>
+        <span class="nt">&lt;filter-name&gt;</span>encoding<span class="nt">&lt;/filter-name&gt;</span>
+        <span class="nt">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="nt">&lt;/filter-class&gt;</span>
+        <span class="nt">&lt;init-param&gt;</span>
+            <span class="nt">&lt;param-name&gt;</span>encoding<span class="nt">&lt;/param-name&gt;</span>
+            <span class="nt">&lt;param-value&gt;</span>UTF-8<span class="nt">&lt;/param-value&gt;</span>
+        <span class="nt">&lt;/init-param&gt;</span>
+        <span class="nt">&lt;init-param&gt;</span>
+            <span class="nt">&lt;param-name&gt;</span>forceRequestEncoding<span class="nt">&lt;/param-name&gt;</span>
+            <span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
+        <span class="nt">&lt;/init-param&gt;</span>
+        <span class="nt">&lt;init-param&gt;</span>
+            <span class="nt">&lt;param-name&gt;</span>forceResponseEncoding<span class="nt">&lt;/param-name&gt;</span>
+            <span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
+        <span class="nt">&lt;/init-param&gt;</span>
+    <span class="nt">&lt;/filter&gt;</span>
+    <span class="nt">&lt;filter-mapping&gt;</span>
+        <span class="nt">&lt;filter-name&gt;</span>encoding<span class="nt">&lt;/filter-name&gt;</span>
+        <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+    <span class="nt">&lt;/filter-mapping&gt;</span>
+</code></pre></div></div>
+
+<h4 id="24-校正请求参数名">2.4. 校正请求参数名</h4>
+
+<p>在系统开发过程可能存在参数名称与处理方法中指定的参数名称不一致则需在处理方法参数前添加@RequestParam(“请求参数名”)注解指定请求URL所携带参数的名称。</p>
+
+<p>在JSP页面中使用HTML表单input标签的name表示请求参数名。参见如下实例：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"requestParam.do"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+    姓名：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"userName"</span><span class="nt">&gt;</span> <span class="nt">&lt;br/&gt;</span>
+    年龄：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"userAge"</span><span class="nt">&gt;</span> <span class="nt">&lt;br/&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交参数"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="o">;</span>
+
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/requestParam.do"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">ModelAndView</span> <span class="nf">requestParam</span><span class="o">(</span><span class="nd">@RequestParam</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"userName"</span><span class="o">,</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">,</span>
+                                     <span class="nd">@RequestParam</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"userAge"</span><span class="o">,</span><span class="n">required</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span> <span class="nc">Integer</span> <span class="n">age</span><span class="o">){</span>
+        <span class="nc">ModelAndView</span> <span class="n">mv</span>  <span class="o">=</span> <span class="k">new</span> <span class="nc">ModelAndView</span><span class="o">();</span>
+        <span class="n">mv</span><span class="o">.</span><span class="na">addObject</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span><span class="n">name</span><span class="o">);</span>
+        <span class="n">mv</span><span class="o">.</span><span class="na">addObject</span><span class="o">(</span><span class="s">"age"</span><span class="o">,</span><span class="n">age</span><span class="o">);</span>
+        <span class="n">mv</span><span class="o">.</span><span class="na">setViewName</span><span class="o">(</span><span class="s">"home"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">mv</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<h4 id="25-应用autowired-和service-进行依赖注入">2.5. 应用@Autowired 和@Service 进行依赖注入</h4>
+
+<p>使用Spring 框架的一个好处是方便进行依赖注入Spring框架就是一个依赖注入容器，将依赖注入到Spring MVC控制器的最简单方法是添加注解@Autowired。</p>
+
+<p>Autowired注解类型属于org.springframework.beans.factory.annotation包的成员,Autowired注解类型表示字段或方法上注入javabean。</p>
+
+<p>Service注解该类型属于org.springframework.stereotype包的成员，Service注解类型表示类是一个服务。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.service</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Service</span><span class="o">;</span>
+
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudentService</span> <span class="o">{</span>
+<span class="o">}</span>
+
+
+<span class="kn">package</span> <span class="nn">com.controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.bean.Student</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.service.StudentService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.ModelAttribute</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestParam</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="o">;</span>
+
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HomeController</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">StudentService</span> <span class="n">studentService</span><span class="o">;</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
 
     <hr style="border-top:1px solid #28323C;"/>
 
