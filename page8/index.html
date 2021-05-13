@@ -7,8 +7,8 @@
     <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
 	<link rel="icon" href="/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="abp,abp vnext,abp在nginx中部署" />
-    <meta name="description" content="在Nginx中部署ABP VNext前后端应用程序" />
+    <meta name="keywords" content="野程序猿,ye程序员,abp,abp vnext,dotnet core,nop,orchard" />
+    <meta name="description" content="我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。" />
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -587,229 +587,42 @@
             </div>
             <div class="col-md-10">
                 
+
 <div class="well article">
-        <h2><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></h2>
-        <span class="post-date">
-            
-            2020-12-01
-        </span>
-        <hr style="border-top:1px solid #28323C;"/>
-    
-    <div class="post-content">
-    <h1 id="安装nginx">安装nginx</h1>
 
-<h2 id="配置-epel源">配置 EPEL源</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> epel-release
-<span class="nb">sudo </span>yum <span class="nt">-y</span> update
-</code></pre></div></div>
-<h2 id="安装nginx-1">安装nginx</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> nginx
-</code></pre></div></div>
-<h3 id="nginx目录">nginx目录</h3>
-<p>默认的配置文件为：/etc/nginx/nginx.conf</p>
-
-<p>自定义配置文件目录为: /etc/nginx/conf.d/</p>
-
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 前端配置
-</span><span class="n">server</span> {
-        <span class="n">listen</span>       <span class="m">8080</span>;
-        <span class="n">server_name</span>  <span class="n">localhost</span>;
-        <span class="n">root</span>         /<span class="n">usr</span>/<span class="n">local</span>/<span class="n">appwasm</span>;
-
-        <span class="c"># Load configuration files for the default server block.
-</span>        <span class="n">include</span> /<span class="n">etc</span>/<span class="n">nginx</span>/<span class="n">default</span>.<span class="n">d</span>/*.<span class="n">conf</span>;
-
-        <span class="n">location</span> / {
-            <span class="n">index</span>  <span class="n">index</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">htm</span>;
-            <span class="n">try_files</span> $<span class="n">uri</span> $<span class="n">uri</span>/ /<span class="n">index</span>.<span class="n">html</span> =<span class="m">404</span>;<span class="c">#必须配置404
-</span>        }
-        <span class="n">error_page</span>  <span class="m">404</span>              /<span class="n">index</span>.<span class="n">html</span>;
-    }
-<span class="c"># 后端api配置
-</span><span class="n">server</span> {
-        <span class="n">listen</span>       <span class="m">80</span>;
-        <span class="n">server_name</span>  <span class="n">localhost</span>;
-
-        <span class="c">#charset koi8-r;
-</span>
-        <span class="c">#access_log  logs/host.access.log  main;
-</span>
-        <span class="n">location</span> / {
-            <span class="n">proxy_pass</span> <span class="n">http</span>://<span class="n">localhost</span>:<span class="m">5000</span>;
-            <span class="n">index</span>  <span class="n">index</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">htm</span> <span class="n">index</span>.<span class="n">jsp</span>;
-            <span class="n">proxy_http_version</span> <span class="m">1</span>.<span class="m">1</span>;
-            <span class="n">proxy_set_header</span>   <span class="n">Upgrade</span> $<span class="n">http_upgrade</span>;
-            <span class="n">proxy_set_header</span>   <span class="n">Connection</span> <span class="n">keep</span>-<span class="n">alive</span>;
-            <span class="n">proxy_set_header</span>   <span class="n">Host</span> $<span class="n">host</span>;
-            <span class="n">proxy_cache_bypass</span> $<span class="n">http_upgrade</span>;
-            <span class="n">proxy_set_header</span>   <span class="n">X</span>-<span class="n">Forwarded</span>-<span class="n">For</span> $<span class="n">proxy_add_x_forwarded_for</span>;
-            <span class="n">proxy_set_header</span>   <span class="n">X</span>-<span class="n">Forwarded</span>-<span class="n">Proto</span> $<span class="n">scheme</span>;
-        }
-    }
-</code></pre></div></div>
-
-<h3 id="操作nginx">操作nginx</h3>
-
-<ol>
-  <li>启动 nginx
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start nginx
-</code></pre></div>    </div>
-  </li>
-  <li>停止nginx
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl stop nginx
-</code></pre></div>    </div>
-  </li>
-  <li>重启nginx
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart nginx
-nginx <span class="nt">-s</span> reload
-</code></pre></div>    </div>
-  </li>
-  <li>查看nginx状态
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status nginx
-</code></pre></div>    </div>
-  </li>
-  <li>启用开机启动nginx
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl <span class="nb">enable </span>nginx
-</code></pre></div>    </div>
-  </li>
-  <li>禁用开机启动nginx
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl disable nginx
-</code></pre></div>    </div>
-  </li>
-</ol>
-
-<h1 id="防火墙firewalld">防火墙firewalld</h1>
-
-<h2 id="开启80端口">开启80端口</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firewall-cmd <span class="nt">--zone</span><span class="o">=</span>public <span class="nt">--add-port</span><span class="o">=</span>80/tcp <span class="nt">--permanent</span> 
-</code></pre></div></div>
-
-<blockquote>
-  <p>命令含义：
-–zone #作用域
-–add-port=80/tcp  #添加端口，格式为：端口/通讯协议
-–permanent   #永久生效，没有此参数重启后失效</p>
-</blockquote>
-
-<h2 id="重启防火墙">重启防火墙</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firewall-cmd <span class="nt">--reload</span>
-</code></pre></div></div>
-
-<h2 id="查看端口">查看端口</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firewall-cmd <span class="nt">--list-all</span>
-firewall-cmd <span class="nt">--list-port</span>
-</code></pre></div></div>
-
-<h1 id="supervisor安装">supervisor安装</h1>
-
-<h2 id="参考链接">参考链接</h2>
-
-<p>https://www.cnblogs.com/xueweihan/p/6195824.html</p>
-
-<p>https://zhuanlan.zhihu.com/p/260071860</p>
-
-<p>https://www.cnblogs.com/flaming/p/8149973.html</p>
-
-<h2 id="名词解释">名词解释</h2>
-
-<blockquote>
-  <p>supervisor：要安装的软件的名称。
-supervisord：装好supervisor软件后，supervisord用于启动supervisor服务。
-supervisorctl：用于管理supervisor配置文件中program和supervisor服务本身。</p>
-</blockquote>
-
-<h2 id="使用yum命令安装推荐">使用yum命令安装（推荐）</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install </span>epel-release
-yum <span class="nb">install</span> <span class="nt">-y</span> supervisor
-systemctl <span class="nb">enable </span>supervisord <span class="c"># 开机自启动</span>
-systemctl start supervisord <span class="c"># 启动supervisord服务</span>
-systemctl stop supervisord <span class="c"># 停止supervisord服务</span>
-systemctl status supervisord <span class="c"># 查看supervisord服务状态</span>
-ps <span class="nt">-ef</span>|grep supervisord <span class="c"># 查看是否存在supervisord进程</span>
-</code></pre></div></div>
-
-<h2 id="配置dotnet命令">配置dotnet命令</h2>
-
-<blockquote>
-  <p>在/etc/supervisord.d目录下添加一个ini文件，同时也可以通过/etc目录下面的supervisord.conf文件中的[include]files进行自定义加载ini文件路径。</p>
-</blockquote>
-
-<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[program:myapp]</span>
-<span class="py">command</span><span class="p">=</span><span class="s">dotnet Wang.MyApp.HttpApi.Host.dll --urls=http://localhost:5000#要执行的命令</span>
-<span class="py">directory</span><span class="p">=</span><span class="s">/usr/local/apphost/#命令执行的目录</span>
-<span class="py">environment</span><span class="p">=</span><span class="s">ASPNETCORE__ENVIRONMENT=Production#环境变量</span>
-<span class="py">user</span><span class="p">=</span><span class="s">root#进程执行的用户身份</span>
-<span class="py">stopsignal</span><span class="p">=</span><span class="s">INT</span>
-<span class="py">autostart</span><span class="p">=</span><span class="s">true#是否自动重启</span>
-<span class="py">autorestart</span><span class="p">=</span><span class="s">true#是否自动启动</span>
-<span class="py">startsecs</span><span class="p">=</span><span class="s">10#自动重启间隔</span>
-<span class="py">stderr_logfile</span><span class="p">=</span><span class="s">/var/log/supervisor/myapp_err.log#标准错误日志</span>
-<span class="py">stdout_logfile</span><span class="p">=</span><span class="s">/var/log/supervisor/myapp_out.log#标准输出日志</span>
-</code></pre></div></div>
-<blockquote>
-  <p><strong>注意：#后边的内容要去掉这里是注释但是supervisor不识别。</strong></p>
-</blockquote>
-
-<blockquote>
-  <p><strong>注意：#日志目录必须是已经存在的目录，不然会出现无法启动的情况。</strong></p>
-</blockquote>
-
-<h2 id="卸载">卸载</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> remove supervisor
-</code></pre></div></div>
-
-    <hr style="border-top:1px solid #28323C;"/>
-
-    <!-- tags and categories under post -->
-    
-    <ul class="list-unstyled list-inline">
-      <li><i class="icon-folder-open"></i></li>
-      
-      
-         
-            <li class="icon-style"><a href="/categories.html">
-                abp <span>(10)</span>
-                
-            </a></li>
+    <span class="post-date">
+        <!--
         
-      
-    </ul>
-      
-
-    
-    <ul class="list-unstyled list-inline">
-      <li><i class="icon-tags"></i></li>
-      
-      
-         
-            <li class="icon-style">
-                <a href="/tags.html">
-                abp <span>(10)</span>
-                
-                </a>
-            </li>
+        April
+        27th,
         
-      
-      
-    </ul>
-      
-
+        2019
+        -->
+        
+        2019-04-27
+    </span>
+    
+    <h4>
+        <a href="/other/2019/04/27/ubuntu-dotnetcore.html">使用ubuntu做为dotnet core开发环境</a>
+    </h4>
+    
+    <div class="post-description">
+        使用ubuntu做为dotnet core开发环境
     </div>
     
 </div>
+
+
 <div class="pagination">
-    
-    <a class="btn btn-default" href="/abp/2020/12/07/abp-sqlite.html" class="next">前一篇</a>
-    
-    
-    <a class="btn btn-default" href="/abp/2020/11/21/abp-publish.html" class="previous">后一篇</a>
-    
+  
+      
+        <a class="btn btn-default" href="/page7" class="previous">上一页</a>
+      
+  
+  <!-- <span class="page_number ">当前页: 8 - 8</span> -->
+  
 </div>
+
             </div>
         </div>
     </div>
