@@ -7,8 +7,8 @@
     <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
 	<link rel="icon" href="/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="野程序猿,ye程序员,abp,abp vnext,dotnet core,nop,orchard" />
-    <meta name="description" content="我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。" />
+    <meta name="keywords" content="Spring MVC 表达式语言（EL）" />
+    <meta name="description" content="JSP 2.0 最重要的特性之一就是表达式语言（EL），JSP 用户可以用它来访问应用程序数据。" />
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -627,164 +627,245 @@
             </div>
             <div class="col-md-10">
                 
-
 <div class="well article">
+        <h2><a href="/java/2021/03/22/springmvc06.html">Spring MVC 表达式语言（EL）</a></h2>
+        <span class="post-date">
+            
+            2021-03-22
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>JSP最重要的特性之一就是表达式语言（EL）JSP 用户可以用它来访问应用程序数据。</p>
 
-    <span class="post-date">
-        <!--
-        
-        March
-        11th,
-        
-        2021
-        -->
-        
-        2021-03-11
-    </span>
+<p>由于受到ECMAScript和XPath表达式语言的启发，EL也设计成可以轻松地编写免脚本的JSP页面。</p>
+
+<h3 id="1-语法">1. 语法</h3>
+
+<p>EL表达式以${开头，并以}结束，支持JavaBean、Map、List等对象操作，EL 表达式的结构如下：
+${expression}
+#{expression}</p>
+
+<ul>
+  <li>
+    <p>在JSF中${exp}会立即计算，#{expr}会延迟计算。</p>
+  </li>
+  <li>
+    <p>在JSP中${exp}编译后页面执行时计算，#{expr}仅支持延迟表达标签中计算。</p>
+  </li>
+</ul>
+
+<h4 id="11-关健字">1.1. 关健字</h4>
+
+<p>关键字and、eq、gt、true、instanceof、or、ne、le、false、empty、not、lt、ge、null、div、mod不能用作标识符。</p>
+
+<h4 id="12-运算符">1.2. 运算符</h4>
+
+<p>EL表达式可以返回任意类型的值。如果EL表达式的结果是一个带有属性的对象，则可以利用”[]”或者”.”运算符来访问该属性。</p>
+
+<h4 id="13-取值规则">1.3. 取值规则</h4>
+
+<p>EL表达式的取值是从左到右进行的对于expr-a[expr-b]形式的表达式其EL表达式的取值方法如下：</p>
+
+<ol>
+  <li>先计算expr-a得到value-a。</li>
+  <li>如果value-a为null则返回null。</li>
+  <li>然后计算expr-b得到value-b。</li>
+  <li>如果value-b为null则返回null。</li>
+  <li>如果value-a为java.util.Map则会查看value-b是否为Map中的一个key。若是则返回value-a.get(value-b)若不是则返回 null。</li>
+  <li>如果value-a为java.util.List或者array则要进行以下处理：
+    <ul>
+      <li>强制value-b为int如果强制失败则抛出异常。</li>
+      <li>如果value-a.get(value-b)抛出IndexOutOfBoundsException或者Array.get(value-a, value-b)抛出ArrayIndexOutOfBoundsException则返回null。</li>
+      <li>否则若value-a是个List则返回value-a.get(value-b)若value-a是个array则返回Array.get(value-a, value-b)。</li>
+    </ul>
+  </li>
+  <li>如果value-a不是一个Map、List或者array那么value-a必须是一个JavaBean。
+    <ul>
+      <li>在这种情况下，必须强制 value-b 为 String。如果value-b是value-a的一个可读属性则要调用该属性的getter方法返回值。</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="2-el-隐式对象">2. EL 隐式对象</h3>
+
+<p>JSP页面中可以利用JSP脚本来访问JSP隐式对象，但是在没有脚本的JSP页面中，则不可能访问这些隐式对象。EL可以通过默认的隐式对象进行调用。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>对象</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>pageContext</td>
+      <td>当前JSP页面的javax.servlet.jsp.PageContext</td>
+    </tr>
+    <tr>
+      <td>initParam</td>
+      <td>所有环境初始化参数Map对象Key Value格式表示</td>
+    </tr>
+    <tr>
+      <td>param</td>
+      <td>所有请求参数Map对象Key Value格式表示</td>
+    </tr>
+    <tr>
+      <td>paramValues</td>
+      <td>所有请求参数并用参数Map对象Key Value格式，每个key的值是一个字符串数组，其中包含了指定参数名称的所有参数值</td>
+    </tr>
+    <tr>
+      <td>header</td>
+      <td>请求标题Map对象Key Value格式表示。每个key的值就是指定标题名称的第一个标题。获取多个标题用headerValues对象代替</td>
+    </tr>
+    <tr>
+      <td>headerValues</td>
+      <td>请求标题Map对象Key Value格式，每个key的值是一个字符串数组，其中包含了指定标题名称的所有参数值</td>
+    </tr>
+    <tr>
+      <td>cookie</td>
+      <td>当前请求对象中所有Cookie对象的Map。Cookie名称就是key名称每一个ke值就是一个Cookie对象</td>
+    </tr>
+    <tr>
+      <td>applicationScope</td>
+      <td>ServletContext对象中所有属性的Map并用属性名称作为 key</td>
+    </tr>
+    <tr>
+      <td>sessionScope</td>
+      <td>HttpSession对象中所有属性的Map，并用属性名称作为key</td>
+    </tr>
+    <tr>
+      <td>requestScope</td>
+      <td>Map对象中包含了当前HttpServletRequest对象中的所有属性，并用属性名称作为 key</td>
+    </tr>
+    <tr>
+      <td>pageScope</td>
+      <td>Map对象包含了全页面范围内的所有属性，属性名称就是Map的key</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="3-其他el运算符">3. 其他EL运算符</h3>
+
+<p>除了”.”和”[]”运算符外EL还提供了其他运算符：算术运算符、关系运算符、逻辑运算符、条件运算符，以及empty运算符。</p>
+
+<p>使用这些运算符时可以进行不同的运算，但是由于EL的目的是方便免脚本JSP页面的编程因此除了关系运算符外这些EL运算符的用处都很有限。</p>
+
+<h4 id="31-算术运算符">3.1. 算术运算符</h4>
+
+<ol>
+  <li>加法（+）。</li>
+  <li>减法（−）。</li>
+  <li>乘法（*）。</li>
+  <li>除法（/和 div）。</li>
+  <li>取余/取模（%和 mod）。</li>
+</ol>
+
+<p>除法和取余运算符有两种形式与XPath和ECMAScript是一致的。</p>
+
+<p><strong>注意:EL表达式的计算按优先级从高到低、从左到右进行。下列运算符是按优先级递减顺序排列的：</strong></p>
+
+<ul>
+  <li>/div%mod</li>
+  <li>+-</li>
+</ul>
+
+<p>这表示*、/、div、%以及 mod 运算符的优先级相同，+与−的优先级相同，但第二组运算符的优先级小于第一组运算符。</p>
+
+<h4 id="32-关系运算符">3.2. 关系运算符</h4>
+
+<ol>
+  <li>等于（==和eq）</li>
+  <li>不等于（!=和ne）</li>
+  <li>大于（&gt;和gt）</li>
+  <li>大于或等于（&gt;=和ge）</li>
+  <li>小于（&lt;和lt）</li>
+  <li>于或等于（&lt;=和le）</li>
+</ol>
+
+<h4 id="33-逻辑运算符">3.3. 逻辑运算符</h4>
+
+<ol>
+  <li>和（&amp;&amp;和and）</li>
+  <li>或（||和or）</li>
+  <li>非（!和not）</li>
+</ol>
+
+<h4 id="33-条件运算符">3.3. 条件运算符</h4>
+
+<p>EL 条件运算符的语法如下：</p>
+
+<p>${先计算expr? A:B}</p>
+
+<p>如果先计算expr的计算结果为True，那么该表达式的输出结果就是A否则为B。</p>
+
+<h4 id="33-empty运算符">3.3. empty运算符</h4>
+
+<p>empty运算符用来检查某一个值是否为null或者empty。</p>
+
+<p>范例：</p>
+
+<p>${empty X}</p>
+
+<p>如果X为null或者X是一个长度为0的字符串，那么该表达式将返回True。如果X是一个空Map、空数组或者空集合它也将返回True否则将返回False。</p>
+
+<h4 id="33-字符串连接运算符">3.3. 字符串连接运算符</h4>
+
+<p>+=运算符用于连接字符串。</p>
+
+<p>范例：</p>
+
+<p>${a+=b}</p>
+
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
     
-    <h4>
-        <a href="/java/2021/03/11/springboot01.html">Spring Boot简介</a>
-    </h4>
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                java <span>(24)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
     
-    <div class="post-description">
-        Spring Boot简介
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                SpringMVC <span>(7)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
     </div>
     
 </div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        March
-        10th,
-        
-        2021
-        -->
-        
-        2021-03-10
-    </span>
-    
-    <h4>
-        <a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a>
-    </h4>
-    
-    <div class="post-description">
-        如何搭建SpringMVC环境
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        March
-        9th,
-        
-        2021
-        -->
-        
-        2021-03-09
-    </span>
-    
-    <h4>
-        <a href="/java/2021/03/09/spring09.html">Spring 事务</a>
-    </h4>
-    
-    <div class="post-description">
-        如何使用Spring 事务
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        March
-        8th,
-        
-        2021
-        -->
-        
-        2021-03-08
-    </span>
-    
-    <h4>
-        <a href="/java/2021/03/08/spring08.html">Spring 整合JDBC</a>
-    </h4>
-    
-    <div class="post-description">
-        如何使用Spring 整合JDBC
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        March
-        7th,
-        
-        2021
-        -->
-        
-        2021-03-07
-    </span>
-    
-    <h4>
-        <a href="/java/2021/03/07/spring07.html">Spring AOP实现</a>
-    </h4>
-    
-    <div class="post-description">
-        如何使用Spring AOP实现功能
-    </div>
-    
-</div>
-
-<div class="well article">
-
-    <span class="post-date">
-        <!--
-        
-        March
-        6th,
-        
-        2021
-        -->
-        
-        2021-03-06
-    </span>
-    
-    <h4>
-        <a href="/java/2021/03/06/spring06.html">Spring AOP简介</a>
-    </h4>
-    
-    <div class="post-description">
-        如何使用Spring AOP扩展功能
-    </div>
-    
-</div>
-
-
 <div class="pagination">
-  
-      
-        <a class="btn btn-default" href="/page2" class="previous">上一页</a>
-      
-  
-  <!-- <span class="page_number ">当前页: 3 - 8</span> -->
-  
-    <a class="btn btn-default" href="/page4" class="next">下一页</a>
-  
+    
+    <a class="btn btn-default" href="/java/2021/03/22/springmvc07.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/java/2021/03/21/springmvc05.html" class="previous">后一篇</a>
+    
 </div>
-
             </div>
         </div>
     </div>

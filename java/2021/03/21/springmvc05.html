@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+    <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
+	<link rel="icon" href="/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Spring MVC 验证器" />
+    <meta name="description" content="Spring MVC 验证器" />
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?417785846428737cc886d2095c0511c3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">首页</a></li>
+                    <li class="active"><a href="/archive.html">归档</a></li>
+                    <li class="active"><a href="/categories.html">分类</a></li>
+                    <li class="active"><a href="/tags.html">标签</a></li>
+                    <li class="active"><a href="/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/touxiang.jpg" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/02/spring02.html">Spring开发环境</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/01/spring-overview.html">Spring简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/11/springboot01.html">Spring Boot简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/java/2021/03/22/springmvc07.html">Spring MVC JSTL</a></li>
+        
+          <li><a href="/java/2021/03/22/springmvc06.html">Spring MVC 表达式语言（EL）</a></li>
+        
+          <li><a href="/java/2021/03/21/springmvc05.html">Spring MVC 验证器</a></li>
+        
+          <li><a href="/java/2021/03/20/springmvc04.html">Spring MVC 转换器和格式化</a></li>
+        
+          <li><a href="/java/2021/03/19/springmvc03.html">Spring MVC 表单标签库</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/java/2021/03/21/springmvc05.html">Spring MVC 验证器</a></h2>
+        <span class="post-date">
+            
+            2021-03-21
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>在Web应用程序中客户端做的数据有效性验证都不是安全有效的，必须在服务端也对数据的有效性进行验证。</p>
+
+<p>SpringMVC自身对数据在服务端的验证可以通过Validation进行实现，验证客户端提交到服务端的数据按照指定的规则进行数据有效性验证。</p>
+
+<p>对于满足要求的数据SpringMVC会把它保存在错误对象中，这些错误信息通过SpringMVC提供的标签在前端JSP页面上进行展示。</p>
+
+<p>在Spring框架诞生初期就已经有了数据验证功能，比JSR303的Java验证规范还要早，但是Spring的Validation功能在项目开发中比较常见，如果在新项目中还是建议使用JSR303进行验证。</p>
+
+<h3 id="1-spring-验证器">1. Spring 验证器</h3>
+
+<p>自定义Spring验证器必须实现org.springframework.validation.Validator接口中的supports和validate方法，如果验证器指定的Class，supports方法将返回true，validate方法会验证目标对象，并将验证错误信息填入Errors对象。</p>
+
+<p>接口的声明：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.validation</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Validator</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="nf">supports</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">clazz</span><span class="o">);</span>
+    <span class="kt">void</span> <span class="nf">validate</span><span class="o">(</span><span class="nc">Object</span> <span class="n">target</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Errors对象是org.springframework.validation.Errors接口的一个实例，Errors对象中包含验证的FieldError和ObjectError对象，FieldError表示与被验证对象中的某个属性相关的一个错误。</p>
+
+<p>在Errors对象上调用reject或者rejectValue方法添加错误信息。调用reject会给FieldError中添加一个ObjectError和rejectValue。</p>
+
+<p>通过org.springframework.validation.ValidationUtils工具类可以简化开发者编写Spring验证器。</p>
+
+<p>对于Errors对象中的错误消息可以使用表单标签库的Errors标签显示在HTML页面中。</p>
+
+<p>方法签名：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ObjectError</span><span class="o">(</span><span class="nc">String</span> <span class="n">objectName</span><span class="o">,</span> <span class="nc">String</span><span class="o">[]</span> <span class="n">codes</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">arguments</span><span class="o">,</span><span class="nc">String</span> <span class="n">defaultMessage</span><span class="o">);</span>
+<span class="nc">FieldError</span><span class="o">(</span><span class="nc">String</span> <span class="n">objectName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">field</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">rejectedValue</span><span class="o">,</span><span class="kt">boolean</span> <span class="n">bindingFailure</span><span class="o">,</span> <span class="nc">String</span><span class="o">[]</span> <span class="n">codes</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">arguments</span><span class="o">,</span><span class="nc">String</span> <span class="n">defaultMessage</span><span class="o">)</span>
+</code></pre></div></div>
+
+<h3 id="11-spring的validator实例">1.1. Spring的Validator实例</h3>
+
+<p>在Controller类中通过@InitBinder标记的方法只有在请求当前Controller的时候才会被执行，所以其中定义的Validator也只能在当前Controller中使用。</p>
+
+<p>如果Validator对所有的Controller都起作用通过WebBindingInitializer的initBinder方法来设定了。</p>
+
+<p>在SpringMVC的配置文件中通过mvc:annotation-driven的validator属性也可以指定全局的Validator。</p>
+
+<p>实体类</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>  
+   
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>  
+     
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">age</span><span class="o">;</span>  
+   
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>  
+       <span class="k">return</span> <span class="n">name</span><span class="o">;</span>  
+    <span class="o">}</span>  
+   
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>  
+    <span class="o">}</span>  
+   
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>  
+       <span class="k">return</span> <span class="n">age</span><span class="o">;</span>  
+    <span class="o">}</span>  
+   
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="nc">String</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>  
+    <span class="o">}</span>  
+     
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>  
+       <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">", "</span> <span class="o">+</span> <span class="n">age</span><span class="o">;</span>  
+    <span class="o">}</span>  
+     
+<span class="o">}</span>  
+
+</code></pre></div></div>
+
+<p>验证类</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.validation.Errors</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.validation.ValidationUtils</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.validation.Validator</span><span class="o">;</span>  
+   
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonValidator</span> <span class="kd">implements</span> <span class="nc">Validator</span> <span class="o">{</span>  
+   
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supports</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">clazz</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="k">return</span> <span class="nc">Person</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">clazz</span><span class="o">);</span>  
+    <span class="o">}</span>  
+   
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">validate</span><span class="o">(</span><span class="nc">Object</span> <span class="n">obj</span><span class="o">,</span> <span class="nc">Errors</span> <span class="n">errors</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="nc">ValidationUtils</span><span class="o">.</span><span class="na">rejectIfEmpty</span><span class="o">(</span><span class="n">errors</span><span class="o">,</span> <span class="s">"name"</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="s">"name is empty."</span><span class="o">);</span>  
+       <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Person</span><span class="o">)</span> <span class="n">obj</span><span class="o">;</span>  
+       <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="nc">Person</span><span class="o">.</span><span class="na">getAge</span><span class="o">()</span> <span class="o">||</span> <span class="s">""</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="nc">Person</span><span class="o">.</span><span class="na">getAge</span><span class="o">()))</span>  
+           <span class="n">errors</span><span class="o">.</span><span class="na">rejectValue</span><span class="o">(</span><span class="s">"age"</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="s">"age is empty."</span><span class="o">);</span>  
+    <span class="o">}</span>  
+   
+<span class="o">}</span>  
+</code></pre></div></div>
+
+<p>控制器</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.validation.BindingResult</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.validation.DataBinder</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.InitBinder</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>  
+   
+<span class="nd">@Controller</span>  
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonController</span> <span class="o">{</span>  
+     
+    <span class="nd">@InitBinder</span>  
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initBinder</span><span class="o">(</span><span class="nc">DataBinder</span> <span class="n">binder</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="n">binder</span><span class="o">.</span><span class="na">setValidator</span><span class="o">(</span><span class="k">new</span> <span class="nc">PersonValidator</span><span class="o">());</span>  
+    <span class="o">}</span>  
+   
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"list"</span><span class="o">)</span>  
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">add</span><span class="o">(</span><span class="nd">@Valid</span> <span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">BindingResult</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">hasErrors</span><span class="o">())</span>  
+           <span class="k">return</span> <span class="s">"redirect:person/list"</span><span class="o">;</span>
+       <span class="k">return</span> <span class="s">"redirect:person/add"</span><span class="o">;</span>  
+    <span class="o">}</span>  
+     
+<span class="o">}</span>  
+</code></pre></div></div>
+
+<h3 id="2-jsr303验证">2. JSR303验证</h3>
+
+<p>JSR 303“Bean Validation”发布于2009年11月和JSR 349“Bean Validation 1.1”（发布于2013年5月）指定了一整套API通过注解给对象属性添加约束。</p>
+
+<ul>
+  <li>JSR 303下载地址：http://jcp.org/en/jsr/detail?id=303</li>
+  <li>JSR 349下载地址：http://jcp.org/en/jsr/detail?id=349</li>
+</ul>
+
+<p>JSR只是一个规范文档本身无法使用必须编写实现类才能使用对于JSR bean validation的第一个实现是Hibernate Validator目前版本为5。</p>
+
+<ul>
+  <li>下载地址：http://sourceforge.net/projects/hibernate/files/hibernate-validator/</li>
+</ul>
+
+<p>第二个实现则是Apache BVal。</p>
+
+<ul>
+  <li>下载地址：http://bval.apache.org/downloads.html</li>
+</ul>
+
+<p>JSR 303不需要编写验证器但要利用JSR 303注解类型嵌入约束;约束属如下：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>属性</th>
+      <th>描述</th>
+      <th>实例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>@AssertFalse</td>
+      <td>应用于 boolean 属性，该属性值必须为 False</td>
+      <td>@AssertFalse boolean hasChildren;</td>
+    </tr>
+    <tr>
+      <td>@AssertTrue</td>
+      <td>应用于 boolean 属性，该属性值必须为 True</td>
+      <td>@AssertTrueboolean isEmpty;</td>
+    </tr>
+    <tr>
+      <td>@DecimalMax</td>
+      <td>该属性值必须为小于或等于指定值的小数</td>
+      <td>@DecimalMax(“1.1”)BigDecimal price;</td>
+    </tr>
+    <tr>
+      <td>@DecimalMin</td>
+      <td>该属性值必须为大于或等于指定值的小数</td>
+      <td>@DecimalMin(“0.04”)BigDecimal price;</td>
+    </tr>
+    <tr>
+      <td>@Digits</td>
+      <td>该属性值必须在指定范围内。integer 属性定义该数值的最大整数部分，fraction 属性定义该数值的最大小数部分</td>
+      <td>@Digits(integer=5,fraction=2) BigDecimal price;</td>
+    </tr>
+    <tr>
+      <td>@Future</td>
+      <td>该属性值必须是未来的一个日期</td>
+      <td>@Future Date shippingDate;</td>
+    </tr>
+    <tr>
+      <td>@Max</td>
+      <td>该属性值必须是一个小于或等于指定值的整数</td>
+      <td>@Max(150) int age;</td>
+    </tr>
+    <tr>
+      <td>@Min</td>
+      <td>该属性值必须是一个大于或等于指定值的整数</td>
+      <td>@Max(150)int age;</td>
+    </tr>
+    <tr>
+      <td>@NotNull</td>
+      <td>该属性值不能为 Null</td>
+      <td>@NotNull String firstName;</td>
+    </tr>
+    <tr>
+      <td>@Null</td>
+      <td>该属性值必须为 Null</td>
+      <td>@Null String testString;</td>
+    </tr>
+    <tr>
+      <td>@Past</td>
+      <td>该属性值必须是过去的一个日期</td>
+      <td>@PastDate birthDate;</td>
+    </tr>
+    <tr>
+      <td>@Pattern</td>
+      <td>该属性值必须与指定的常规表达式相匹配</td>
+      <td>@Pattern(regext=”\d{3}”) String areaCode;</td>
+    </tr>
+    <tr>
+      <td>@Size</td>
+      <td>该属性值必须在指定范围内</td>
+      <td>Size(min=2, max=140)String description;</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="21-jsr303实例">2.1. JSR303实例</h4>
+
+<p>实体类</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>  
+   
+    <span class="nd">@NotNull</span><span class="o">(</span><span class="n">message</span><span class="o">=</span><span class="s">"名字不能为空"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>  
+     
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">age</span><span class="o">;</span>  
+   
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>  
+       <span class="k">return</span> <span class="n">name</span><span class="o">;</span>  
+    <span class="o">}</span>  
+   
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>  
+    <span class="o">}</span>  
+   
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>  
+       <span class="k">return</span> <span class="n">age</span><span class="o">;</span>  
+    <span class="o">}</span>  
+   
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="nc">String</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>  
+    <span class="o">}</span>  
+     
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>  
+       <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">", "</span> <span class="o">+</span> <span class="n">age</span><span class="o">;</span>  
+    <span class="o">}</span>  
+     
+<span class="o">}</span>  
+</code></pre></div></div>
+<p>控制器</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.validation.BindingResult</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.validation.DataBinder</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.InitBinder</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>  
+   
+<span class="nd">@Controller</span>  
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonController</span> <span class="o">{</span>  
+     
+    <span class="nd">@InitBinder</span>  
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initBinder</span><span class="o">(</span><span class="nc">DataBinder</span> <span class="n">binder</span><span class="o">)</span> <span class="o">{</span>  
+       <span class="n">binder</span><span class="o">.</span><span class="na">setValidator</span><span class="o">(</span><span class="k">new</span> <span class="nc">PersonValidator</span><span class="o">());</span>  
+    <span class="o">}</span>  
+   
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"add"</span><span class="o">)</span>  
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">add</span><span class="o">(</span><span class="nd">@Valid</span> <span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">BindingResult</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">hasErrors</span><span class="o">()){</span>
+            <span class="nc">List</span><span class="o">&lt;</span><span class="nc">ObjectError</span><span class="o">&gt;</span> <span class="n">errorList</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getAllErrors</span><span class="o">();</span>
+            <span class="k">for</span><span class="o">(</span><span class="nc">ObjectError</span> <span class="n">error</span> <span class="o">:</span> <span class="n">errorList</span><span class="o">){</span>
+                 <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">error</span><span class="o">.</span><span class="na">getDefaultMessage</span><span class="o">());</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="s">"redirect:person/list"</span><span class="o">;</span>  
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="s">"redirect:person/add"</span><span class="o">;</span>  
+    <span class="o">}</span>  
+     
+<span class="o">}</span>  
+</code></pre></div></div>
+
+<p><strong>注意：这里一个@Valid的参数后必须紧挨着一个BindingResult参数，否则spring会在校验不通过时直接抛出异常。</strong></p>
+
+<p><strong>注意：启用注解驱动&lt;mvc:annotation-driven /&gt;。</strong></p>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                java <span>(24)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                SpringMVC <span>(7)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/java/2021/03/22/springmvc06.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/java/2021/03/20/springmvc04.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+             
+                <a href="http://www.beian.miit.gov.cn">
+                蜀ICP备19012996号-3
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>
