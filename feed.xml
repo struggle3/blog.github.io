@@ -274,8 +274,6 @@
 
 &lt;h3 id=&quot;2-业务代码&quot;&gt;2. 业务代码&lt;/h3&gt;
 
-&lt;p&gt;程序员可以在这里根据自身业务情况进行相关逻辑代码编写和开发，只需要按照一定的套路编写即可，同时按照自身公司的相关开发标准和代码审查规范即可。&lt;/p&gt;
-
 &lt;h4 id=&quot;21-controller&quot;&gt;2.1. controller&lt;/h4&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
@@ -491,16 +489,16 @@ ${tips}
 
 &lt;h4 id=&quot;效果结构图&quot;&gt;效果结构图&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/springmvc/springmvc0801.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
 &lt;p&gt;&lt;img src=&quot;/assets/images/springmvc/springmvc0802.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/springmvc/springmvc0803.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;&lt;img src=&quot;/assets/images/springmvc/springmvc0804.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
 </description>
-				<pubDate>Mon, 22 Mar 2021 22:00:00 +0800</pubDate>
-				<link>https://myabp.cn/java/2021/03/22/springmvc08.html</link>
-				<guid isPermaLink="true">https://myabp.cn/java/2021/03/22/springmvc08.html</guid>
+				<pubDate>Wed, 24 Mar 2021 22:00:00 +0800</pubDate>
+				<link>https://myabp.cn/java/2021/03/24/springmvc08.html</link>
+				<guid isPermaLink="true">https://myabp.cn/java/2021/03/24/springmvc08.html</guid>
 			</item>
 		
 			<item>
@@ -1140,9 +1138,9 @@ ${tips}
   &lt;/tbody&gt;
 &lt;/table&gt;
 </description>
-				<pubDate>Mon, 22 Mar 2021 22:00:00 +0800</pubDate>
-				<link>https://myabp.cn/java/2021/03/22/springmvc07.html</link>
-				<guid isPermaLink="true">https://myabp.cn/java/2021/03/22/springmvc07.html</guid>
+				<pubDate>Tue, 23 Mar 2021 22:00:00 +0800</pubDate>
+				<link>https://myabp.cn/java/2021/03/23/springmvc07.html</link>
+				<guid isPermaLink="true">https://myabp.cn/java/2021/03/23/springmvc07.html</guid>
 			</item>
 		
 			<item>
