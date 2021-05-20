@@ -652,6 +652,15 @@
 
 <h3 id="1-core标签">1. Core标签</h3>
 
+<p>JSTL 核心标签库(C标签)标签共有13个功能上分为4类：</p>
+
+<ol>
+  <li>表达式控制标签：out、set、remove、catch</li>
+  <li>流程控制标签：if、choose、when、otherwise</li>
+  <li>循环标签：forEach、forTokens</li>
+  <li>URL操作标签：import、url、redirect</li>
+</ol>
+
 <p>在JSP页面中此用&lt;%@ taglib uri=”http://java.sun.com/jsp/jstl/core” prefix=”c” %&gt;后才能正常使用相关标签。</p>
 
 <h4 id="11-out-标签">1.1. out 标签</h4>
@@ -700,7 +709,7 @@
 
 <p>语法格式:</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:url  </span><span class="na">var=</span><span class="s">"&lt;string&gt;"</span><span class="na">  scope=</span><span class="s">"&lt;string&gt;"</span><span class="na">  value=</span><span class="s">"&lt;string&gt;"</span><span class="na">  context=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:url </span><span class="na">var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> scope=</span><span class="s">"&lt;string&gt;"</span><span class="na"> value=</span><span class="s">"&lt;string&gt;"</span><span class="na"> context=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <table>
@@ -746,7 +755,7 @@
 
 <p>语法格式:</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"&lt;string&gt;"</span><span class="na">  value=</span><span class="s">"&lt;string&gt;"</span><span class="na">  target=</span><span class="s">"&lt;string&gt;"</span><span class="na">  property=</span><span class="s">"&lt;string&gt;"</span><span class="na">  scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> value=</span><span class="s">"&lt;string&gt;"</span><span class="na"> target=</span><span class="s">"&lt;string&gt;"</span><span class="na"> property=</span><span class="s">"&lt;string&gt;"</span><span class="na"> scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <table>
@@ -835,11 +844,11 @@
 
 <h4 id="15-choosewhen和otherwise标签">1.5. choose、when和otherwise标签</h4>
 
-<p>choose 和 when 标签的作用与 Java 中的关键字 switch 和 case 类似。</p>
+<p>choose和when标签的作用与Java中的关键字switch和case类似。</p>
 
 <p>choose标签中必须嵌有一个或者多个when标签并且每when标签都表示一种可以计算和处理的情况。</p>
 
-<p>otherwise 标签则用于默认的条件块假如没有任何一个when标签的测试条件结果为True，otherwise就会得到处理,假如是这种情况otherwise就必须放在最后一个when之后。</p>
+<p>otherwise标签则用于默认的条件块假如没有任何一个when标签的测试条件结果为True，otherwise就会得到处理,假如是这种情况otherwise就必须放在最后一个when之后。</p>
 
 <p>choose和otherwise标签没有属性when标签必须带有定义测试条件的test属性，用来决定是否应该处理内容。</p>
 
@@ -863,12 +872,12 @@
 
 <p>forEach 语法格式：</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:forEach    </span><span class="na">items=</span><span class="s">"&lt;object&gt;"</span><span class="na">    begin=</span><span class="s">"&lt;int&gt;"</span><span class="na">    end=</span><span class="s">"&lt;int&gt;"</span><span class="na">    step=</span><span class="s">"&lt;int&gt;"</span><span class="na">    var=</span><span class="s">"&lt;string&gt;"</span><span class="na">    varStatus=</span><span class="s">"&lt;string&gt;"</span> <span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:forEach </span><span class="na">items=</span><span class="s">"&lt;object&gt;"</span><span class="na"> begin=</span><span class="s">"&lt;int&gt;"</span><span class="na"> end=</span><span class="s">"&lt;int&gt;"</span><span class="na"> step=</span><span class="s">"&lt;int&gt;"</span><span class="na"> var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> varStatus=</span><span class="s">"&lt;string&gt;"</span> <span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <p>forTokens语法格式:</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:forTokens    </span><span class="na">items=</span><span class="s">"&lt;string&gt;"</span><span class="na">    delims=</span><span class="s">"&lt;string&gt;"</span><span class="na">    begin=</span><span class="s">"&lt;int&gt;"</span><span class="na">    end=</span><span class="s">"&lt;int&gt;"</span><span class="na">    step=</span><span class="s">"&lt;int&gt;"</span><span class="na">    var=</span><span class="s">"&lt;string&gt;"</span><span class="na">    varStatus=</span><span class="s">"&lt;string&gt;"</span> <span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:forTokens </span><span class="na">items=</span><span class="s">"&lt;string&gt;"</span><span class="na"> delims=</span><span class="s">"&lt;string&gt;"</span><span class="na"> begin=</span><span class="s">"&lt;int&gt;"</span><span class="na"> end=</span><span class="s">"&lt;int&gt;"</span><span class="na"> step=</span><span class="s">"&lt;int&gt;"</span><span class="na"> var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> varStatus=</span><span class="s">"&lt;string&gt;"</span> <span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <table>
@@ -920,9 +929,69 @@
   </tbody>
 </table>
 
+<h4 id="17-import标签">1.7. import标签</h4>
+
+<p>import标签提供了所有&lt;jsp:include&gt;行为标签所具有的功能，同时也允许包含绝对URL。</p>
+
+<p>语法格式：</p>
+
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;c:import </span><span class="na">url=</span><span class="s">"&lt;string&gt;"</span><span class="na"> var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> scope=</span><span class="s">"&lt;string&gt;"</span><span class="na"> varReader=</span><span class="s">"&lt;string&gt;"</span><span class="na"> context=</span><span class="s">"&lt;string&gt;"</span><span class="na"> charEncoding=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>属性</th>
+      <th>描述</th>
+      <th>是否必要</th>
+      <th>默认值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>url</td>
+      <td>待导入资源的URL，可以是相对路径和绝对路径，并且可以导入其他主机资源</td>
+      <td>是</td>
+      <td>无</td>
+    </tr>
+    <tr>
+      <td>context</td>
+      <td>当使用相对路径访问外部context资源时，context指定了这个资源的名字。</td>
+      <td>否</td>
+      <td>当前应用程序</td>
+    </tr>
+    <tr>
+      <td>charEncoding</td>
+      <td>所引入的数据的字符编码集</td>
+      <td>否</td>
+      <td>ISO-8859-1</td>
+    </tr>
+    <tr>
+      <td>var</td>
+      <td>用于存储所引入的文本的变量</td>
+      <td>否</td>
+      <td>无</td>
+    </tr>
+    <tr>
+      <td>scope</td>
+      <td>var属性的作用域</td>
+      <td>否</td>
+      <td>page</td>
+    </tr>
+    <tr>
+      <td>varReader</td>
+      <td>可选的用于提供java.io.Reader对象的变量</td>
+      <td>否</td>
+      <td>无</td>
+    </tr>
+  </tbody>
+</table>
+
 <h3 id="2-格式化标签">2. 格式化标签</h3>
 
 <p>JSTL 提供了格式化和解析数字与日期的标签它们是formatNumber、formatDate、timeZone、setTimeZone、parseNumber和parseDate。</p>
+
+<p>在JSP页面中此用&lt;%@ taglib prefix=”fmt” uri=”http://java.sun.com/jsp/jstl/fmt” %&gt;后才能正常使用相关标签。</p>
 
 <h4 id="21-formatnumber">2.1. formatNumber</h4>
 
@@ -930,7 +999,7 @@
 
 <p>语法格式:</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:formatNumber  </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na">  type=</span><span class="s">"&lt;string&gt;"</span><span class="na">  pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na">  currencyCode=</span><span class="s">"&lt;string&gt;"</span><span class="na">  currencySymbol=</span><span class="s">"&lt;string&gt;"</span><span class="na">  groupingUsed=</span><span class="s">"&lt;string&gt;"</span><span class="na">  maxIntegerDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na">  minIntegerDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na">  maxFractionDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na">  minFractionDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na">  var=</span><span class="s">"&lt;string&gt;"</span><span class="na">  scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:formatNumber </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na"> type=</span><span class="s">"&lt;string&gt;"</span><span class="na"> pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na"> currencyCode=</span><span class="s">"&lt;string&gt;"</span><span class="na"> currencySymbol=</span><span class="s">"&lt;string&gt;"</span><span class="na">  groupingUsed=</span><span class="s">"&lt;string&gt;"</span><span class="na"> maxIntegerDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na"> minIntegerDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na"> maxFractionDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na"> minFractionDigits=</span><span class="s">"&lt;string&gt;"</span><span class="na"> var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <table>
@@ -1077,7 +1146,7 @@
 
 <p>语法格式:</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:formatDate  </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na">  type=</span><span class="s">"&lt;string&gt;"</span><span class="na">  dateStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na">  timeStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na">  pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na">  timeZone=</span><span class="s">"&lt;string&gt;"</span><span class="na">  var=</span><span class="s">"&lt;string&gt;"</span><span class="na">  scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:formatDate </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na"> type=</span><span class="s">"&lt;string&gt;"</span><span class="na"> dateStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na"> timeStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na"> pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na"> timeZone=</span><span class="s">"&lt;string&gt;"</span><span class="na">  var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <table>
@@ -1147,7 +1216,7 @@
 
 <p>语法格式:</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:parseNumber  </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na">  type=</span><span class="s">"&lt;string&gt;"</span><span class="na">  pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na">  parseLocale=</span><span class="s">"&lt;string&gt;"</span><span class="na">  integerOnly=</span><span class="s">"&lt;string&gt;"</span><span class="na">  var=</span><span class="s">"&lt;string&gt;"</span><span class="na">  scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:parseNumber </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na"> type=</span><span class="s">"&lt;string&gt;"</span><span class="na"> pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na"> parseLocale=</span><span class="s">"&lt;string&gt;"</span><span class="na"> integerOnly=</span><span class="s">"&lt;string&gt;"</span><span class="na"> var=</span><span class="s">"&lt;string&gt;"</span><span class="na">  cope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <table>
@@ -1217,7 +1286,7 @@
 
 <p>语法格式:</p>
 
-<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:parseDate   </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na">   type=</span><span class="s">"&lt;string&gt;"</span><span class="na">   dateStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na">   timeStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na">   pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na">   timeZone=</span><span class="s">"&lt;string&gt;"</span><span class="na">   parseLocale=</span><span class="s">"&lt;string&gt;"</span><span class="na">   var=</span><span class="s">"&lt;string&gt;"</span><span class="na">   scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;fmt:parseDate </span><span class="na">value=</span><span class="s">"&lt;string&gt;"</span><span class="na"> type=</span><span class="s">"&lt;string&gt;"</span><span class="na"> dateStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na"> timeStyle=</span><span class="s">"&lt;string&gt;"</span><span class="na"> pattern=</span><span class="s">"&lt;string&gt;"</span><span class="na"> timeZone=</span><span class="s">"&lt;string&gt;"</span><span class="na"> parseLocale=</span><span class="s">"&lt;string&gt;"</span><span class="na"> var=</span><span class="s">"&lt;string&gt;"</span><span class="na"> scope=</span><span class="s">"&lt;string&gt;"</span><span class="nt">/&gt;</span>
 </code></pre></div></div>
 
 <table>
