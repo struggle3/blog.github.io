@@ -7,8 +7,8 @@
     <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
 	<link rel="icon" href="/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="docker远程" />
-    <meta name="description" content="介绍如何对docker进行远程" />
+    <meta name="keywords" content="github 443,github超时" />
+    <meta name="description" content="记录一次github超时让程序员怀疑人生的事件。" />
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -648,32 +648,56 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/docker/2020/02/20/docker-yuancheng.html">docker远程</a></h2>
+        <h2><a href="/github/2021/03/25/github443.html">记录一次github超时443问题</a></h2>
         <span class="post-date">
             
-            2020-02-20
+            2021-03-25
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <p>docker同样可以以远程的方式进行访问，但存在安全风险在生产环境中不建议这样使用。</p>
+    <h3 id="1-背景">1. 背景</h3>
 
-<p>配置远程访问1
-修改/etc/docerk/daemon.jso文件</p>
+<p>github作为全球最大的同性交友网站然后由于网络原因可能导致你打开网站、提交代码、同步代码出现的各种慢、各种卡、各种失败让程序员有一种无力回天的感觉时。</p>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"hosts"</span><span class="p">:[</span><span class="s2">"tcp://0.0.0.0:2375"</span><span class="p">,</span><span class="s2">"unix://var/run/docker.sock"</span><span class="p">]</span><span class="w">
-</span></code></pre></div></div>
+<p>这个时候多么想做一个秒天、秒地、秒空气的男人，然而是可以通过修改host文件实现这样的效果的，当然这不是唯一的办法，如果你是富二代可以用梯子，富豪可以尝试肉身翻墙。</p>
 
-<p>配置远程访问2
-修改/usr/lib/systemd/system/docker.service</p>
+<h3 id="2-操作方法">2. 操作方法</h3>
 
-<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">ExecStart</span><span class="p">=</span><span class="s">/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock</span>
+<h4 id="21-查看githubcom域名ip">2.1. 查看github.com域名IP</h4>
+
+<ul>
+  <li>查看地址：<a href="https://github.com.ipaddress.com/">点击此处</a></li>
+</ul>
+
+<h4 id="22-查看ssl地址">2.2. 查看ssl地址</h4>
+
+<ul>
+  <li>查看地址：<a href="https://fastly.net.ipaddress.com/github.global.ssl.fastly.net#ipinfo">点击此处</a></li>
+</ul>
+
+<h4 id="23-查看cdn地址">2.3. 查看cdn地址</h4>
+
+<ul>
+  <li>查看地址：<a href="https://github.com.ipaddress.com/assets-cdn.github.com">点击此处</a></li>
+</ul>
+
+<p><strong>注意：请复制以上显示的IP地址以做备用</strong></p>
+
+<h4 id="24-修改host文件">2.4. 修改host文件</h4>
+
+<p>以windwos为例host文件对应的目录在C:\Windows\System32\drivers\etc中找到并添加下面地址然后通过ipconfig  /flushdns刷新DNS缓存即可。</p>
+
+<p><strong>注意：所有地此必须是通过上面连接获取的地址。</strong></p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">140.82.113.4</span> <span class="err">github.com</span> 
+<span class="err">199.232.69.194</span> <span class="err">github.global.ssl.fastly.net</span>
+<span class="err">185.199.108.153</span> <span class="err">assets-cdn.github.com</span>
+<span class="err">185.199.109.153</span> <span class="err">assets-cdn.github.com</span>
+<span class="err">185.199.110.153</span> <span class="err">assets-cdn.github.com</span>
+<span class="err">185.199.111.153</span> <span class="err">assets-cdn.github.com</span>
 </code></pre></div></div>
 
-<p>远程命令</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nt">-H</span> ip:port <span class="nb">command</span>
-</code></pre></div></div>
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -685,7 +709,7 @@
       
          
             <li class="icon-style"><a href="/categories.html">
-                docker <span>(11)</span>
+                github <span>(1)</span>
                 
             </a></li>
         
@@ -701,7 +725,7 @@
          
             <li class="icon-style">
                 <a href="/tags.html">
-                docker <span>(11)</span>
+                other <span>(1)</span>
                 
                 </a>
             </li>
@@ -716,10 +740,8 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/docker/2020/02/21/docker-image.html" class="next">前一篇</a>
     
-    
-    <a class="btn btn-default" href="/docker/2020/02/19/docker-xianzhi.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/java/2021/03/24/springmvc08.html" class="previous">后一篇</a>
     
 </div>
             </div>

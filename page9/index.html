@@ -7,8 +7,8 @@
     <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
 	<link rel="icon" href="/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="docker远程" />
-    <meta name="description" content="介绍如何对docker进行远程" />
+    <meta name="keywords" content="野程序猿,ye程序员,abp,abp vnext,dotnet core,nop,orchard" />
+    <meta name="description" content="我是一名普通的80后程序员一直从事.net平台技术栈的web开发工作，一个忠实的微软粉爱生活、爱代码、爱技术喜欢研究开源项目。" />
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -647,81 +647,42 @@
             </div>
             <div class="col-md-10">
                 
+
 <div class="well article">
-        <h2><a href="/docker/2020/02/20/docker-yuancheng.html">docker远程</a></h2>
-        <span class="post-date">
-            
-            2020-02-20
-        </span>
-        <hr style="border-top:1px solid #28323C;"/>
-    
-    <div class="post-content">
-    <p>docker同样可以以远程的方式进行访问，但存在安全风险在生产环境中不建议这样使用。</p>
 
-<p>配置远程访问1
-修改/etc/docerk/daemon.jso文件</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"hosts"</span><span class="p">:[</span><span class="s2">"tcp://0.0.0.0:2375"</span><span class="p">,</span><span class="s2">"unix://var/run/docker.sock"</span><span class="p">]</span><span class="w">
-</span></code></pre></div></div>
-
-<p>配置远程访问2
-修改/usr/lib/systemd/system/docker.service</p>
-
-<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">ExecStart</span><span class="p">=</span><span class="s">/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock</span>
-</code></pre></div></div>
-
-<p>远程命令</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nt">-H</span> ip:port <span class="nb">command</span>
-</code></pre></div></div>
-
-    <hr style="border-top:1px solid #28323C;"/>
-
-    <!-- tags and categories under post -->
-    
-    <ul class="list-unstyled list-inline">
-      <li><i class="icon-folder-open"></i></li>
-      
-      
-         
-            <li class="icon-style"><a href="/categories.html">
-                docker <span>(11)</span>
-                
-            </a></li>
+    <span class="post-date">
+        <!--
         
-      
-    </ul>
-      
-
-    
-    <ul class="list-unstyled list-inline">
-      <li><i class="icon-tags"></i></li>
-      
-      
-         
-            <li class="icon-style">
-                <a href="/tags.html">
-                docker <span>(11)</span>
-                
-                </a>
-            </li>
+        April
+        27th,
         
-      
-      
-    </ul>
-      
-
+        2019
+        -->
+        
+        2019-04-27
+    </span>
+    
+    <h4>
+        <a href="/other/2019/04/27/ubuntu-dotnetcore.html">使用ubuntu做为dotnet core开发环境</a>
+    </h4>
+    
+    <div class="post-description">
+        使用ubuntu做为dotnet core开发环境
     </div>
     
 </div>
+
+
 <div class="pagination">
-    
-    <a class="btn btn-default" href="/docker/2020/02/21/docker-image.html" class="next">前一篇</a>
-    
-    
-    <a class="btn btn-default" href="/docker/2020/02/19/docker-xianzhi.html" class="previous">后一篇</a>
-    
+  
+      
+        <a class="btn btn-default" href="/page8" class="previous">上一页</a>
+      
+  
+  <!-- <span class="page_number ">当前页: 9 - 9</span> -->
+  
 </div>
+
             </div>
         </div>
     </div>

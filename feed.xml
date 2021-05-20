@@ -7,6 +7,56 @@
 		<atom:link href="https://myabp.cn/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>记录一次github超时443问题</title>
+				<description>&lt;h3 id=&quot;1-背景&quot;&gt;1. 背景&lt;/h3&gt;
+
+&lt;p&gt;github作为全球最大的同性交友网站然后由于网络原因可能导致你打开网站、提交代码、同步代码出现的各种慢、各种卡、各种失败让程序员有一种无力回天的感觉时。&lt;/p&gt;
+
+&lt;p&gt;这个时候多么想做一个秒天、秒地、秒空气的男人，然而是可以通过修改host文件实现这样的效果的，当然这不是唯一的办法，如果你是富二代可以用梯子，富豪可以尝试肉身翻墙。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-操作方法&quot;&gt;2. 操作方法&lt;/h3&gt;
+
+&lt;h4 id=&quot;21-查看githubcom域名ip&quot;&gt;2.1. 查看github.com域名IP&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看地址：&lt;a href=&quot;https://github.com.ipaddress.com/&quot;&gt;点击此处&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;22-查看ssl地址&quot;&gt;2.2. 查看ssl地址&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看地址：&lt;a href=&quot;https://fastly.net.ipaddress.com/github.global.ssl.fastly.net#ipinfo&quot;&gt;点击此处&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;23-查看cdn地址&quot;&gt;2.3. 查看cdn地址&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看地址：&lt;a href=&quot;https://github.com.ipaddress.com/assets-cdn.github.com&quot;&gt;点击此处&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：请复制以上显示的IP地址以做备用&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;24-修改host文件&quot;&gt;2.4. 修改host文件&lt;/h4&gt;
+
+&lt;p&gt;以windwos为例host文件对应的目录在C:\Windows\System32\drivers\etc中找到并添加下面地址然后通过ipconfig  /flushdns刷新DNS缓存即可。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：所有地此必须是通过上面连接获取的地址。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;140.82.113.4&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;github.com&lt;/span&gt; 
+&lt;span class=&quot;err&quot;&gt;199.232.69.194&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;github.global.ssl.fastly.net&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;185.199.108.153&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;assets-cdn.github.com&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;185.199.109.153&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;assets-cdn.github.com&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;185.199.110.153&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;assets-cdn.github.com&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;185.199.111.153&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;assets-cdn.github.com&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Thu, 25 Mar 2021 22:00:00 +0800</pubDate>
+				<link>https://myabp.cn/github/2021/03/25/github443.html</link>
+				<guid isPermaLink="true">https://myabp.cn/github/2021/03/25/github443.html</guid>
+			</item>
+		
+			<item>
 				<title>Spring MVC 集成SSM</title>
 				<description>&lt;p&gt;SSM（Spring+SpringMVC+MyBatis）框架集由Spring、MyBatis两个开源框架整合而成，就现在java web开发中很多团队都会选择前后端分离的方式进行项目或者产品开发。&lt;/p&gt;
 
@@ -2961,35 +3011,6 @@ Converter则可以用在任意层中。&lt;/p&gt;
 				<pubDate>Tue, 16 Mar 2021 22:00:00 +0800</pubDate>
 				<link>https://myabp.cn/java/2021/03/16/springboot06.html</link>
 				<guid isPermaLink="true">https://myabp.cn/java/2021/03/16/springboot06.html</guid>
-			</item>
-		
-			<item>
-				<title>Spring Boot热部署</title>
-				<description>&lt;h3 id=&quot;1-介绍&quot;&gt;1. 介绍&lt;/h3&gt;
-
-&lt;p&gt;在开发中提升效率可以通过Spring Boot为开发者提供的热部署方式实现修改部分代码后，不需要每次重启即可在界面中看见修改的后的结果。&lt;/p&gt;
-
-&lt;h3 id=&quot;2-加入依赖&quot;&gt;2. 加入依赖&lt;/h3&gt;
-
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--devtools热部署--&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-devtools&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;optional&amp;gt;&lt;/span&gt;true&lt;span class=&quot;nt&quot;&gt;&amp;lt;/optional&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;scope&amp;gt;&lt;/span&gt;true&lt;span class=&quot;nt&quot;&gt;&amp;lt;/scope&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;3-idea配置&quot;&gt;3. IDEA配置&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;File-Settings-Compiler-Build Project automatically&lt;/li&gt;
-  &lt;li&gt;ctrl + shift + alt + / ,选择Registry,勾上 Compiler autoMake allow when app running&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-				<pubDate>Mon, 15 Mar 2021 22:00:00 +0800</pubDate>
-				<link>https://myabp.cn/java/2021/03/15/springboot05.html</link>
-				<guid isPermaLink="true">https://myabp.cn/java/2021/03/15/springboot05.html</guid>
 			</item>
 		
 	</channel>
