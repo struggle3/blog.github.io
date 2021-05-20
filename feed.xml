@@ -7,6 +7,49 @@
 		<atom:link href="https://myabp.cn/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>github pages绑定域名</title>
+				<description>&lt;h3 id=&quot;1-背景&quot;&gt;1. 背景&lt;/h3&gt;
+
+&lt;p&gt;gitHub pages是一个静态站点托管服务由用户编写的静态网页托管在github上面并且容量不超过1GB的网页。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-添加cname文件&quot;&gt;2. 添加CNAME文件&lt;/h3&gt;
+
+&lt;p&gt;直接在仓库根目录创建一个CNAME文件（文件名全部大写）具体内空如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-code&quot;&gt;myabp.cn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;3-github设置页面&quot;&gt;3. github设置页面&lt;/h3&gt;
+
+&lt;p&gt;进入你的github项目中进入settings页面参见下图进行配置。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/githubpages/githubpage01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4-dns解析&quot;&gt;4. DNS解析&lt;/h3&gt;
+
+&lt;p&gt;进入你的域名提供商域名解析页面具体配置参见下图进行配置。&lt;/p&gt;
+
+&lt;p&gt;当然你也可以配置下面任意思一个IP地址。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-code&quot;&gt;185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;以阿里云为例：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/githubpages/githubpage02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</description>
+				<pubDate>Fri, 26 Mar 2021 22:00:00 +0800</pubDate>
+				<link>https://myabp.cn/github/2021/03/26/githubpages.html</link>
+				<guid isPermaLink="true">https://myabp.cn/github/2021/03/26/githubpages.html</guid>
+			</item>
+		
+			<item>
 				<title>记录一次github超时443问题</title>
 				<description>&lt;h3 id=&quot;1-背景&quot;&gt;1. 背景&lt;/h3&gt;
 
@@ -2779,238 +2822,6 @@ Converter则可以用在任意层中。&lt;/p&gt;
 				<pubDate>Wed, 17 Mar 2021 22:00:00 +0800</pubDate>
 				<link>https://myabp.cn/java/2021/03/17/springmvc01.html</link>
 				<guid isPermaLink="true">https://myabp.cn/java/2021/03/17/springmvc01.html</guid>
-			</item>
-		
-			<item>
-				<title>Spring Boot日志</title>
-				<description>&lt;p&gt;Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。&lt;/p&gt;
-
-&lt;p&gt;每种Logger都可以通过配置使用控制台或者文件输出日志内容。&lt;/p&gt;
-
-&lt;p&gt;默认使⽤Logback使用Logback“启动器”和“连接器”进行⽇志记录，以确保使⽤Java Util Logging,Commons Logging,Log4J或SLF4J的日志库正常⼯作。&lt;/p&gt;
-
-&lt;h3 id=&quot;1-志格式&quot;&gt;1 ⽇志格式&lt;/h3&gt;
-
-&lt;p&gt;Spring Boot 的默认⽇志输出⽰例：&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2021-03-16 22:01:46.203  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 8080 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-2021-03-16 22:01:46.203  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] o.apache.catalina.core.StandardService   : Starting service &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Tomcat]
-2021-03-16 22:01:46.203  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Apache Tomcat/9.0.45]
-2021-03-16 22:01:46.266  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2021-03-16 22:01:46.266  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;847 ms
-2021-03-16 22:01:46.406  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService &lt;span class=&quot;s1&quot;&gt;'applicationTaskExecutor'&lt;/span&gt;
-2021-03-16 22:01:46.516  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2021-03-16 22:01:46.531  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 8080 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; with context path &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;
-2021-03-16 22:01:46.547  INFO 3308 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] com.example.demo.DemoApplication         : Started DemoApplication &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;1.586 seconds &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;JVM running &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;2.586&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-2021-03-16 22:07:00.550 TRACE 10476 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] com.example.demo.DemoApplication         : 跟踪
-2021-03-16 22:07:00.550 DEBUG 10476 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] com.example.demo.DemoApplication         : 调试
-2021-03-16 22:07:00.550 ERROR 10476 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] com.example.demo.DemoApplication         : 错误
-2021-03-16 22:07:00.550  WARN 10476 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] com.example.demo.DemoApplication         : 警告
-2021-03-16 22:07:00.550  INFO 10476 &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  restartedMain] com.example.demo.DemoApplication         : 信息
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;输出以下项⽬：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;时间日期 — 精确到毫秒&lt;/li&gt;
-  &lt;li&gt;日志级别 — ERROR, WARN, INFO, DEBUG or TRACE&lt;/li&gt;
-  &lt;li&gt;进程ID&lt;/li&gt;
-  &lt;li&gt;分隔符 — — 标识实际日志的开始&lt;/li&gt;
-  &lt;li&gt;线程名 — 方括号括起来（可能会截断控制台输出）&lt;/li&gt;
-  &lt;li&gt;Logger名 — 通常使用源代码的类名&lt;/li&gt;
-  &lt;li&gt;日志内容&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;日志输出级别修改：&lt;/p&gt;
-
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;logging&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;trace&lt;/span&gt;
-      
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;注意：root表示所包下的日志都是trace级别，可以通过com.xxx进行更细粒度的日志级别控制&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-控制台输出&quot;&gt;2. 控制台输出&lt;/h3&gt;
-
-&lt;p&gt;在Spring Boot中默认配置了ERROR、WARN和INFO级别的日志输出到控制台。&lt;/p&gt;
-
-&lt;p&gt;我们可以通过两种方式切换至DEBUG级别：&lt;/p&gt;
-
-&lt;p&gt;命令行方式：&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; myapp.jar &lt;span class=&quot;nt&quot;&gt;--debug&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;配置文件方式：&lt;/p&gt;
-
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;在application.yml中配置debug: true，debug属性置为true的时候，核心Logger（包含嵌入式容器、hibernate、spring）会输出更多内容，但是你自己应用的日志并不会输出为DEBUG级别。&lt;/p&gt;
-
-&lt;h3 id=&quot;3-件输出&quot;&gt;3. ⽂件输出&lt;/h3&gt;
-
-&lt;p&gt;Spring Boot默认仅记录到控制台不会写⽇志⽂件。&lt;/p&gt;
-
-&lt;p&gt;如果除了控制台输出外还需要写⼊⽇志⽂件，则需要设置logging:file或logging:path属性(例如：在application.yml中)。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;属性设置&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;名称&lt;/th&gt;
-      &lt;th&gt;实例&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;logging:file&lt;/td&gt;
-      &lt;td&gt;my.log&lt;/td&gt;
-      &lt;td&gt;设置文件名称及路径支持相对及绝对路径&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;logging:path&lt;/td&gt;
-      &lt;td&gt;/var/log&lt;/td&gt;
-      &lt;td&gt;设置spring.log文件目录）&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;strong&gt;日志文件默认为10Mb，超后过会生成新的日志文件，默认级别为：ERROR、WARN、INFO&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;4-日志归档&quot;&gt;4. 日志归档&lt;/h3&gt;
-
-&lt;p&gt;引用地址：&lt;a href=&quot;[超链接地址](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html)&quot; title=&quot;appendix-application-properties&quot;&gt;传送门&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;如果使用Logback则可以使用配置文件（yml或properties）进行日志文件轮播设置，对于其它日志记录系统，你可以直接配置轮转设置（例如：Log4J2则可以添加log4j.xml文件）。&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;名称&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;logging.logback.rollingpolicy.clean-history-on-start&lt;/td&gt;
-      &lt;td&gt;表示应用在启动进行清理归档日志文件&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;logging.logback.rollingpolicy.file-name-pattern&lt;/td&gt;
-      &lt;td&gt;归档日志文件名称&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;logging.logback.rollingpolicy.max-file-size&lt;/td&gt;
-      &lt;td&gt;归档日志文件大小&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;logging.logback.rollingpolicy.max-history&lt;/td&gt;
-      &lt;td&gt;归档日志文件保留天数（默认为7天）&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;logging.logback.rollingpolicy.total-size-cap&lt;/td&gt;
-      &lt;td&gt;归档日志文件保留大小（0表示不限制）&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;5-自定义日志文件&quot;&gt;5. 自定义日志文件&lt;/h3&gt;
-
-&lt;p&gt;简单的日志配置不能满足实际项目需求，那可以通过引用定制日志文件的形式达到目的。&lt;/p&gt;
-
-&lt;p&gt;Spring Boot能根据类路径下的类库和配置文件自动配置对应的日志框架。&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;日志框架&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Logback&lt;/td&gt;
-      &lt;td&gt;logback-spring.xml,logback-spring.groovy,logback.xml,logback.groovy&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Log4j2&lt;/td&gt;
-      &lt;td&gt;log4j2-spring.xml,log4j2.xml&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;JDK (Java Util Logging）&lt;/td&gt;
-      &lt;td&gt;logging.properties&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;logback.xml&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;configuration&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;debug=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;false&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径--&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LOG_HOME&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/home&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--控制台日志， 控制台输出 --&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;appender&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;STDOUT&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.core.ConsoleAppender&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;encoder&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;c&quot;&gt;&amp;lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度,%msg：日志消息，%n是换行符--&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;pattern&amp;gt;&lt;/span&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n&lt;span class=&quot;nt&quot;&gt;&amp;lt;/pattern&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/encoder&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/appender&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--文件日志， 按照每天生成日志文件 --&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;appender&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;FILE&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;rollingPolicy&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;c&quot;&gt;&amp;lt;!--日志文件输出的文件名--&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;FileNamePattern&amp;gt;&lt;/span&gt;${LOG_HOME}/TestWeb.log.%d{yyyy-MM-dd}.log&lt;span class=&quot;nt&quot;&gt;&amp;lt;/FileNamePattern&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;c&quot;&gt;&amp;lt;!--日志文件保留天数--&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;MaxHistory&amp;gt;&lt;/span&gt;30&lt;span class=&quot;nt&quot;&gt;&amp;lt;/MaxHistory&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/rollingPolicy&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;encoder&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;c&quot;&gt;&amp;lt;!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;pattern&amp;gt;&lt;/span&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n&lt;span class=&quot;nt&quot;&gt;&amp;lt;/pattern&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/encoder&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;&amp;lt;!--日志文件最大的大小--&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;triggeringPolicy&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;MaxFileSize&amp;gt;&lt;/span&gt;10MB&lt;span class=&quot;nt&quot;&gt;&amp;lt;/MaxFileSize&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/triggeringPolicy&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/appender&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- show parameters for hibernate sql 专为 Hibernate 定制 --&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;org.hibernate.type.descriptor.sql.BasicBinder&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TRACE&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;org.hibernate.type.descriptor.sql.BasicExtractor&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;org.hibernate.SQL&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;org.hibernate.engine.QueryParameters&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;org.hibernate.engine.query.HQLQueryPlan&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--myibatis log configure--&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.apache.ibatis&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TRACE&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;java.sql.Connection&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;java.sql.Statement&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;logger&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;java.sql.PreparedStatement&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 日志输出级别 --&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;root&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;level=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;DEBUG&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;appender-ref&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ref=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;STDOUT&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;appender-ref&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ref=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;FILE&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;注意：如果启用日志记录框架，配置文件中的设置将不生效&lt;/strong&gt;&lt;/p&gt;
-</description>
-				<pubDate>Tue, 16 Mar 2021 22:00:00 +0800</pubDate>
-				<link>https://myabp.cn/java/2021/03/16/springboot06.html</link>
-				<guid isPermaLink="true">https://myabp.cn/java/2021/03/16/springboot06.html</guid>
 			</item>
 		
 	</channel>
