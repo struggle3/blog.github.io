@@ -7,8 +7,8 @@
     <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
 	<link rel="icon" href="/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="docker数据卷，docker volume" />
-    <meta name="description" content="介绍如何在docker内部以及容器之间管理数据" />
+    <meta name="keywords" content="Spring Data JPA,ORM,JPA" />
+    <meta name="description" content="javax.persistence相关内容的简单介绍。" />
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -698,99 +698,116 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/docker/2020/02/18/docker-volume.html">docker数据卷</a></h2>
+        <h2><a href="/github/2021/03/29/springdatajpa.html">hibernate中的javax.persistence介绍</a></h2>
         <span class="post-date">
             
-            2020-02-18
+            2021-03-29
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <h1 id="1-数据卷特性">1. 数据卷特性</h1>
+    <p>JPA(Java Persistence API)是Sun官方提出的Java持久化规范，它为Java开发人员提供了一种对象关系映射的方式管理Java应用中的关系数据。</p>
 
-<p>数据卷是一个可供一个或多个容器使用的特殊目录，docker镜像由多个只读层叠加而成启动容器时docker会加载只读镜像层并在镜像栈顶部添加一个读写层。从而数据卷具有如下特性：</p>
+<p>它显示了如何定义一个面向普通Java对象（POJO）作为一个实体，以及如何与管理关系实体提供一套标准。因此javax.persistence下面的有些注解还是必须要去了解的，以便于更好地提高工作效率。</p>
 
-<ul>
-  <li><strong>数据卷可以在容器之间共享和重用</strong></li>
-  <li><strong>对数据卷的修改会立马生效</strong></li>
-  <li><strong>对数据卷的更新，不会影响镜像</strong></li>
-  <li><strong>数据卷默认会一直存在，即使容器被删除</strong></li>
-</ul>
+<p>Hibernate是它的一种实现方式，还有EclipseLink(曾经的toplink)，OpenJPA等可以使用，所以使用Jpa的一个好处是可以方便的切换ORM框架。</p>
 
-<p>如果运行中的容器修改了现有的一个已经存在的文件，那么该文件将会从读写层下面的的只读层复制到读写层，该文件的只读版本仍然存在，只是已经被读写层中隐藏了该文件的副本并<strong>写时复制</strong>。</p>
-
-<p><img src="/assets/images/docker/volume.jpg" width="500" alt="" /></p>
-
-<h1 id="2-数据卷意义">2. 数据卷意义</h1>
-
-<p>由于docker容器有自己的名称空间无法与宿主机的文件系统进行交互并且删除<strong>容器数据就会丢失</strong>，为了保障关闭或重启容器数据不受影响将应程序产生的进行<strong>数据保存</strong>可以使用数据卷做为解决方案。</p>
-
-<p><img src="/assets/images/docker/volume2.jpg" width="500" alt="" /></p>
+<p>JPA与Hibernate的区别如下：</p>
 
 <ul>
-  <li>数据卷可以在运行容器时即完成创建与绑定操作。当然，前提需要拥有对应的申明</li>
-  <li>数据卷的目的就是数据持久化</li>
+  <li>可以理解为JPA是标准接口Hibernate是实现;</li>
+  <li>Hibernate实现与JPA的关系主要是通过三个组件来实现的hibernate-annotation、hibernate-entitymanager和hibernate-core:
+    <ol>
+      <li>hibernate-annotation：是Hibernate支持annotation方式配置的基础，它包括了标准的JPA annotation以及Hibernate自身特殊功能的annotation。</li>
+      <li>hibernate-core：是Hibernate的核心实现提供了Hibernate所有的核心功能。</li>
+      <li>hibernate-entitymanager：实现了标准的JPA可以把它看成hibernate-core和JPA之间的适配器，它并不直接提供ORM的功能，而是对hibernate-core进行封装，使得Hibernate符合JPA的规范。</li>
+    </ol>
+  </li>
 </ul>
 
-<p><img src="/assets/images/docker/volume3.jpg" width="500" alt="" /></p>
+<p>依赖关系如下：</p>
 
-<h1 id="3-数据卷操作">3. 数据卷操作</h1>
+<p><img src="/assets/images/jpa/jpa03.png" alt="" /></p>
 
-<h2 id="31-创建数据卷">3.1. 创建数据卷</h2>
+<p><strong>注意：也可以使用mvn dependency:tree命令可以查看。</strong></p>
 
-<p>命令格式：</p>
+<p>在实现项目中直接引用org.hibernate:hibernate-entitymanager即可，从依赖关系包含hibernate-commons-annotations、hibernate-jpa和hibernate-core三个比较重要的依赖。</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume create <span class="o">[</span>OPTIONS] <span class="o">[</span>VOLUME]
-<span class="c">#Options:</span>
-<span class="c">#-d, --driver string 指定卷驱动程序名称</span>
-<span class="c">#–label list 设置卷的元数据</span>
-<span class="c">#-o, --opt map 设置驱动程序特定选项</span>
-</code></pre></div></div>
-<p>创建出来的数据卷位于宿主机/var/lib/docker/volumes/下。</p>
+<h3 id="1-entitymanagerfactory">1. EntityManagerFactory</h3>
 
-<h2 id="32-删除数据卷">3.2. 删除数据卷</h2>
+<p>EntityManagerFactory是线程安全的对象，并且EntityManagerFactory的创建极其浪费资源，所以在使用JPA编程时，我们可以对EntityManagerFactory封装，只需要做到项目只存在一个EntityManagerFactory 即可。</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">rm</span> <span class="o">[</span>VOLUME]
+<p>实例化代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">EntityManagerFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="nc">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"myJpa"</span><span class="o">);</span>
 </code></pre></div></div>
 
-<h2 id="33-列出数据卷">3.3. 列出数据卷</h2>
+<h3 id="2-entitymanager">2. EntityManager</h3>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">ls</span>
+<p>EntityManager是完成持久化操作的核心对象实体类作为普通java对象，只有在调用EntityManager将其持久化后才会变成持久化对象。</p>
+
+<p>EntityManager对象在一组实体类与底层数据源之间进行对象关系映射的管理,它可以用来管理和更新Entity、查找Entity还可以通过JPQL语句查询实体。</p>
+
+<p>我们可以通过调用EntityManager的方法完成获取事务以及持久化数据库的操作。</p>
+
+<p>实例化代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">EntityManager</span> <span class="n">em</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createEntityManager</span><span class="o">();</span>
 </code></pre></div></div>
 
-<h2 id="34-查看数据卷详情">3.4. 查看数据卷详情</h2>
+<h3 id="3-entitytransaction">3. EntityTransaction</h3>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume inspect <span class="o">[</span>VOLUME]
+<p>EntityTransaction是完成事务操作的核心对象,在JPA中必须使用其相关方法实现数据持久化并让所有数据提交都支持事务在很大程度上保证了数据的一致性。</p>
+
+<p>常用方法如下：</p>
+
+<ol>
+  <li>begin：启动事务;</li>
+  <li>commit：提交事务;</li>
+  <li>rollback：撤消(回滚)事务;</li>
+  <li>setRollbackOnly：使当前事务只能被撤消;</li>
+  <li>getRollbackOnly：查看当前事务是否设置了只能撤消标志;</li>
+  <li>isActive：查看当前事务是否是活动的。</li>
+</ol>
+
+<p>实例化代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">EntityTransaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">();</span>
 </code></pre></div></div>
+<h3 id="4-常用注解">4. 常用注解</h3>
 
-<h2 id="35-删除未使用数据卷">3.5. 删除未使用数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
-</code></pre></div></div>
-
-<h1 id="4-数据卷应用">4. 数据卷应用</h1>
-
-<ul>
-  <li>Docker-managed Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> MOUNTDIR 镜像
-</code></pre></div></div>
-
-<ul>
-  <li>Bind-mount Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> HOSTDIR:VOLUMEDIR	镜像
-</code></pre></div></div>
-
-<ul>
-  <li>Union Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">--volumes-from</span> ContainerName 镜像
-</code></pre></div></div>
-
+<ol>
+  <li>@Entity:表示将实体与表映射;</li>
+  <li>@Table:表示数据库表名;</li>
+  <li>@Id:表示数据库主键;</li>
+  <li>@IdClass:表示联合主键;
+    <ul>
+      <li>必须实现Serializable接口;</li>
+      <li>必须有默认的public无参数的构造方法;</li>
+      <li>必须覆盖equals和hashCode方法;</li>
+    </ul>
+  </li>
+  <li>@GeneratedValue:表示主键生成策略;
+    <ul>
+      <li>TABLE:JPA框架支持类型;</li>
+      <li>SEQUENCE:oracle支持类型;</li>
+      <li>IDENTITY:mysql支持类型;</li>
+      <li>AUTO:自动选择支持的类型;</li>
+    </ul>
+  </li>
+  <li>@Basic:表示属性是到数据库表的字段的映射;</li>
+  <li>@Transient:表示该属性并非映射到数据库;</li>
+  <li>@Column:表示数据表列名;</li>
+  <li>@Tempral:表示数据库Date类型的精度;
+    <ul>
+      <li>TemporalType.DATE:映射为日期;</li>
+      <li>TemporalType.TIME:映射为时间;</li>
+      <li>TemporalType.TIMESTAMP:映射为日期和时间;</li>
+    </ul>
+  </li>
+  <li>@Enumerated:表示枚举类型字段映射;</li>
+  <li>@Lob:表示数据库支持的大对象类型映射;</li>
+</ol>
 
     <hr style="border-top:1px solid #28323C;"/>
 
@@ -802,7 +819,7 @@
       
          
             <li class="icon-style"><a href="/categories.html">
-                docker <span>(11)</span>
+                github <span>(6)</span>
                 
             </a></li>
         
@@ -818,7 +835,7 @@
          
             <li class="icon-style">
                 <a href="/tags.html">
-                docker <span>(11)</span>
+                other <span>(7)</span>
                 
                 </a>
             </li>
@@ -833,10 +850,10 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/docker/2020/02/19/docker-xianzhi.html" class="next">前一篇</a>
+    <a class="btn btn-default" href="/github/2021/03/30/springdatajpa.html" class="next">前一篇</a>
     
     
-    <a class="btn btn-default" href="/docker/2020/02/17/docker-network.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/github/2021/03/28/springdatajpa.html" class="previous">后一篇</a>
     
 </div>
             </div>

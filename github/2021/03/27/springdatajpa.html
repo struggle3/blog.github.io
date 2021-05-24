@@ -7,8 +7,8 @@
     <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
 	<link rel="icon" href="/assets/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="docker数据卷，docker volume" />
-    <meta name="description" content="介绍如何在docker内部以及容器之间管理数据" />
+    <meta name="keywords" content="Spring Data JPA,ORM" />
+    <meta name="description" content="Spring Data JPA相关概念理解。" />
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -698,98 +698,66 @@
             <div class="col-md-10">
                 
 <div class="well article">
-        <h2><a href="/docker/2020/02/18/docker-volume.html">docker数据卷</a></h2>
+        <h2><a href="/github/2021/03/27/springdatajpa.html">Spring Data JPA认识</a></h2>
         <span class="post-date">
             
-            2020-02-18
+            2021-03-27
         </span>
         <hr style="border-top:1px solid #28323C;"/>
     
     <div class="post-content">
-    <h1 id="1-数据卷特性">1. 数据卷特性</h1>
+    <h3 id="1-什么是orm">1. 什么是ORM</h3>
 
-<p>数据卷是一个可供一个或多个容器使用的特殊目录，docker镜像由多个只读层叠加而成启动容器时docker会加载只读镜像层并在镜像栈顶部添加一个读写层。从而数据卷具有如下特性：</p>
+<p>对象关系映射ORM（Object-Relational Mapping）使开发人员能够通过业务对象处理数据库中的数据并以对象模型的方式去理解数据，ORM会自动的生成底层数据库可以执行的SQL语句。</p>
 
-<ul>
-  <li><strong>数据卷可以在容器之间共享和重用</strong></li>
-  <li><strong>对数据卷的修改会立马生效</strong></li>
-  <li><strong>对数据卷的更新，不会影响镜像</strong></li>
-  <li><strong>数据卷默认会一直存在，即使容器被删除</strong></li>
-</ul>
+<p>简而言之ORM可以减少开发人员的编码工作，提升开发效效率；同时可以将关系型数据以OOP的编程方式进行复用，封装提高代码的复用性。</p>
 
-<p>如果运行中的容器修改了现有的一个已经存在的文件，那么该文件将会从读写层下面的的只读层复制到读写层，该文件的只读版本仍然存在，只是已经被读写层中隐藏了该文件的副本并<strong>写时复制</strong>。</p>
+<h3 id="2-什么是jpa">2. 什么是JPA</h3>
 
-<p><img src="/assets/images/docker/volume.jpg" width="500" alt="" /></p>
+<p>JPA的全称是Java Persistence API即Java持久化API是SUN公司推出的一套基于ORM的规范，内部是由一系列的接口和抽象类构成。</p>
 
-<h1 id="2-数据卷意义">2. 数据卷意义</h1>
+<p>JPA是一种ORM规范不是ORM框架,因为JPA并未提供ORM实现，它只是制订了一些规范，提供了一些编程的API接口，但具体实现则由服务厂商来提供实现。</p>
 
-<p>由于docker容器有自己的名称空间无法与宿主机的文件系统进行交互并且删除<strong>容器数据就会丢失</strong>，为了保障关闭或重启容器数据不受影响将应程序产生的进行<strong>数据保存</strong>可以使用数据卷做为解决方案。</p>
+<p>JPA通过JDK 5.0注解描述对象－关系表的映射关系，并将运行期的实体对象持久化到数据库中。</p>
 
-<p><img src="/assets/images/docker/volume2.jpg" width="500" alt="" /></p>
+<p><img src="/assets/images/jpa/jpa01.png" alt="" /></p>
 
-<ul>
-  <li>数据卷可以在运行容器时即完成创建与绑定操作。当然，前提需要拥有对应的申明</li>
-  <li>数据卷的目的就是数据持久化</li>
-</ul>
+<p>JPA的优势：</p>
 
-<p><img src="/assets/images/docker/volume3.jpg" width="500" alt="" /></p>
+<ol>
+  <li>
+    <p>标准化
+   JPA 是JCP组织发布的Java EE标准之一，任何符合JPA标准的框架都遵循ORM规范，保证了基于JPA开发的软件能够经过少量的修改就能够在不同的JPA框架下运行。</p>
+  </li>
+  <li>
+    <p>容器级特性的支持
+JPA框架中支持大数据集、事务、并发等容器级的事务使得JPA超越了简单持久化框架的局限，在软件发挥更大的作用。</p>
+  </li>
+  <li>
+    <p>简单方便
+JPA的主要目标之一就是提供更加简单的编程模型：在JPA框架下创建实体和创建Java类一样简单，没有任何的约束和限制，只需要使用javax.persistence.Entity注释JPA基于非侵入式原则设计，因此可以很容易的和其它框架或者容器集成</p>
+  </li>
+  <li>
+    <p>查询能力
+JPA的查询语言是面向对象而非面向数据库的，它以面向对象的自然语法构造查询语句，可以看成是Hibernate HQL的等价物。</p>
 
-<h1 id="3-数据卷操作">3. 数据卷操作</h1>
+    <p>JPA定义了独特的JPQL（Java Persistence Query Language），JPQL是EJB QL的一种扩展，它是针对实体的一种查询语言，操作对象是实体，而不是关系数据库的表，而且能够支持批量更新和修改、JOIN、GROUP BY、HAVING 等通常只有SQL才能够提供的高级查询特性，甚至还能够支持子查询。</p>
+  </li>
+  <li>
+    <p>高级特性
+JPA中能够支持面向对象的高级特性，如类之间的继承、多态和类之间的复杂关系，能够让开发者使用面向对象的模型设计软件。</p>
+  </li>
+</ol>
 
-<h2 id="31-创建数据卷">3.1. 创建数据卷</h2>
+<h3 id="3-什么是spring-data-jpa">3. 什么是Spring Data JPA</h3>
 
-<p>命令格式：</p>
+<p>Spring Data JPA是Spring基于ORM框架JPA规范的基础上封装的一套JPA应用框架，可使开发者用极简的代码即可实现对数据库的访问和操作。</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume create <span class="o">[</span>OPTIONS] <span class="o">[</span>VOLUME]
-<span class="c">#Options:</span>
-<span class="c">#-d, --driver string 指定卷驱动程序名称</span>
-<span class="c">#–label list 设置卷的元数据</span>
-<span class="c">#-o, --opt map 设置驱动程序特定选项</span>
-</code></pre></div></div>
-<p>创建出来的数据卷位于宿主机/var/lib/docker/volumes/下。</p>
+<p>它提供了包括增删改查等在内的常用功能，且易于扩展！学习并使用Spring Data JPA可以极大提高开发效率！</p>
 
-<h2 id="32-删除数据卷">3.2. 删除数据卷</h2>
+<p>Spring Data JPA让开发者不必关注DAO类的实现，直接使用Repository实现CURD操作,推荐使用Spring Data JPA + ORM（如：hibernate）进行数据库操作使应用更加简单，易于解耦，切ORM更方便。</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">rm</span> <span class="o">[</span>VOLUME]
-</code></pre></div></div>
-
-<h2 id="33-列出数据卷">3.3. 列出数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume <span class="nb">ls</span>
-</code></pre></div></div>
-
-<h2 id="34-查看数据卷详情">3.4. 查看数据卷详情</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume inspect <span class="o">[</span>VOLUME]
-</code></pre></div></div>
-
-<h2 id="35-删除未使用数据卷">3.5. 删除未使用数据卷</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
-</code></pre></div></div>
-
-<h1 id="4-数据卷应用">4. 数据卷应用</h1>
-
-<ul>
-  <li>Docker-managed Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> MOUNTDIR 镜像
-</code></pre></div></div>
-
-<ul>
-  <li>Bind-mount Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">-v</span> HOSTDIR:VOLUMEDIR	镜像
-</code></pre></div></div>
-
-<ul>
-  <li>Union Volume</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--name</span> roc <span class="nt">--volumes-from</span> ContainerName 镜像
-</code></pre></div></div>
+<p><img src="/assets/images/jpa/jpa02.png" alt="" /></p>
 
 
     <hr style="border-top:1px solid #28323C;"/>
@@ -802,7 +770,7 @@
       
          
             <li class="icon-style"><a href="/categories.html">
-                docker <span>(11)</span>
+                github <span>(6)</span>
                 
             </a></li>
         
@@ -818,7 +786,7 @@
          
             <li class="icon-style">
                 <a href="/tags.html">
-                docker <span>(11)</span>
+                other <span>(7)</span>
                 
                 </a>
             </li>
@@ -833,10 +801,10 @@
 </div>
 <div class="pagination">
     
-    <a class="btn btn-default" href="/docker/2020/02/19/docker-xianzhi.html" class="next">前一篇</a>
+    <a class="btn btn-default" href="/github/2021/03/28/springdatajpa.html" class="next">前一篇</a>
     
     
-    <a class="btn btn-default" href="/docker/2020/02/17/docker-network.html" class="previous">后一篇</a>
+    <a class="btn btn-default" href="/github/2021/03/26/githubpages.html" class="previous">后一篇</a>
     
 </div>
             </div>
