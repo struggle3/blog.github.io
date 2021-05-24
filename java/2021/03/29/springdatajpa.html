@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+    <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
+	<link rel="icon" href="/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Spring Data JPA,ORM,JPA" />
+    <meta name="description" content="javax.persistence相关内容的简单介绍。" />
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?417785846428737cc886d2095c0511c3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">首页</a></li>
+                    <li class="active"><a href="/archive.html">归档</a></li>
+                    <li class="active"><a href="/categories.html">分类</a></li>
+                    <li class="active"><a href="/tags.html">标签</a></li>
+                    <li class="active"><a href="/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/touxiang.jpg" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/02/spring02.html">Spring开发环境</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/01/spring-overview.html">Spring简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/11/springboot01.html">Spring Boot简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/java/2021/04/02/springdatajpa.html">Spring Data JPA基础查询方法</a></li>
+        
+          <li><a href="/java/2021/04/01/springdatajpa.html">Spring Data JPA项目构建</a></li>
+        
+          <li><a href="/java/2021/03/30/springdatajpa.html">JPA实现增删改查</a></li>
+        
+          <li><a href="/java/2021/03/29/springdatajpa.html">hibernate中的javax.persistence介绍</a></li>
+        
+          <li><a href="/java/2021/03/28/springdatajpa.html">JPA实例</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/java/2021/03/29/springdatajpa.html">hibernate中的javax.persistence介绍</a></h2>
+        <span class="post-date">
+            
+            2021-03-29
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>JPA(Java Persistence API)是Sun官方提出的Java持久化规范，它为Java开发人员提供了一种对象关系映射的方式管理Java应用中的关系数据。</p>
+
+<p>它显示了如何定义一个面向普通Java对象（POJO）作为一个实体，以及如何与管理关系实体提供一套标准。因此javax.persistence下面的有些注解还是必须要去了解的，以便于更好地提高工作效率。</p>
+
+<p>Hibernate是它的一种实现方式，还有EclipseLink(曾经的toplink)，OpenJPA等可以使用，所以使用Jpa的一个好处是可以方便的切换ORM框架。</p>
+
+<p>JPA与Hibernate的区别如下：</p>
+
+<ul>
+  <li>可以理解为JPA是标准接口Hibernate是实现;</li>
+  <li>Hibernate实现与JPA的关系主要是通过三个组件来实现的hibernate-annotation、hibernate-entitymanager和hibernate-core:
+    <ol>
+      <li>hibernate-annotation：是Hibernate支持annotation方式配置的基础，它包括了标准的JPA annotation以及Hibernate自身特殊功能的annotation。</li>
+      <li>hibernate-core：是Hibernate的核心实现提供了Hibernate所有的核心功能。</li>
+      <li>hibernate-entitymanager：实现了标准的JPA可以把它看成hibernate-core和JPA之间的适配器，它并不直接提供ORM的功能，而是对hibernate-core进行封装，使得Hibernate符合JPA的规范。</li>
+    </ol>
+  </li>
+</ul>
+
+<p>依赖关系如下：</p>
+
+<p><img src="/assets/images/jpa/jpa03.png" alt="" /></p>
+
+<p><strong>注意：也可以使用mvn dependency:tree命令可以查看。</strong></p>
+
+<p>在实现项目中直接引用org.hibernate:hibernate-entitymanager即可，从依赖关系包含hibernate-commons-annotations、hibernate-jpa和hibernate-core三个比较重要的依赖。</p>
+
+<h3 id="1-entitymanagerfactory">1. EntityManagerFactory</h3>
+
+<p>EntityManagerFactory是线程安全的对象，并且EntityManagerFactory的创建极其浪费资源，所以在使用JPA编程时，我们可以对EntityManagerFactory封装，只需要做到项目只存在一个EntityManagerFactory 即可。</p>
+
+<p>实例化代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">EntityManagerFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="nc">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"myJpa"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<h3 id="2-entitymanager">2. EntityManager</h3>
+
+<p>EntityManager是完成持久化操作的核心对象实体类作为普通java对象，只有在调用EntityManager将其持久化后才会变成持久化对象。</p>
+
+<p>EntityManager对象在一组实体类与底层数据源之间进行对象关系映射的管理,它可以用来管理和更新Entity、查找Entity还可以通过JPQL语句查询实体。</p>
+
+<p>我们可以通过调用EntityManager的方法完成获取事务以及持久化数据库的操作。</p>
+
+<p>实例化代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">EntityManager</span> <span class="n">em</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createEntityManager</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h3 id="3-entitytransaction">3. EntityTransaction</h3>
+
+<p>EntityTransaction是完成事务操作的核心对象,在JPA中必须使用其相关方法实现数据持久化并让所有数据提交都支持事务在很大程度上保证了数据的一致性。</p>
+
+<p>常用方法如下：</p>
+
+<ol>
+  <li>begin：启动事务;</li>
+  <li>commit：提交事务;</li>
+  <li>rollback：撤消(回滚)事务;</li>
+  <li>setRollbackOnly：使当前事务只能被撤消;</li>
+  <li>getRollbackOnly：查看当前事务是否设置了只能撤消标志;</li>
+  <li>isActive：查看当前事务是否是活动的。</li>
+</ol>
+
+<p>实例化代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">EntityTransaction</span> <span class="n">tx</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">();</span>
+</code></pre></div></div>
+<h3 id="4-常用注解">4. 常用注解</h3>
+
+<ol>
+  <li>@Entity:表示将实体与表映射;</li>
+  <li>@Table:表示数据库表名;</li>
+  <li>@Id:表示数据库主键;</li>
+  <li>@IdClass:表示联合主键;
+    <ul>
+      <li>必须实现Serializable接口;</li>
+      <li>必须有默认的public无参数的构造方法;</li>
+      <li>必须覆盖equals和hashCode方法;</li>
+    </ul>
+  </li>
+  <li>@GeneratedValue:表示主键生成策略;
+    <ul>
+      <li>TABLE:JPA框架支持类型;</li>
+      <li>SEQUENCE:oracle支持类型;</li>
+      <li>IDENTITY:mysql支持类型;</li>
+      <li>AUTO:自动选择支持的类型;</li>
+    </ul>
+  </li>
+  <li>@Basic:表示属性是到数据库表的字段的映射;</li>
+  <li>@Transient:表示该属性并非映射到数据库;</li>
+  <li>@Column:表示数据表列名;</li>
+  <li>@Tempral:表示数据库Date类型的精度;
+    <ul>
+      <li>TemporalType.DATE:映射为日期;</li>
+      <li>TemporalType.TIME:映射为时间;</li>
+      <li>TemporalType.TIMESTAMP:映射为日期和时间;</li>
+    </ul>
+  </li>
+  <li>@Enumerated:表示枚举类型字段映射;</li>
+  <li>@Lob:表示数据库支持的大对象类型映射;</li>
+</ol>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                java <span>(31)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                SpringBataJPA <span>(6)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/java/2021/03/30/springdatajpa.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/java/2021/03/28/springdatajpa.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+             
+                <a href="http://www.beian.miit.gov.cn">
+                蜀ICP备19012996号-3
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>

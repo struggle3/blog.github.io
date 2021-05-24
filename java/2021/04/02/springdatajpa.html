@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+    <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
+	<link rel="icon" href="/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Spring整合Spring Data JPA,ORM,JPA" />
+    <meta name="description" content="介绍Spring Data JPA相关仓储接口和类。" />
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?417785846428737cc886d2095c0511c3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">首页</a></li>
+                    <li class="active"><a href="/archive.html">归档</a></li>
+                    <li class="active"><a href="/categories.html">分类</a></li>
+                    <li class="active"><a href="/tags.html">标签</a></li>
+                    <li class="active"><a href="/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/touxiang.jpg" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/02/spring02.html">Spring开发环境</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/01/spring-overview.html">Spring简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/11/springboot01.html">Spring Boot简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/java/2021/04/02/springdatajpa.html">Spring Data JPA基础查询方法</a></li>
+        
+          <li><a href="/java/2021/04/01/springdatajpa.html">Spring Data JPA项目构建</a></li>
+        
+          <li><a href="/java/2021/03/30/springdatajpa.html">JPA实现增删改查</a></li>
+        
+          <li><a href="/java/2021/03/29/springdatajpa.html">hibernate中的javax.persistence介绍</a></li>
+        
+          <li><a href="/java/2021/03/28/springdatajpa.html">JPA实例</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/java/2021/04/02/springdatajpa.html">Spring Data JPA基础查询方法</a></h2>
+        <span class="post-date">
+            
+            2021-04-02
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>在Spring Data JPA可以将一切数据库操作看成一个泛型Repository接口，然而Repository是一个空接口，里面没有定义任何方法和属性。</p>
+
+<p>从源码中进行查看相关代码发现CrudRepository、PagingAndSortingRepository、JpaRepository中可以得出一个结论就是Repository是所有接口的顶层接口，仅起到一个仅仅起到一个标识作用。</p>
+
+<p>Spring Data JPA中通过SimpleJpaRepository和QueryDslJpaRepository实现类完成了常规的数据持久化操作，由于特殊的业务场景无法满足要求开发者可以通过自定Repository和扩展JpaSpecificationExecutor方式满足需求。</p>
+
+<p>SimpleJpaRepository类图：</p>
+
+<p><img src="/assets/images/jpa/jpa04.png" alt="" /></p>
+
+<p>QueryDslJpaRepository类图：</p>
+
+<p><img src="/assets/images/jpa/jpa05.png" alt="" /></p>
+
+<h3 id="1-repository说明">1. Repository说明</h3>
+
+<p>在实际项目中此接口主要作为标记接口捕获要使用的类型，并帮助开发者发通如下两种方式扩展此接口;</p>
+
+<ol>
+  <li>继承JpaSpecificationExecutor通过CriteriaQuery可以实现任何逻辑。</li>
+  <li>继承CrudRepository独立实现类利用EntityManager操作Criteria Query API可以实现任何逻辑。</li>
+</ol>
+
+<p><img src="/assets/images/jpa/jpa06.png" alt="" /></p>
+
+<p>原型如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.data.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+
+<span class="cm">/**
+ * 顶层接口管理领域类型保证容器能够自动扫描相关实现并创建bean对象
+ * 
+ * 在CrudRepository接中已经定义并公开了一些CRUD方法声明
+ * 
+ * @see CrudRepository
+ * @param &lt;T&gt; 领域模型实体类型
+ * @param &lt;ID&gt; 领域模型id类型
+ * @author Oliver Gierke
+ */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Repository</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">ID</span> <span class="kd">extends</span> <span class="nc">Serializable</span><span class="o">&gt;</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="2-crudrepository说明">2. CrudRepository说明</h3>
+
+<p>在Spring Data JPA中CrudRepository接口定义了增删改查的相关方法并交给实现类SimpleJpaRepository进行实现。</p>
+
+<p>在日常开发中可以完全胜任数据持久化工作的，但是值得注意的是delete和save方法已经做了查询可以直接对数据进行操作。</p>
+
+<p>原型如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.data.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+
+<span class="cm">/**
+ * Interface for generic CRUD operations on a repository for a specific type.
+ * 
+ * @author Oliver Gierke
+ * @author Eberhard Wolff
+ */</span>
+<span class="nd">@NoRepositoryBean</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">CrudRepository</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">ID</span> <span class="kd">extends</span> <span class="nc">Serializable</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="nc">Repository</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">ID</span><span class="o">&gt;</span> <span class="o">{</span>
+
+	<span class="cm">/**
+	 * 保存对象，id记录存在是更新，不存在是添加
+	 */</span>
+	<span class="o">&lt;</span><span class="no">S</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="no">S</span> <span class="nf">save</span><span class="o">(</span><span class="no">S</span> <span class="n">entity</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 批量保存
+	 */</span>
+	<span class="o">&lt;</span><span class="no">S</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">S</span><span class="o">&gt;</span> <span class="nf">save</span><span class="o">(</span><span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">S</span><span class="o">&gt;</span> <span class="n">entities</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过Id查询对象
+	 */</span>
+	<span class="no">T</span> <span class="nf">findOne</span><span class="o">(</span><span class="no">ID</span> <span class="n">id</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过id判断对象是否存在，不存在时返回null
+	 */</span>
+	<span class="kt">boolean</span> <span class="nf">exists</span><span class="o">(</span><span class="no">ID</span> <span class="n">id</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 查询所有对象
+	 */</span>
+	<span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">();</span>
+
+	<span class="cm">/**
+	 * 通过id列表查询对象
+	 */</span>
+	<span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">ID</span><span class="o">&gt;</span> <span class="n">ids</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 求和
+	 */</span>
+	<span class="kt">long</span> <span class="nf">count</span><span class="o">();</span>
+
+	<span class="cm">/**
+	 * 通过id删除对象
+	 */</span>
+	<span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="no">ID</span> <span class="n">id</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过对象删除
+	 */</span>
+	<span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="no">T</span> <span class="n">entity</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过对象删除
+	 */</span>
+	<span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="nc">Iterable</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">entities</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 遍历删除所有
+	 */</span>
+	<span class="kt">void</span> <span class="nf">deleteAll</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="3-pagingandsortingrepository说明">3. PagingAndSortingRepository说明</h3>
+
+<p>PagingAndSortingRepository继承CrudRepository所有的基本方法，它增加了分页和排序等对查询结果进行限制的基本的、常用的、通用的一些分页方法。</p>
+
+<p>@NoRepositoryBean不要此Repository创建实例。</p>
+
+<p>原型如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.data.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Sort</span><span class="o">;</span>
+
+<span class="nd">@NoRepositoryBean</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PagingAndSortingRepository</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">ID</span> <span class="kd">extends</span> <span class="nc">Serializable</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="nc">CrudRepository</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">ID</span><span class="o">&gt;</span> <span class="o">{</span>
+
+	<span class="cm">/**
+	 * 通过排序取所有对象的集合
+	 */</span>
+	<span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Sort</span> <span class="n">sort</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过分页和排序进行查询，并用Page对象封装。Pageable对象包含分页和Sort对象
+	 */</span>
+	<span class="nc">Page</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="4-jparepository说明">4. JpaRepository说明</h3>
+
+<p>JpaRepository是对关系型数据库进行抽象封装继承了PagingAndSortingRepository类，也就继承了其所有方法，并且实现类也是SimpleJpaRepository同时还继承和拥有了JpaSpecificationExecutor的相关方法。</p>
+
+<p>原型如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.data.jpa.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.EntityManager</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Sort</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.repository.NoRepositoryBean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.repository.PagingAndSortingRepository</span><span class="o">;</span>
+
+<span class="nd">@NoRepositoryBean</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">ID</span> <span class="kd">extends</span> <span class="nc">Serializable</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="nc">PagingAndSortingRepository</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">ID</span><span class="o">&gt;</span> <span class="o">{</span>
+
+	<span class="cm">/*
+	 * 查询所有对象
+	 */</span>
+	<span class="nc">List</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">();</span>
+
+	<span class="cm">/*
+	 * 查询所有对象并排序
+	 */</span>
+	<span class="nc">List</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Sort</span> <span class="n">sort</span><span class="o">);</span>
+
+	<span class="cm">/*
+	 * 通Id列表查询对象
+	 */</span>
+	<span class="nc">List</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">ID</span><span class="o">&gt;</span> <span class="n">ids</span><span class="o">);</span>
+
+	<span class="cm">/*
+	 * 批量保存
+	 */</span>
+	<span class="o">&lt;</span><span class="no">S</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">S</span><span class="o">&gt;</span> <span class="nf">save</span><span class="o">(</span><span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">S</span><span class="o">&gt;</span> <span class="n">entities</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 强制刷新缓存与数据库同步
+	 */</span>
+	<span class="kt">void</span> <span class="nf">flush</span><span class="o">();</span>
+
+	<span class="cm">/**
+	 * 保存并且同步
+	 */</span>
+	<span class="o">&lt;</span><span class="no">S</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="no">S</span> <span class="nf">saveAndFlush</span><span class="o">(</span><span class="no">S</span> <span class="n">entity</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 循环删除
+	 */</span>
+	<span class="kt">void</span> <span class="nf">deleteInBatch</span><span class="o">(</span><span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">entities</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 批量删除
+	 */</span>
+	<span class="kt">void</span> <span class="nf">deleteAllInBatch</span><span class="o">();</span>
+
+	<span class="cm">/**
+	 * 根据Id查询并返回对象引用
+	 */</span>
+	<span class="no">T</span> <span class="nf">getOne</span><span class="o">(</span><span class="no">ID</span> <span class="n">id</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="5-jpaspecificationexecutor说明">5. JpaSpecificationExecutor说明</h3>
+
+<p>JpaSpecificationExecutor是JPA 2.0提供的Criteria API可以用于动态生成query，所有方法中的形参是Specification接口，JpaSpecificationExecutor是针对Criteria API进行了predicate标准封装，相比JPQL的优势在于类型安全及更加面向对象。</p>
+
+<p>原型如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.data.jpa.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Sort</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.domain.Specification</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">JpaSpecificationExecutor</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+	<span class="cm">/**
+	 * 通过Specification条件查询一个对象
+	 */</span>
+	<span class="no">T</span> <span class="nf">findOne</span><span class="o">(</span><span class="nc">Specification</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">spec</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过Specification条件查询对象
+	 */</span>
+	<span class="nc">List</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Specification</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">spec</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过Specification条件查询所有对象，并提供分页功能
+	 */</span>
+	<span class="nc">Page</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Specification</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">spec</span><span class="o">,</span> <span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过Specification条件查询所有对象，并提供排序功能
+	 */</span>
+	<span class="nc">List</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Specification</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">spec</span><span class="o">,</span> <span class="nc">Sort</span> <span class="n">sort</span><span class="o">);</span>
+
+	<span class="cm">/**
+	 * 通过Specification条件，查询数量
+	 */</span>
+	<span class="kt">long</span> <span class="nf">count</span><span class="o">(</span><span class="nc">Specification</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">spec</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="51-criteria简单介绍">5.1. Criteria简单介绍</h4>
+
+<ol>
+  <li>Root<T>root:代表了可以查询和操作的实体对象的根。如果将实体对象比喻成表名，那root里面就是这张表里面的字段。这不过是JPQL的实体字段而已。通过里面的Path<Y>get(String attributeName)来获得我们操作的字段。</Y></T></li>
+  <li>CriteriaQuery&lt;?&gt;query:代表一个specific的顶层查询对象，它包含着查询的各个部分，比如：select、from、where、group by、order by等。CriteriaQuery对象只对实体类型或嵌入式类型的Criteria查询起作用提供了查询ROOT的方法。</li>
+  <li>CriteriaBuilder cb:用来构建CritiaQuery的构建器对象，其实就相当于条件或者是条件组合，以谓语即Predicate的形式返回。</li>
+</ol>
+
+<p>原型如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.data.jpa.domain</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.criteria.CriteriaBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.criteria.CriteriaQuery</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.criteria.Predicate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.criteria.Root</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Specification</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="nc">Predicate</span> <span class="nf">toPredicate</span><span class="o">(</span><span class="nc">Root</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">var1</span><span class="o">,</span> <span class="nc">CriteriaQuery</span><span class="o">&lt;?&gt;</span> <span class="n">var2</span><span class="o">,</span> <span class="nc">CriteriaBuilder</span> <span class="n">var3</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="6-querydslpredicateexecutor说明">6. QueryDslPredicateExecutor说明</h3>
+
+<p>Spring Data JPA中的QuerydslJpaRepository类实现QueryDslPredicateExecutor接口，用来支持Querydsl的查询方法。</p>
+
+<p>当我们引入Querydsl的时候Spring就会自动帮我们把SimpleJpaRepository的实现切换到QuerydslJpaRepository的实现。</p>
+
+<p>原型如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">org.springframework.data.querydsl</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Page</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Pageable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.domain.Sort</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.mysema.query.types.OrderSpecifier</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.mysema.query.types.Predicate</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">QuerydslPredicateExecutor</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+	<span class="cm">/**
+	 * 返回与给定条件匹配单个对象
+	 */</span>
+	<span class="nc">Optional</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findOne</span><span class="o">(</span><span class="nc">Predicate</span> <span class="n">predicate</span><span class="o">);</span>
+	<span class="cm">/**
+	 * 返回与给定条件匹配的所有对象
+	 */</span>
+	<span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Predicate</span> <span class="n">predicate</span><span class="o">);</span>
+	<span class="cm">/**
+	 * 返回与给定条件匹配的所有对象，并提供排序功能
+	 */</span>
+	<span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Predicate</span> <span class="n">predicate</span><span class="o">,</span> <span class="nc">Sort</span> <span class="n">sort</span><span class="o">);</span>
+	<span class="cm">/**
+	 * 返回与给定条件匹配的所有对象，并按照一定的顺序
+	 */</span>
+	<span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Predicate</span> <span class="n">predicate</span><span class="o">,</span> <span class="nc">OrderSpecifier</span><span class="o">&lt;?&gt;...</span> <span class="n">orders</span><span class="o">);</span>
+	<span class="cm">/**
+	 * 返回给定顺序的所有对象
+	 */</span>
+	<span class="nc">Iterable</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">OrderSpecifier</span><span class="o">&lt;?&gt;...</span> <span class="n">orders</span><span class="o">);</span>
+	<span class="cm">/**
+	 * 返回与给定条件匹配的所有对象，并提供分页功能
+	 */</span>
+	<span class="nc">Page</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="nc">Predicate</span> <span class="n">predicate</span><span class="o">,</span> <span class="nc">Pageable</span> <span class="n">pageable</span><span class="o">);</span>
+	<span class="cm">/**
+	 * 返回与给定条件匹配的所有对象的总数
+	 */</span>
+	<span class="kt">long</span> <span class="nf">count</span><span class="o">(</span><span class="nc">Predicate</span> <span class="n">predicate</span><span class="o">);</span>
+	<span class="cm">/**
+	 * 判断与给定条件匹配的对象是否存在
+	 */</span>
+	<span class="kt">boolean</span> <span class="nf">exists</span><span class="o">(</span><span class="nc">Predicate</span> <span class="n">predicate</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                java <span>(31)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                SpringBataJPA <span>(6)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/java/2021/04/01/springdatajpa.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+             
+                <a href="http://www.beian.miit.gov.cn">
+                蜀ICP备19012996号-3
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>
