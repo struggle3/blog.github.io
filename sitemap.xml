@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://myabp.cn/ubuntu/2019/04/27/ubuntu-dotnetcore.html</loc>
+<loc>https://myabp.cn/other/2019/04/27/ubuntu-dotnetcore.html</loc>
 <lastmod>2019-04-27T15:03:00+08:00</lastmod>
 </url>
 <url>
@@ -89,7 +89,11 @@
 <lastmod>2020-12-07T22:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>https://myabp.cn/linux/2020/12/20/firewalld.html</loc>
+<loc>https://myabp.cn/other/2020/12/20/firewalld.html</loc>
+<lastmod>2020-12-20T22:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>https://myabp.cn/other/2020/12/20/nopi.html</loc>
 <lastmod>2020-12-20T22:00:00+08:00</lastmod>
 </url>
 <url>
@@ -193,11 +197,11 @@
 <lastmod>2021-03-24T22:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>https://myabp.cn/github/2021/03/25/github443.html</loc>
+<loc>https://myabp.cn/other/2021/03/25/github443.html</loc>
 <lastmod>2021-03-25T22:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>https://myabp.cn/github/2021/03/26/githubpages.html</loc>
+<loc>https://myabp.cn/other/2021/03/26/githubpages.html</loc>
 <lastmod>2021-03-26T22:00:00+08:00</lastmod>
 </url>
 <url>

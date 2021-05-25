@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ye程序员</title>
+    <meta name="baidu-site-verification" content="code-9dLmWXu6Zd" />
+	<link rel="icon" href="/assets/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="NPOI生成word" />
+    <meta name="description" content="使用NOPI生成一个简单的word文档。" />
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+       <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?417785846428737cc886d2095c0511c3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/logo.png" height="30" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    
+                    <li class="active"><a href="/">首页</a></li>
+                    <li class="active"><a href="/archive.html">归档</a></li>
+                    <li class="active"><a href="/categories.html">分类</a></li>
+                    <li class="active"><a href="/tags.html">标签</a></li>
+                    <li class="active"><a href="/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrap">
+    <div class="container container-left">
+        <div class="row">
+            <div class="col-md-2 hidden-xs">
+                
+<div class="sidebar well">
+    <header class="sidebar-header" role="banner">
+        <a href="/">
+            <img src="/assets/images/touxiang.jpg" class="img-circle" />
+        </a>
+        <!--
+        <h3 class="title">
+        <a href="/"></a>
+        </h3>
+        -->
+    </header>
+    <div class="text-center">
+        欢迎来到我的博客！
+    </div>
+</div>
+
+
+<div class="sidebar well">
+    <h1>置顶文章</h1>
+    <ul>
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/02/spring02.html">Spring开发环境</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/01/spring-overview.html">Spring简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/java/2021/03/11/springboot01.html">Spring Boot简介</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    </ul>
+</div>
+
+
+<div class="sidebar well">
+    <h1>最新发表</h1>
+    <ul>
+        
+          <li><a href="/java/2021/04/02/springdatajpa.html">Spring Data JPA基础查询方法</a></li>
+        
+          <li><a href="/java/2021/04/01/springdatajpa.html">Spring Data JPA项目构建</a></li>
+        
+          <li><a href="/java/2021/03/30/springdatajpa.html">JPA实现增删改查</a></li>
+        
+          <li><a href="/java/2021/03/29/springdatajpa.html">hibernate中的javax.persistence介绍</a></li>
+        
+          <li><a href="/java/2021/03/28/springdatajpa.html">JPA实例</a></li>
+        
+    </ul>
+</div>
+
+<div class="sidebar well">
+    
+<h1>友情链接</h1>
+<ul>
+  <!-- <li><a href="#">One</a></li>
+  <li><a href="#">Two</a></li>
+  <li><a href="#">Three</a></li>
+  <li><a href="#">Four</a></li> -->
+  
+  <li>
+    <a href="http://jekyllcn.com/" target="_blank">
+      jekyll中文
+    </a>
+  </li> 
+  
+</ul>
+
+</div>
+
+            </div>
+            <div class="col-md-10">
+                
+<div class="well article">
+        <h2><a href="/other/2020/12/20/nopi.html">NPOI生成word</a></h2>
+        <span class="post-date">
+            
+            2020-12-20
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>通过nopi生成一个word完全不用依赖office组件，主要实现思路是在文档中通过代码的方式进行数据添加。</p>
+
+<p>安装nopi:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Install-Package NPOI <span class="nt">-Version</span> 2.5.2
+</code></pre></div></div>
+
+<p>实际代码：</p>
+
+<pre><code class="language-C#">public void Test()
+{
+	XWPFDocument doc = new XWPFDocument();//创建新的word文档
+	CT_SectPr sectPr = new CT_SectPr();
+	sectPr.pgMar = new CT_PageMar();
+	sectPr.pgMar.bottom = "635";//下
+	sectPr.pgMar.top = "635";//上
+	sectPr.pgMar.left = 635;//左
+	sectPr.pgMar.right = 635;//右
+	doc.Document.body.sectPr = sectPr; //设置页边距
+
+	XWPFParagraph title_p = doc.CreateParagraph();//向新文档中添加段落
+	title_p.Alignment = ParagraphAlignment.CENTER;//段落对其方式为居中
+	XWPFRun title_txt = title_p.CreateRun();//向该段落中添加文字
+	title_txt.SetText("车辆超限超载违法告知书");
+	title_txt.FontSize = 36;//设置字体大小
+	title_txt.IsBold = true;//设置粗体
+
+	//创建表格
+	XWPFTable table = doc.CreateTable();
+	table.Width = 5000;
+	table.RemoveRow(0);
+
+	//表格内容
+	XWPFTableRow row_1 = CreateRow(table);//第一行
+	XWPFTableCell cell_1_1 = CreateCell(row_1);
+	cell_1_1.SetText("车牌号");
+	XWPFTableCell cell_1_2 = CreateCell(row_1);
+	cell_1_2.SetText("");
+	XWPFTableCell cell_1_3 = CreateCell(row_1);
+	cell_1_3.SetText("轴数");
+	XWPFTableCell cell_1_4 = CreateCell(row_1);
+	cell_1_4.SetText("");
+	XWPFTableCell cell_1_5 = CreateCell(row_1);
+	cell_1_5.SetText("车速");
+	XWPFTableCell cell_1_6 = CreateCell(row_1);
+	cell_1_6.SetText("");
+
+	XWPFTableRow row_2 = CreateRow(table);//第二行
+	XWPFTableCell cell_2_1 = CreateCell(row_2);
+	cell_2_1.SetText("检测时间");
+
+	XWPFTableCell cell_2_2 = CreateCell(row_2);
+	cell_2_2.SetText("");
+	SetColSpan(table.GetRow(1).GetCell(1), 2);
+
+
+	XWPFTableCell cell_2_3 = CreateCell(row_2);
+	cell_2_3.SetText("检测地点");
+	XWPFTableCell cell_2_4 = CreateCell(row_2);
+	cell_2_4.SetText("");
+	SetColSpan(table.GetRow(1).GetCell(3), 2);
+
+	XWPFTableRow row_3 = CreateRow(table);//第三行
+	XWPFTableCell cell_3_1 = CreateCell(row_3);
+	cell_3_1.SetText("总重");
+	XWPFTableCell cell_3_2 = CreateCell(row_3);
+	cell_3_2.SetText("");
+	XWPFTableCell cell_3_3 = CreateCell(row_3);
+	cell_3_3.SetText("超重");
+	XWPFTableCell cell_3_4 = CreateCell(row_3);
+	cell_3_4.SetText("");
+	XWPFTableCell cell_3_5 = CreateCell(row_3);
+	cell_3_5.SetText("超限率");
+	XWPFTableCell cell_3_6 = CreateCell(row_3);
+	cell_3_6.SetText("");
+
+	//图片行
+	XWPFTableRow row_4 = CreateRow(table);//第四行
+	XWPFTableCell cell_4_1 = CreateCell(row_4);
+	cell_4_1.RemoveParagraph(0);
+	XWPFParagraph picp = table.GetRow(3).GetCell(0).AddParagraph();
+	XWPFRun picrun = picp.CreateRun();
+	using (FileStream fsImg = new FileStream(Application.StartupPath+ "/1113805_550.jpeg", FileMode.Open, FileAccess.Read))
+	{
+		picrun.AddPicture(fsImg, (int)PictureType.JPEG, "1113805_550.jpg", (int)(710.0 * 9525), (int)(570.0 * 9525));
+	}
+
+	SetColSpan(table.GetRow(3).GetCell(0), 6);
+
+	//说明
+	XWPFTableRow row_5 = CreateRow(table);//第五行
+	XWPFTableCell cell_5_1 = CreateCell(row_5);
+	CT_Tc ct = cell_5_1.GetCTTc();
+	CT_TcPr cp = ct.AddNewTcPr();
+	cp.gridSpan = new CT_DecimalNumber();
+	cp.gridSpan.val = "6"; //合并6列  
+	cell_5_1.RemoveParagraph(0);
+
+	XWPFParagraph p_1 = table.GetRow(4).GetCell(0).AddParagraph();//添加一个段落到单元格
+	p_1.GetCTP().AddNewPPr().AddNewSpacing().after = 200;//段落间距
+	p_1.GetCTP().AddNewPPr().AddNewSpacing().line = "400";//行间距
+	p_1.GetCTP().AddNewPPr().AddNewSpacing().lineRule = ST_LineSpacingRule.exact;
+	XWPFRun run_csdw = p_1.CreateRun();
+	
+	run_csdw.SetText("车属单位：");
+	p_1.AddRun(run_csdw);
+	cell_5_1.AddParagraph(p_1);
+
+	XWPFParagraph p_2 = table.GetRow(4).GetCell(0).AddParagraph();
+	p_2.GetCTP().AddNewPPr().AddNewSpacing().after = 200;//段落间距
+	p_2.GetCTP().AddNewPPr().AddNewSpacing().line = "400";
+	p_2.GetCTP().AddNewPPr().AddNewSpacing().lineRule = ST_LineSpacingRule.exact;
+	XWPFRun run1 = p_2.CreateRun();
+	
+	run1.AddTab();
+	run1.SetText("（单位）已违反交通运输部");
+	p_2.AddRun(run1);
+
+	XWPFRun run2 = p_2.CreateRun();
+	run2.SetText("《超限运输车辆行驶公路管理规定》第三条。");
+	run2.SetUnderline(UnderlinePatterns.Single);
+
+	XWPFRun run3 = p_2.CreateRun();
+	run3.SetText("依据交通运输部");
+
+	XWPFRun run4 = p_2.CreateRun();
+	run4.SetText("《超限运输车辆行驶公路管理规定》第四十三条第一款第二项");
+	run4.SetUnderline(UnderlinePatterns.Single);
+
+	XWPFRun run5 = p_2.CreateRun();
+	run5.SetText("，拟对你（单位）应在接到本通知后三日内到XXX交通运输综合行政执法支队接受调查及处（理）罚。");
+
+	cell_5_1.AddParagraph(p_2);
+
+	XWPFParagraph p_3 = table.GetRow(4).GetCell(0).AddParagraph();
+	p_3.Alignment = ParagraphAlignment.RIGHT;
+	XWPFRun run6 = p_3.CreateRun();
+	run6.SetText("XXX交通运输综合行政执法支队");
+	p_3.AddRun(run6);
+
+	XWPFParagraph p_4 = table.GetRow(4).GetCell(0).AddParagraph();
+	p_4.Alignment = ParagraphAlignment.RIGHT;
+	p_4.GetCTP().AddNewPPr().AddNewSpacing().after = 200;//段落间距
+
+	XWPFRun run7 = p_4.CreateRun();
+	run7.SetText(DateTime.Now.ToString("yyyy年MM月dd日"));
+	p_4.GetCTP().AddNewPPr().AddNewSpacing().before=200;
+	p_4.AddRun(run6);
+
+	//地址
+	XWPFParagraph dizhi = doc.CreateParagraph();
+	dizhi.GetCTP().AddNewPPr().AddNewSpacing().before = 200;//段落间距
+	dizhi.Alignment = ParagraphAlignment.LEFT;
+	XWPFRun dizhi_txt = dizhi.CreateRun();
+	dizhi_txt.SetText("执法机关地址：XXXXX");
+
+	//电话
+	XWPFParagraph dianhua = doc.CreateParagraph();
+	dianhua.Alignment = ParagraphAlignment.LEFT;
+	dianhua.GetCTP().AddNewPPr().AddNewSpacing().before = 200;//段落间距
+	XWPFRun dianhua_txt = dianhua.CreateRun();
+	dianhua_txt.SetText("电话：XXXXX");
+	//dianhua_txt.AddCarriageReturn();//回车
+
+	FileStream sw = File.Create("D:/test.docx");
+	doc.Write(sw);
+	sw.Close();
+}
+/// &lt;summary&gt;
+/// 创建行
+/// &lt;/summary&gt;
+/// &lt;param name="table"&gt;&lt;/param&gt;
+/// &lt;returns&gt;&lt;/returns&gt;
+private XWPFTableRow CreateRow(XWPFTable table)
+{
+	CT_Row newRow = new CT_Row();
+	XWPFTableRow row = new XWPFTableRow(newRow, table);
+	row.GetCTRow().AddNewTrPr().AddNewTrHeight().val = (ulong)626;
+	table.AddRow(row);
+
+	return row;
+}
+
+/// &lt;summary&gt;
+/// 创建列
+/// &lt;/summary&gt;
+/// &lt;param name="row"&gt;&lt;/param&gt;
+/// &lt;returns&gt;&lt;/returns&gt;
+private XWPFTableCell CreateCell(XWPFTableRow row)
+{
+	XWPFTableCell newCell = row.CreateCell();
+	CT_Tc cttc = newCell.GetCTTc();
+	CT_TcPr ctpr = cttc.AddNewTcPr();
+
+	cttc.GetPList()[0].AddNewPPr().AddNewJc().val = ST_Jc.center;//水平居中
+
+	ctpr.AddNewVAlign().val = ST_VerticalJc.center;//垂直居中
+
+	ctpr.tcW = new CT_TblWidth();
+	ctpr.tcW.w = "1200";//默认列宽
+	ctpr.tcW.type = ST_TblWidth.dxa;
+
+	return newCell;
+}
+
+/// &lt;summary&gt;
+/// 合并单元格
+/// &lt;/summary&gt;
+/// &lt;param name="cell"&gt;&lt;/param&gt;
+/// &lt;param name="Span"&gt;&lt;/param&gt;
+private void SetColSpan(XWPFTableCell cell, int Span)
+{
+	CT_Tc cttc = cell.GetCTTc();
+	CT_TcPr ctpr = cttc.AddNewTcPr();
+	ctpr.gridSpan = new CT_DecimalNumber();
+	ctpr.gridSpan.val = Span.ToString();//合并单元格
+
+	cttc.GetPList()[0].AddNewPPr().AddNewJc().val = ST_Jc.center;//水平居中
+
+	ctpr.AddNewVAlign().val = ST_VerticalJc.center;//垂直居中
+}
+</code></pre>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                other <span>(5)</span>
+                
+            </a></li>
+        
+      
+    </ul>
+      
+
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                other <span>(4)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
+</div>
+<div class="pagination">
+    
+    <a class="btn btn-default" href="/java/2021/03/01/spring-boot-road.html" class="next">前一篇</a>
+    
+    
+    <a class="btn btn-default" href="/other/2020/12/20/firewalld.html" class="previous">后一篇</a>
+    
+</div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="footer">
+    <p>&copy;2021 ye程序员版权所有
+             
+                <a href="http://www.beian.miit.gov.cn">
+                蜀ICP备19012996号-3
+                </a>
+                <!-- not the last, output a ',' -->
+                
+            
+    </p>
+</div>
+
+<!-- 
+    
+
+    
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+ 
+-->
+
+</body>
+</html>
+
+</div>
