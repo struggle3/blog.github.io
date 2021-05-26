@@ -140,6 +140,8 @@
                 
             
                 
+            
+                
                     <li><a href="/java/2021/03/10/spring10.html">Spring MVC环境搭建</a></li>
                 
             
@@ -212,6 +214,8 @@
                 
             
         
+            
+                
             
                 
             
@@ -394,6 +398,8 @@
                 
             
                 
+            
+                
                     <li><a href="/java/2021/03/01/spring-overview.html">Spring简介</a></li>
                 
             
@@ -448,6 +454,8 @@
                 
             
         
+            
+                
             
                 
             
@@ -640,6 +648,8 @@
                 
             
                 
+            
+                
                     <li><a href="/abp/2020/12/01/abp-deployment.html">abpvnext部署</a></li>
                 
             
@@ -692,6 +702,8 @@
     <h1>最新发表</h1>
     <ul>
         
+          <li><a href="/java/2021/04/03/springdatajpa.html">Repository实现增删改查</a></li>
+        
           <li><a href="/java/2021/04/02/springdatajpa.html">Spring Data JPA基础查询方法</a></li>
         
           <li><a href="/java/2021/04/01/springdatajpa.html">Spring Data JPA项目构建</a></li>
@@ -699,8 +711,6 @@
           <li><a href="/java/2021/03/30/springdatajpa.html">JPA实现增删改查</a></li>
         
           <li><a href="/java/2021/03/29/springdatajpa.html">hibernate中的javax.persistence介绍</a></li>
-        
-          <li><a href="/java/2021/03/28/springdatajpa.html">JPA实例</a></li>
         
     </ul>
 </div>
@@ -1072,7 +1082,26 @@
 
 </code></pre></div></div>
 
-<h4 id="22-测试代码">2.2. 测试代码</h4>
+<h4 id="22-repository代码">2.2. Repository代码</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dao</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.domain.User</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaSpecificationExecutor</span><span class="o">;</span>
+
+<span class="cm">/**
+ * JpaRepository&lt;实休，主键&gt;
+ * 封装了基本CRUD操作
+ * JpaSpecificationExecutor&lt;实体&gt;
+ * 封装了复杂查询（分页）
+ */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="nc">JpaRepository</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">,</span><span class="nc">Integer</span><span class="o">&gt;,</span> <span class="nc">JpaSpecificationExecutor</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="23-测试代码">2.3. 测试代码</h4>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">com.dao.UserDao</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.domain.User</span><span class="o">;</span>
@@ -1108,7 +1137,7 @@
       
          
             <li class="icon-style"><a href="/categories.html">
-                java <span>(31)</span>
+                java <span>(32)</span>
                 
             </a></li>
         
@@ -1124,7 +1153,7 @@
          
             <li class="icon-style">
                 <a href="/tags.html">
-                SpringBataJPA <span>(6)</span>
+                SpringBataJPA <span>(7)</span>
                 
                 </a>
             </li>

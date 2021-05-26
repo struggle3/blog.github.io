@@ -7,6 +7,445 @@
 		<atom:link href="https://myabp.cn/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Repository实现增删改查</title>
+				<description>&lt;h3 id=&quot;1-orm方式&quot;&gt;1. ORM方式&lt;/h3&gt;
+
+&lt;p&gt;直接使用Repository接口提供的相关方法完成数据持久化相关操作，如果默认的的Repository接口不满足要求时可以自定义Repository接口并实现即可。&lt;/p&gt;
+
+&lt;h4 id=&quot;11-repository代码&quot;&gt;1.1. Repository代码&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaSpecificationExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/**
+ * JpaRepository&amp;lt;实休，主键&amp;gt;
+ * 封装了基本CRUD操作
+ * JpaSpecificationExecutor&amp;lt;实体&amp;gt;
+ * 封装了复杂查询（分页）
+ */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserDao&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaSpecificationExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;12-测试代码&quot;&gt;1.2. 测试代码&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao.UserDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.runner.RunWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.test.context.ContextConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.test.context.junit4.SpringJUnit4ClassRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.transaction.annotation.Transactional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@RunWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SpringJUnit4ClassRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//声明spring提供的单元测试环境&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ContextConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;classpath:applicationContext.xml&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//加载spring容器&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Test01&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 立即加载查询
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findOne&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 插入
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zhaoliu&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setUserName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zhaoliu&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 更新
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zhaoliu2&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setUserName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zhaoliu2&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 删除
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * 查询所有
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;selectAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findAll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * 统计总条数
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * 否存在
+     * 如果值为空代表不存在， 否则不为空代表存在
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exists&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;是否存在：&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+
+    &lt;span class=&quot;cm&quot;&gt;/**
+     * 延迟加载查询
+     * 在单元测试中保证getOne正常运行必须添加@Transactional注解
+     */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Transactional&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;getOne&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOne&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;getone sql ^&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//System.out.println(user);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-jpql方式&quot;&gt;2. JPQL方式&lt;/h3&gt;
+
+&lt;p&gt;JPQL语法和SQL类似都可以实现对数据库中表结构里面的数据是持久化操作，但二者不的地方在于JPQL是操作对象和属性，SQL操作的表和字段。&lt;/p&gt;
+
+&lt;p&gt;使用JPQL必须满足以下要求：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;在Repository接口中定义方法;&lt;/li&gt;
+  &lt;li&gt;通过注解的形式配置JPQL语句;&lt;/li&gt;
+  &lt;li&gt;@Query注解表示查询;value参数值是JPQL语句,nativeQuery参数值是false表示是jpql查询方式，true表示是sql查询方式；&lt;/li&gt;
+  &lt;li&gt;?表示查询条件占位符；占位符默认顺序和方法参数名一致，?索引的方式手动指定占位符顺序；&lt;/li&gt;
+  &lt;li&gt;更新操作使用@Modifying注解声明方法为更新;&lt;/li&gt;
+  &lt;li&gt;更新操作必须手动添加@Transactional和@Rollback(value = false)注解启用事务&lt;/li&gt;
+  &lt;li&gt;使用原生SQL查询返回值必须是List&amp;lt;Object []&amp;gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;21-repository代码&quot;&gt;2.1. Repository代码&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaSpecificationExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/**
+ * JpaRepository&amp;lt;实休，主键&amp;gt;
+ * 封装了基本CRUD操作
+ * JpaSpecificationExecutor&amp;lt;实体&amp;gt;
+ * 封装了复杂查询（分页）
+ */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserDao&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaSpecificationExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 查询
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;from User where name = ?&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 更新
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; update User set name = ?2 where id = ?1 &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Modifying&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 插入
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Modifying&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;insert into Users(name, userName) values(?1, ?2)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nativeQuery&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;cm&quot;&gt;/*
+    * 删除
+    * */&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Modifying&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;delete User where id= ?&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;22-测试代码&quot;&gt;2.2. 测试代码&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao.UserDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.runner.RunWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.test.annotation.Rollback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.test.context.ContextConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.test.context.junit4.SpringJUnit4ClassRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.transaction.annotation.Transactional&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@RunWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SpringJUnit4ClassRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//声明spring提供的单元测试环境&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ContextConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;classpath:applicationContext.xml&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//加载spring容器&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Test02&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zhangsan&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Transactional&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Rollback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zhangsan2&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Transactional&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Rollback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;3-方法名约定查询&quot;&gt;3. 方法名约定查询&lt;/h3&gt;
+
+&lt;p&gt;Spring Data JPA的运行阶段会根据方法名称进行解析可以生成前缀有find…By、read…By、query…By、count…By和get…By的相关方法，By用来分隔方法实际行的开始同时可以用And、Or进行条件限定。&lt;/p&gt;
+
+&lt;p&gt;总结一下：查询功能的方法名由查询策略（关键字）、查询字段和一些限制性条件组成。&lt;/p&gt;
+
+&lt;p&gt;关键字列表：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;关键字&lt;/th&gt;
+      &lt;th&gt;方法命名&lt;/th&gt;
+      &lt;th&gt;sql where字句&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;And&lt;/td&gt;
+      &lt;td&gt;findByNameAndPwd&lt;/td&gt;
+      &lt;td&gt;where name= ? and pwd =?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Or&lt;/td&gt;
+      &lt;td&gt;findByNameOrSex&lt;/td&gt;
+      &lt;td&gt;where name= ? or sex=?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Is,Equals&lt;/td&gt;
+      &lt;td&gt;findById,findByIdEquals&lt;/td&gt;
+      &lt;td&gt;where id= ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Between&lt;/td&gt;
+      &lt;td&gt;findByIdBetween&lt;/td&gt;
+      &lt;td&gt;where id between ? and ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;LessThan&lt;/td&gt;
+      &lt;td&gt;findByIdLessThan&lt;/td&gt;
+      &lt;td&gt;where id &amp;lt; ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;LessThanEquals&lt;/td&gt;
+      &lt;td&gt;findByIdLessThanEquals&lt;/td&gt;
+      &lt;td&gt;where id &amp;lt;= ?&amp;lt; td&amp;gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GreaterThan&lt;/td&gt;
+      &lt;td&gt;findByIdGreaterThan&lt;/td&gt;
+      &lt;td&gt;where id &amp;gt; ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GreaterThanEqual&lt;/td&gt;
+      &lt;td&gt;findByAgeGreaterThanEqual&lt;/td&gt;
+      &lt;td&gt;where age &amp;gt;= ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;After&lt;/td&gt;
+      &lt;td&gt;findByIdAfter&lt;/td&gt;
+      &lt;td&gt;where id &amp;gt; ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Before&lt;/td&gt;
+      &lt;td&gt;findByIdBefore&lt;/td&gt;
+      &lt;td&gt;where id &amp;lt; ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;IsNull&lt;/td&gt;
+      &lt;td&gt;findByNameIsNull&lt;/td&gt;
+      &lt;td&gt;where name is null&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;isNotNull,NotNull&lt;/td&gt;
+      &lt;td&gt;findByNameNotNull&lt;/td&gt;
+      &lt;td&gt;where name is not null&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Like&lt;/td&gt;
+      &lt;td&gt;findByNameLike&lt;/td&gt;
+      &lt;td&gt;where name like ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;NotLike&lt;/td&gt;
+      &lt;td&gt;findByNameNotLike&lt;/td&gt;
+      &lt;td&gt;where name not like ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;StartingWith&lt;/td&gt;
+      &lt;td&gt;findByNameStartingWith&lt;/td&gt;
+      &lt;td&gt;where name like ‘?%’&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EndingWith&lt;/td&gt;
+      &lt;td&gt;findByNameEndingWith&lt;/td&gt;
+      &lt;td&gt;where name like ‘%?’&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Containing&lt;/td&gt;
+      &lt;td&gt;findByNameContaining&lt;/td&gt;
+      &lt;td&gt;where name like ‘%?%’&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;OrderBy&lt;/td&gt;
+      &lt;td&gt;findByIdOrderByXDesc&lt;/td&gt;
+      &lt;td&gt;where id=? order by x desc&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Not&lt;/td&gt;
+      &lt;td&gt;findByNameNot&lt;/td&gt;
+      &lt;td&gt;where name &amp;lt;&amp;gt; ?&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;In&lt;/td&gt;
+      &lt;td&gt;findByIdIn(Collection c)&lt;/td&gt;
+      &lt;td&gt;where id in (?)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;NotIn&lt;/td&gt;
+      &lt;td&gt;findByIdNotIn(Collection c)&lt;/td&gt;
+      &lt;td&gt;where id not  in (?)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;True&lt;/td&gt;
+      &lt;td&gt;findByAaaTue&lt;/td&gt;
+      &lt;td&gt;where aaa = true&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;False&lt;/td&gt;
+      &lt;td&gt;findByAaaFalse&lt;/td&gt;
+      &lt;td&gt;where aaa = false&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;IgnoreCase&lt;/td&gt;
+      &lt;td&gt;findByNameIgnoreCase&lt;/td&gt;
+      &lt;td&gt;where UPPER(name)=UPPER(?)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;top&lt;/td&gt;
+      &lt;td&gt;findTop100&lt;/td&gt;
+      &lt;td&gt;top 10/where ROWNUM &amp;lt;=10&amp;lt; td&amp;gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;31-repository代码&quot;&gt;3.1. Repository代码&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.Modifying&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.Query&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.repository.CrudRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserDao&lt;/span&gt;  &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CrudRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findByName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findByNameContains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;findByNameContaining&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;32-测试代码&quot;&gt;3.2. 测试代码&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao.UserDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.runner.RunWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.beans.factory.annotation.Autowired&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.test.context.ContextConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.test.context.junit4.SpringJUnit4ClassRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@RunWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SpringJUnit4ClassRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//声明spring提供的单元测试环境&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@ContextConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;classpath:applicationContext.xml&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//加载spring容器&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Test3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserDao&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;findByName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findByName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;zhaoliu&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;findByNameContains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findByNameContains&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;liu&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;  &lt;span class=&quot;nf&quot;&gt;findByNameContaining&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findByNameContaining&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;liu&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Sat, 03 Apr 2021 22:00:00 +0800</pubDate>
+				<link>https://myabp.cn/java/2021/04/03/springdatajpa.html</link>
+				<guid isPermaLink="true">https://myabp.cn/java/2021/04/03/springdatajpa.html</guid>
+			</item>
+		
+			<item>
 				<title>Spring Data JPA基础查询方法</title>
 				<description>&lt;p&gt;在Spring Data JPA可以将一切数据库操作看成一个泛型Repository接口，然而Repository是一个空接口，里面没有定义任何方法和属性。&lt;/p&gt;
 
@@ -21,6 +460,8 @@
 &lt;p&gt;QueryDslJpaRepository类图：&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/jpa/jpa05.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：ctrl+f12查看当前类，接口的方法列表;ctrl+alt+b查看当前接口的实现类。&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;1-repository说明&quot;&gt;1. Repository说明&lt;/h3&gt;
 
@@ -692,7 +1133,26 @@
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h4 id=&quot;22-测试代码&quot;&gt;2.2. 测试代码&lt;/h4&gt;
+&lt;h4 id=&quot;22-repository代码&quot;&gt;2.2. Repository代码&lt;/h4&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.data.jpa.repository.JpaSpecificationExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/**
+ * JpaRepository&amp;lt;实休，主键&amp;gt;
+ * 封装了基本CRUD操作
+ * JpaSpecificationExecutor&amp;lt;实体&amp;gt;
+ * 封装了复杂查询（分页）
+ */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserDao&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JpaSpecificationExecutor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;23-测试代码&quot;&gt;2.3. 测试代码&lt;/h4&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.dao.UserDao&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.domain.User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
@@ -2064,717 +2524,6 @@ ${tips}
 				<pubDate>Wed, 24 Mar 2021 22:00:00 +0800</pubDate>
 				<link>https://myabp.cn/java/2021/03/24/springmvc08.html</link>
 				<guid isPermaLink="true">https://myabp.cn/java/2021/03/24/springmvc08.html</guid>
-			</item>
-		
-			<item>
-				<title>Spring MVC JSTL</title>
-				<description>&lt;p&gt;JSP 标准标签库（JavaServer Pages Standard Tag Library，JSTL）是一个定制标签库的集合，用来解决像遍历 Map 或集合、条件测试、XML 处理，甚至数据库访问和数据操作等常见的问题。&lt;/p&gt;
-
-&lt;p&gt;在JSP页面中使用JSTL库必须通过taglib指令导入：&amp;lt;%@ taglib uri=”uri” prefix=”prefix” %&amp;gt;。&lt;/p&gt;
-
-&lt;h3 id=&quot;1-core标签&quot;&gt;1. Core标签&lt;/h3&gt;
-
-&lt;p&gt;JSTL 核心标签库(C标签)标签共有13个功能上分为4类：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;表达式控制标签：out、set、remove、catch&lt;/li&gt;
-  &lt;li&gt;流程控制标签：if、choose、when、otherwise&lt;/li&gt;
-  &lt;li&gt;循环标签：forEach、forTokens&lt;/li&gt;
-  &lt;li&gt;URL操作标签：import、url、redirect&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;在JSP页面中此用&amp;lt;%@ taglib uri=”http://java.sun.com/jsp/jstl/core” prefix=”c” %&amp;gt;后才能正常使用相关标签。&lt;/p&gt;
-
-&lt;h4 id=&quot;11-out-标签&quot;&gt;1.1. out 标签&lt;/h4&gt;
-
-&lt;p&gt;out标签用来显示一个表达式的结果，与&amp;lt;%= %&amp;gt;作用相似，它们的区别就是&amp;lt;c:out&amp;gt;标签可以直接通过”.”操作符来访问属性。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:out &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; default=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; escapeXml=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;true|false&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;value&lt;/td&gt;
-      &lt;td&gt;要输出的内容&lt;/td&gt;
-      &lt;td&gt;是&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;default&lt;/td&gt;
-      &lt;td&gt;输出的默认值&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;主体中的内容&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;escapeXml&lt;/td&gt;
-      &lt;td&gt;是否忽略XML特殊字符&lt;/td&gt;
-      &lt;td&gt;否	true&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;12-url标签&quot;&gt;1.2. url标签&lt;/h4&gt;
-
-&lt;p&gt;url标签将URL格式化为一个字符串。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:url &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; context=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;value&lt;/td&gt;
-      &lt;td&gt;基础URL&lt;/td&gt;
-      &lt;td&gt;是&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;context&lt;/td&gt;
-      &lt;td&gt;本地网络应用程序的名称&lt;/td&gt;
-      &lt;td&gt;否	当前应用程序&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;代表URL的变量名&lt;/td&gt;
-      &lt;td&gt;否	Print to page&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;var属性的作用域&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;Page&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;13-set标签&quot;&gt;1.3. set标签&lt;/h4&gt;
-
-&lt;p&gt;set标签用于设置变量值和对象属性。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:set &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; target=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; property=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;value&lt;/td&gt;
-      &lt;td&gt;要存储的值&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;主体的内容&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;target&lt;/td&gt;
-      &lt;td&gt;要修改的属性所属的对象&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;property&lt;/td&gt;
-      &lt;td&gt;要修改的属性&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;存储信息的变量&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;var属性的作用域&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;Page&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;14-if标签&quot;&gt;1.4. if标签&lt;/h4&gt;
-
-&lt;p&gt;if标签判断表达式的值，如果表达式的值为 true 则执行其主体内容。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:if &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;test=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;boolean&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:if&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;test&lt;/td&gt;
-      &lt;td&gt;条件&lt;/td&gt;
-      &lt;td&gt;是&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;用于存储条件结果的变量&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;var属性的作用域&lt;/td&gt;
-      &lt;td&gt;否 page&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;15-choosewhen和otherwise标签&quot;&gt;1.5. choose、when和otherwise标签&lt;/h4&gt;
-
-&lt;p&gt;choose和when标签的作用与Java中的关键字switch和case类似。&lt;/p&gt;
-
-&lt;p&gt;choose标签中必须嵌有一个或者多个when标签并且每when标签都表示一种可以计算和处理的情况。&lt;/p&gt;
-
-&lt;p&gt;otherwise标签则用于默认的条件块假如没有任何一个when标签的测试条件结果为True，otherwise就会得到处理,假如是这种情况otherwise就必须放在最后一个when之后。&lt;/p&gt;
-
-&lt;p&gt;choose和otherwise标签没有属性when标签必须带有定义测试条件的test属性，用来决定是否应该处理内容。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:choose&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:when &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;test=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;boolean&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:when&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:when &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;test=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;boolean&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:when&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;c:otherwise&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:otherwise&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/c:choose&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;16-foreachfortokens标签&quot;&gt;1.6. forEach,forTokens标签&lt;/h4&gt;
-
-&lt;p&gt;forEach标签会反复遍历集合中数据，可以遍历的对象包括java.util.Collection和java.util.Map的所有实现，以及对象数组或者基本类型。&lt;/p&gt;
-
-&lt;p&gt;forTokens标签通过指定分隔符将字符串分隔为一个数组然后迭代它们。&lt;/p&gt;
-
-&lt;p&gt;forEach 语法格式：&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:forEach &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;items=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;object&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; begin=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;int&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; end=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;int&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; step=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;int&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; varStatus=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;forTokens语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:forTokens &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;items=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; delims=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; begin=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;int&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; end=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;int&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; step=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;int&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; varStatus=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;items&lt;/td&gt;
-      &lt;td&gt;要被循环的信息&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;begin&lt;/td&gt;
-      &lt;td&gt;开始的元素（0=第一个元素，1=第二个元素）&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;end&lt;/td&gt;
-      &lt;td&gt;最后一个元素（0=第一个元素，1=第二个元素）&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;Last element&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;step&lt;/td&gt;
-      &lt;td&gt;每一次迭代的步长&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;代表当前条目的变量名称&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;varStatus&lt;/td&gt;
-      &lt;td&gt;代表循环状态的变量名称&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;17-import标签&quot;&gt;1.7. import标签&lt;/h4&gt;
-
-&lt;p&gt;import标签提供了所有&amp;lt;jsp:include&amp;gt;行为标签所具有的功能，同时也允许包含绝对URL。&lt;/p&gt;
-
-&lt;p&gt;语法格式：&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;c:import &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;url=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; varReader=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; context=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; charEncoding=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;url&lt;/td&gt;
-      &lt;td&gt;待导入资源的URL，可以是相对路径和绝对路径，并且可以导入其他主机资源&lt;/td&gt;
-      &lt;td&gt;是&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;context&lt;/td&gt;
-      &lt;td&gt;当使用相对路径访问外部context资源时，context指定了这个资源的名字。&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;当前应用程序&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;charEncoding&lt;/td&gt;
-      &lt;td&gt;所引入的数据的字符编码集&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;ISO-8859-1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;用于存储所引入的文本的变量&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;var属性的作用域&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;page&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;varReader&lt;/td&gt;
-      &lt;td&gt;可选的用于提供java.io.Reader对象的变量&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;2-格式化标签&quot;&gt;2. 格式化标签&lt;/h3&gt;
-
-&lt;p&gt;JSTL 提供了格式化和解析数字与日期的标签它们是formatNumber、formatDate、timeZone、setTimeZone、parseNumber和parseDate。&lt;/p&gt;
-
-&lt;p&gt;在JSP页面中此用&amp;lt;%@ taglib prefix=”fmt” uri=”http://java.sun.com/jsp/jstl/fmt” %&amp;gt;后才能正常使用相关标签。&lt;/p&gt;
-
-&lt;h4 id=&quot;21-formatnumber&quot;&gt;2.1. formatNumber&lt;/h4&gt;
-
-&lt;p&gt;formatNumber用于格式化数字，货币等。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;fmt:formatNumber &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; pattern=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; currencyCode=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; currencySymbol=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  groupingUsed=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; maxIntegerDigits=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; minIntegerDigits=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; maxFractionDigits=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; minFractionDigits=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;value&lt;/td&gt;
-      &lt;td&gt;要显示的数字&lt;/td&gt;
-      &lt;td&gt;是&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;type&lt;/td&gt;
-      &lt;td&gt;NUMBER，CURRENCY，或 PERCENT类型&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;Number&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pattern&lt;/td&gt;
-      &lt;td&gt;指定一个自定义的格式化模式用与输出&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;currencyCode&lt;/td&gt;
-      &lt;td&gt;货币码（当type=”currency”时）&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;取决于默认区域&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;currencySymbol&lt;/td&gt;
-      &lt;td&gt;货币符号 (当 type=”currency”时)&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;取决于默认区域&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;groupingUsed&lt;/td&gt;
-      &lt;td&gt;是否对数字分组 (TRUE 或 FALSE)&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;true&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;maxIntegerDigits&lt;/td&gt;
-      &lt;td&gt;整型数最大的位数&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;minIntegerDigits&lt;/td&gt;
-      &lt;td&gt;整型数最小的位数&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;maxFractionDigits&lt;/td&gt;
-      &lt;td&gt;小数点后最大的位数&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;minFractionDigits&lt;/td&gt;
-      &lt;td&gt;小数点后最小的位数&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;存储格式化数字的变量&lt;/td&gt;
-      &lt;td&gt;否	Print to page&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;var属性的作用域&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;page&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;formatNumber 标签的用途之一就是将数字格式化成货币。为此可以利用 currencyCode属性来定义一个ISO-4217货币代码。&lt;/p&gt;
-
-&lt;p&gt;ISO-4217货币代码见表：&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;币别&lt;/th&gt;
-      &lt;th&gt;ISO-4217码&lt;/th&gt;
-      &lt;th&gt;大单位名称&lt;/th&gt;
-      &lt;th&gt;小单位名称&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;加拿大元&lt;/td&gt;
-      &lt;td&gt;CAD&lt;/td&gt;
-      &lt;td&gt;加元&lt;/td&gt;
-      &lt;td&gt;分&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;人民币&lt;/td&gt;
-      &lt;td&gt;CNY&lt;/td&gt;
-      &lt;td&gt;元&lt;/td&gt;
-      &lt;td&gt;角&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;欧元&lt;/td&gt;
-      &lt;td&gt;EUR&lt;/td&gt;
-      &lt;td&gt;欧元&lt;/td&gt;
-      &lt;td&gt;分&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;日元&lt;/td&gt;
-      &lt;td&gt;JPY&lt;/td&gt;
-      &lt;td&gt;日元&lt;/td&gt;
-      &lt;td&gt;钱&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;英镑&lt;/td&gt;
-      &lt;td&gt;GBP&lt;/td&gt;
-      &lt;td&gt;英镑&lt;/td&gt;
-      &lt;td&gt;便士&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;美元&lt;/td&gt;
-      &lt;td&gt;USD&lt;/td&gt;
-      &lt;td&gt;美元&lt;/td&gt;
-      &lt;td&gt;美分&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;22-formatdate&quot;&gt;2.2. formatDate&lt;/h4&gt;
-
-&lt;p&gt;formatDate 标签用于格式化日期。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;fmt:formatDate &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; dateStyle=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; timeStyle=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; pattern=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; timeZone=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;value&lt;/td&gt;
-      &lt;td&gt;要显示的日期&lt;/td&gt;
-      &lt;td&gt;是&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;type&lt;/td&gt;
-      &lt;td&gt;DATE, TIME, 或 BOTH&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;date&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;dateStyle&lt;/td&gt;
-      &lt;td&gt;FULL, LONG, MEDIUM, SHORT或DEFAULT&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;default&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;timeStyle&lt;/td&gt;
-      &lt;td&gt;FULL, LONG, MEDIUM, SHORT或DEFAULT&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;default&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pattern&lt;/td&gt;
-      &lt;td&gt;自定义格式模式&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;timeZone&lt;/td&gt;
-      &lt;td&gt;显示日期的时区&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;默认时区&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;存储格式化日期的变量名&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;显示在页面&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;存储格式化日志变量的范围&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;页面&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;23-parsenumber&quot;&gt;2.3. parseNumber&lt;/h4&gt;
-
-&lt;p&gt;parseNumber 将以字符串表示的数字、货币或者百分比解析成数字。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;fmt:parseNumber &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; pattern=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; parseLocale=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; integerOnly=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;  cope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;value&lt;/td&gt;
-      &lt;td&gt;要解析的数字&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;Body&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;type&lt;/td&gt;
-      &lt;td&gt;NUMBER，CURRENCY或PERCENT&lt;/td&gt;
-      &lt;td&gt;否	number&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;parseLocale&lt;/td&gt;
-      &lt;td&gt;解析数字时所用的区域&lt;/td&gt;
-      &lt;td&gt;否	默认区域&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;integerOnly&lt;/td&gt;
-      &lt;td&gt;是否只解析整型数（true）或浮点数（false）&lt;/td&gt;
-      &lt;td&gt;否	false&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pattern&lt;/td&gt;
-      &lt;td&gt;自定义解析模式&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;timeZone&lt;/td&gt;
-      &lt;td&gt;要显示的日期的时区&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;默认时区&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;存储待解析数字的变量&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;Print to page&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;var属性的作用域&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;page&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;24-parsedate&quot;&gt;2.4. parseDate&lt;/h4&gt;
-
-&lt;p&gt;parseDate 将字符串解析成日期和时间显示。&lt;/p&gt;
-
-&lt;p&gt;语法格式:&lt;/p&gt;
-
-&lt;div class=&quot;language-jsp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;fmt:parseDate &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; dateStyle=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; timeStyle=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; pattern=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; timeZone=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; parseLocale=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; var=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt; scope=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;string&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;属性&lt;/th&gt;
-      &lt;th&gt;描述&lt;/th&gt;
-      &lt;th&gt;是否必要&lt;/th&gt;
-      &lt;th&gt;默认值&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;value&lt;/td&gt;
-      &lt;td&gt;要显示的日期	是	无&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;type&lt;/td&gt;
-      &lt;td&gt;DATE, TIME,或BOTH&lt;/td&gt;
-      &lt;td&gt;否	date&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;dateStyle&lt;/td&gt;
-      &lt;td&gt;FULL, LONG, MEDIUM, SHORT或DEFAULT&lt;/td&gt;
-      &lt;td&gt;否	default&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;timeStyle&lt;/td&gt;
-      &lt;td&gt;FULL, LONG, MEDIUM, SHORT或DEFAULT&lt;/td&gt;
-      &lt;td&gt;否	default&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pattern&lt;/td&gt;
-      &lt;td&gt;自定义格式模式&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;无&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;timeZone&lt;/td&gt;
-      &lt;td&gt;显示日期的时区&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;默认时区&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;var&lt;/td&gt;
-      &lt;td&gt;存储格式化日期的变量名&lt;/td&gt;
-      &lt;td&gt;否&lt;/td&gt;
-      &lt;td&gt;显示在页面&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;scope&lt;/td&gt;
-      &lt;td&gt;存储格式化日志变量的范围&lt;/td&gt;
-      &lt;td&gt;否	页面&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-</description>
-				<pubDate>Tue, 23 Mar 2021 22:00:00 +0800</pubDate>
-				<link>https://myabp.cn/java/2021/03/23/springmvc07.html</link>
-				<guid isPermaLink="true">https://myabp.cn/java/2021/03/23/springmvc07.html</guid>
 			</item>
 		
 	</channel>
